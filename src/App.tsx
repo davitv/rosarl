@@ -3,20 +3,21 @@ import './App.css';
 import * as React from 'react';
 import { Route, RouteComponentProps } from 'react-router-dom';
 
-import Header from './components/header';
 import './icons';
+
+import Header from './components/header';
+import Catalogue from './components/catalogue';
 
 class App extends React.Component {
   public render() {
     return (
       <div >
+        <Header />
         <Route
             path='/'
             exact={true}
         >
-            <div>
-                <Route component={Header} />
-            </div>
+          <Catalogue />
         </Route>
       </div>
     );

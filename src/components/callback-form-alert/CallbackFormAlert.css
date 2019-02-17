@@ -1,0 +1,5 @@
+:local .className {
+    background: rgba(90,184,212,.1);
+    padding: 15px;
+    border: 1px solid #a2bee0;
+}

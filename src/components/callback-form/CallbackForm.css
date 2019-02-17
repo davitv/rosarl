@@ -1,0 +1,55 @@
+
+:local .className {
+    padding: 15px;
+}
+
+:local .field {
+    margin-bottom: 15px;
+}
+
+:local .fieldError {
+    border: solid 1px red;
+    padding: 10px;
+    border-left: none;
+    border-right: none;
+    border-top: none;
+    background: #fff3f3;
+    color: #653232;
+    margin-bottom: 15px;
+}
+
+:local .button {
+    background: #fff;
+    border: 1px solid transparent;
+    display: inline-block;
+    cursor: pointer;
+    outline: none;
+    font-size: 1rem;
+    line-height: 1rem;
+    font-family: Noto Sans;
+    font-weight: 300;
+    padding: 7px 20px;
+    transition: background-color .3s ease-in-out,color .3s ease-in-out,opacity .3s ease-in-out;
+    background-color: transparent;
+    vertical-align: middle;
+    text-decoration: none;
+    padding: 8px 16px;
+    color: #fff;
+    background-color: #3525d3;
+
+    &[disabled] {
+        background: #f0f0f0;
+        color: #333131;
+        cursor: default;
+    }
+}
+
+:local .error {
+    border: solid 1px red;
+    padding: 10px;
+    border-left: none;
+    border-right: none;
+    background: #fff3f3;
+    color: #653232;
+    margin-bottom: 15px;
+}

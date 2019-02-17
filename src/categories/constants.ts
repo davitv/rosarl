@@ -1,0 +1,3 @@
+
+export const LOAD_CATEGORIES = 'LOAD_CATEGORIES';
+export type LOAD_CATEGORIES = typeof LOAD_CATEGORIES;

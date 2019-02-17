@@ -1,0 +1,3 @@
+
+export const REQUEST_PHONE_CALL = 'REQUEST_PHONE_CALL';
+export type REQUEST_PHONE_CALL = typeof REQUEST_PHONE_CALL;

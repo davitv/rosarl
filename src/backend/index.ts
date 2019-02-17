@@ -1,5 +1,6 @@
 import * as queryString from 'query-string'
 import { isArray } from '../utils/check';
+import { serialize } from '../utils/url';
 
 export const handleError = (response: Response, errorContent: any) => {
     if (response.status === 400) {
@@ -26,10 +27,11 @@ export const handleError = (response: Response, errorContent: any) => {
     }
 }
 
-export function persistData<T>(apiPath: string, data: Array< Partial<T> >, accessToken: string): Promise<T[]> {
-    return new Promise<T[]>((resolve, reject) => {
+export function persistData<T>(apiPath: string, data: Partial<T>, accessToken: string): Promise<T> {
+    return new Promise<T>((resolve, reject) => {
         const headers = new Headers();
         headers.append('Authorization', accessToken);
+        headers.append('Content-Type', 'application/json;charset=UTF-8');
 
         fetch(
             apiPath,
@@ -56,12 +58,12 @@ export function persistData<T>(apiPath: string, data: Array< Partial<T> >, acces
 }
 
 
-export const retrieveData = <T>(apiPath: string, accessToken: string) => new Promise<T[]>((resolve, reject) => {
+export const retrieveData = <T>(apiPath: string, accessToken: string, queryParams?: {[key: string]: string | undefined}) => new Promise<T[]>((resolve, reject) => {
     const headers = new Headers();
     headers.append('Authorization', accessToken);
 
     fetch(
-        apiPath,
+        apiPath + '?' + serialize(queryParams),
         {
             method: 'GET',
             headers,

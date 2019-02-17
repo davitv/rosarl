@@ -5,7 +5,6 @@ import { Route, RouteComponentProps, withRouter } from 'react-router-dom';
 import * as types from '../../types';
 
 import { logout, AuthAction } from '../../auth/actions';
-import { openLoginModal, closeLoginModal, openResetPasswordModal } from '../../ui/actions';
 
 import Header from './Header';
 

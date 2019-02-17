@@ -1,0 +1,5 @@
+@import '../../scss/clearfix';
+
+:local .className {
+    @include clearfix;
+}

@@ -8,6 +8,7 @@ export interface DropdownProps {
         bindContentTogglerRef: (ref: React.ReactNode) => React.ReactNode,
         isOpen: boolean
     ) => React.ReactNode;
+    isContentToggling?: boolean;
 }
 
 export interface DropdownState {
@@ -17,6 +18,9 @@ export interface DropdownState {
 class Dropdown extends React.Component<DropdownProps, DropdownState> {
     private togglerRef: HTMLElement;
     private contentRef: HTMLElement;
+    static defaultProps = {
+        isContentToggling: false
+    }
 
     constructor(props: DropdownProps) {
         super(props);
@@ -55,18 +59,33 @@ class Dropdown extends React.Component<DropdownProps, DropdownState> {
         );
     }
 
-
-    private documentClickListener(e: Event & {target: {parentElement: null | HTMLElement}}) {
+    private allParents(e: HTMLElement, searchParent: Element | null | string) {
+        let parent = e.parentElement;
+        while(parent) {
+            if (parent === searchParent) {
+                return true;
+            }
+            parent = parent.parentElement;
+        }
+        return false;
+    }
+    private documentClickListener(e: Event & {target: HTMLElement}) {
         const node = findDOMNode(this.togglerRef);
         // TODO: find more elegant way to achieve this.
         // Currently only 3 level nesting of toggler supported, and i have no mood and time
         // for searching for a workaround...
         if (
             node !== e.target &&
-            node !== e.target.parentElement
+            !this.allParents(e.target, node)
         ) {
-            if (e.target.parentElement !== null && e.target.parentElement.parentElement !== node && this.state.isOpen) {
-                this.setState({isOpen: false});
+
+            if (this.state.isOpen) {
+                if (this.props.isContentToggling) {
+                    console.error('j')
+                    this.setState({isOpen: false});
+                } else if (node !== findDOMNode(this.contentRef) && !this.allParents(e.target, findDOMNode(this.contentRef))) {
+                    this.setState({isOpen: false});
+                }
             }
         }
     }

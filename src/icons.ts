@@ -10,6 +10,9 @@ import {
     faTruck,
     faEnvelope,
     faPhone,
+    faSpinner,
+    faSearch,
+    faCaretDown,
 } from '@fortawesome/free-solid-svg-icons';
 
 library.add(
@@ -21,4 +24,7 @@ library.add(
     faTruck,
     faEnvelope,
     faPhone,
+    faSpinner,
+    faSearch,
+    faCaretDown,
 );
