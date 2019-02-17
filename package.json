@@ -1,8 +1,11 @@
 {
-  "name": "day",
+  "name": "rosarl",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^1.2.15",
+    "@fortawesome/free-solid-svg-icons": "^5.7.2",
+    "@fortawesome/react-fontawesome": "^0.1.4",
     "@types/chance": "^1.0.1",
     "@types/classnames": "^2.2.6",
     "@types/draggabilly": "^2.1.1",
@@ -56,6 +59,7 @@
     "react-textarea-autosize": "^7.0.4",
     "remove-markdown": "^0.3.0",
     "resolve": "1.6.0",
+    "serve": "^10.1.2",
     "source-map-loader": "^0.2.1",
     "style-loader": "0.19.0",
     "sw-precache-webpack-plugin": "0.11.4",
