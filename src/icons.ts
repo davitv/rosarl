@@ -13,6 +13,7 @@ import {
     faSpinner,
     faSearch,
     faCaretDown,
+    faCaretUp,
 } from '@fortawesome/free-solid-svg-icons';
 
 library.add(
@@ -27,4 +28,5 @@ library.add(
     faSpinner,
     faSearch,
     faCaretDown,
+    faCaretUp,
 );

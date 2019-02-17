@@ -1,5 +1,4 @@
 import * as React from 'react';
-
 const styles = require('./Catalogue.css');
 
 import Sidebar from '../sidebar';

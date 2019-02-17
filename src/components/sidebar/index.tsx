@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { ThunkDispatch } from 'redux-thunk';
-
+import { Route } from 'react-router-dom';
 import * as types from '../../types';
 import { loadCategories, CategoriesAction } from '../../categories/actions';
 
@@ -26,9 +26,12 @@ export class SidebarContainer extends React.Component<Props> {
     componentDidMount() {
         this.props.load();
     }
+
     public render() {
         return (
+            <Route>
             <Sidebar />
+            </Route>
         );
     }
 }

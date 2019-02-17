@@ -6,10 +6,17 @@
 
 :local .category {
     display: block;
+
+    > .category {
+        display: none;
+    }
 }
-
+:local .categoryOpen {
+    > .category {
+        display: block;
+    }
+}
 :local .categorySecond {
-
     :local .link {
         padding-left: 30px;
     }
@@ -41,4 +48,8 @@
     line-height: 20px;
     color: #333;
     color: inherit;
+}
+:local .linkSelected {
+    background: #04488b;
+    color: #fff;
 }

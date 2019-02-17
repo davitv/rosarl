@@ -11,8 +11,20 @@ export interface SetHeaderCallbackFormSubmitted {
     };
 }
 
+export interface SelectCategory {
+    type: constants.SELECT_CATEGORY;
+    payload: number;
+}
+
+export interface ToggleCategory {
+    type: constants.TOGGLE_CATEGORY;
+    payload: number;
+}
+
 export type UIAction = (
-    SetHeaderCallbackFormSubmitted
+    SetHeaderCallbackFormSubmitted |
+    ToggleCategory |
+    SelectCategory
 );
 
 export function setHeaderCallbackFormSubmitted(submittedBy: string, phoneNumber: string) {
@@ -24,6 +36,24 @@ export function setHeaderCallbackFormSubmitted(submittedBy: string, phoneNumber:
                 phoneNumber
             }
 
+        });
+    }
+}
+
+export function selectCategory(categoryId: number) {
+    return (dispatch: Dispatch<SelectCategory>) => {
+        dispatch({
+            type: constants.SELECT_CATEGORY,
+            payload: categoryId,
+        });
+    }
+}
+
+export function toggleCategory(categoryId: number) {
+    return (dispatch: Dispatch<ToggleCategory>) => {
+        dispatch({
+            type: constants.TOGGLE_CATEGORY,
+            payload: categoryId,
         });
     }
 }
