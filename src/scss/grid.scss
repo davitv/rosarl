@@ -1,0 +1,13 @@
+
+@import './vars.scss';
+
+$container-width: $md-screen-width;
+
+@mixin container() {
+    width: $container-width;
+    margin: 0 auto;
+
+    @media(max-width: 500px) {
+        width: 100%;
+    }
+}

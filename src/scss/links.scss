@@ -1,0 +1,11 @@
+
+@mixin link() {
+    text-decoration: none;
+    color: #4289f1;
+
+    &:active,
+    &:hover,
+    &:visited {
+        color: #4289f1;
+    }
+}

@@ -1,0 +1,26 @@
+
+
+export const ADD_BOARDS = 'ADD_BOARDS';
+export type ADD_BOARDS = typeof ADD_BOARDS;
+
+export const ADD_SHARED_BOARDS = 'ADD_SHARED_BOARDS';
+export type ADD_SHARED_BOARDS = typeof ADD_SHARED_BOARDS;
+
+export const ADD_BOARD_LIST_STYLES = 'ADD_BOARD_LIST_STYLES';
+export type ADD_BOARD_LIST_STYLES = typeof ADD_BOARD_LIST_STYLES;
+
+export const REMOVE_BOARDS = 'REMOVE_BOARDS';
+export type REMOVE_BOARDS = typeof REMOVE_BOARDS;
+
+
+export const ADD_BOARD_LISTS = 'ADD_BOARD_LISTS';
+export type ADD_BOARD_LISTS = typeof ADD_BOARD_LISTS;
+
+export const ADD_BOARD_FILES = 'ADD_BOARD_FILES';
+export type ADD_BOARD_FILES = typeof ADD_BOARD_FILES;
+
+export const REMOVE_BOARD_FILES = 'REMOVE_BOARD_FILES';
+export type REMOVE_BOARD_FILES = typeof REMOVE_BOARD_FILES;
+
+export const REMOVE_BOARD_LISTS = 'REMOVE_BOARD_LISTS';
+export type REMOVE_BOARD_LISTS = typeof REMOVE_BOARD_LISTS;

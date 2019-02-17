@@ -1,0 +1,38 @@
+---
+- hosts: dayspot
+  vars:
+    app_name: 'dayspot'
+    app_folder: '/webapp/spa/'
+
+  gather_facts: False
+  pre_tasks:
+
+    # - apt_repository:
+    #     repo: 'ppa:jonathonf/python-3.6'
+    #     state: 'absent'
+    # - name: apt-get update
+    #   raw: apt-get update -qq
+
+    # - name: 'Install python 2 (ansible dep)'
+    #   raw: sudo apt-get -y install python
+    #   become: yes
+
+  tasks:
+    - name: test connection
+      ping:
+
+    - name: Ensure app directory exists
+      file: path="{{ app_folder }}" state=directory owner=www-data group=www-data mode=0775 recurse=yes
+
+    - name: Sync app build folder
+      synchronize:
+        src: '../build/'
+        dest: "{{app_folder}}"
+
+    - name: Restart "{{app_name}}" process
+      supervisorctl:
+          name: "{{app_name}}:"
+          state: restarted
+          config: /etc/supervisor/supervisord.conf
+      tags:
+         - supervisor

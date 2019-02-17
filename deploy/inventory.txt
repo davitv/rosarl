@@ -1,0 +1,1 @@
+dayspot ansible_host=77.244.213.11 ansible_user=root

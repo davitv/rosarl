@@ -1,0 +1,89 @@
+@import '../../scss/clearfix';
+@import '../../scss/grid';
+@import '../../scss/buttons';
+@import '../../scss/vars';
+
+:local .className {
+    @include clearfix;
+
+    height: 60px;
+    background-color: #023466;
+}
+
+
+:local .floatLeft {
+    float: left;
+}
+
+:local .floatRight {
+    float: right;
+}
+
+:local .logo {
+    float: left;
+    width: 16.66667%;
+    border-right: 1px solid #6b7682;
+    padding: 10px 15px;
+}
+
+:local .title {
+    font-size: 18px;
+    line-height: 20px;
+    text-align: center;
+}
+
+:local .link {
+    color: #fff;
+    text-decoration: none;
+    text-transform: uppercase;
+}
+
+:local .phone {
+    display: block;
+}
+
+
+
+:local .navigation {
+    @include clearfix;
+    display: inline-block;
+    position: relative;
+}
+
+:local .item {
+    float: left;
+}
+
+:local .navigationLink {
+    display: block;
+    color: #fff;
+    text-decoration: none;
+    padding: 6px 10px;
+    font-size: 12px;
+}
+
+:local .icon {
+    display: block;
+    text-align: center;
+}
+
+:local .dropdown {
+    display: none;
+    left: 0;
+    width: 950px;
+    position: absolute;
+    border: solid 1px #ccc;
+
+    box-shadow: 0 6px 12px rgba(0,0,0,.175);
+    border: 1px solid rgba(0,0,0,.15);
+}
+
+:local .dropdownOpen {
+    display: block;
+}
+
+:local .dropdownSmall {
+    width: 230px;
+    right: 0;
+    left: auto;
+}

@@ -1,0 +1,95 @@
+// Button
+//
+// Mixin that defines common styles of all buttons in application
+
+@mixin button($style: primary, $border-style: solid, $size: normal) {
+    background: #fff;
+    border: $border-style 1px transparent;
+    display: inline-block;
+    cursor: pointer;
+    outline: none;
+    // border-radius: 0.25rem;
+    font-size: 1rem;
+    line-height: 1rem;
+    font-family: 'Noto Sans';
+    font-weight: 300;
+    padding: 7px 20px;
+    transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out, opacity  0.3s ease-in-out;
+    background-color: transparent;
+    vertical-align: middle;
+    text-decoration: none;
+
+    padding: 8px 16px;
+
+    @if $style == primary {
+        color: #fff;
+        background-color: #3525D3;
+        &:hover {
+            background-color: #3d2dda;
+        }
+    }
+
+    @if $style == outlined {
+        color: #3525D3;
+        background-color: #fff;
+        border: $border-style 1px #3525D3;
+        &:hover {
+            // color: #fff;
+            background-color: #fff;
+        }
+    }
+
+    @if $style == default {
+        color: #000;
+
+        &:hover {
+            background-color: #f0f0f0;
+        }
+    }
+
+    @if $size == small {
+        padding: 5px 10px;
+    }
+
+    &:active {
+        outline: none;
+        box-shadow: inset 1px 2px 2px #ccc;
+    }
+
+    &:disabled {
+        opacity: 0.4;
+        cursor: not-allowed;
+    }
+}
+
+@mixin buttonShadow {
+    position: relative;
+    &:before {
+        box-shadow: 0 8px 16px rgba(53,37,211,0.24);
+        border-radius: 2px;
+        content: '';
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        mix-blend-mode: multiply;
+        transition: box-shadow .15s ease;
+    }
+    &:hover {
+        &:before {
+            box-shadow: 0 8px 16px rgba(53,37,211,0.32);
+        }
+    }
+}
+@mixin resetButtonStyles() {
+    background: none;
+    border: none;
+    display: inline-block;
+    padding: 0;
+    font-size: 1rem;
+    cursor: pointer;
+    outline: none;
+    text-align: left;
+    color: inherit;
+}

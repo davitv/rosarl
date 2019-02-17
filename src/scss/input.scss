@@ -1,0 +1,30 @@
+// Input
+//
+// Mixin that defines common styles of all input elements in application
+
+@mixin input() {
+    width: 100%;
+
+    display: block;
+    padding: .375rem .75rem;
+    font-size: 1rem;
+    line-height: 1.5;
+    color: #495057;
+    background-color: #fff;
+    border: 1px solid #ced4da;
+    border-radius: .25rem;
+    font-weight: 400;
+    transition: border-color .15s ease-in-out;
+
+
+    &:focus {
+        border: 1px solid #736cc7;
+        outline: none;
+    }
+}
+
+@mixin label() {
+    display: inline-block;
+    padding: 2px 0;
+    font-weight: 400;
+}
