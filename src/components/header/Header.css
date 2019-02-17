@@ -65,8 +65,23 @@
 :local .icon {
     display: block;
     text-align: center;
+    font-size: 14px;
+    /*line-height: 1;*/
 }
 
+:local .loaderIconImage {
+    width: 23px;
+
+}
+
+:local .cartInfo {
+    display: block;
+
+    :local .icon {
+        float: right;
+        margin-top: 4px;
+    };
+};
 :local .dropdown {
     display: none;
     left: 0;
