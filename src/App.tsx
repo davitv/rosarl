@@ -4,6 +4,7 @@ import * as React from 'react';
 import { Route, RouteComponentProps } from 'react-router-dom';
 
 import Header from './components/header';
+import './icons';
 
 class App extends React.Component {
   public render() {
