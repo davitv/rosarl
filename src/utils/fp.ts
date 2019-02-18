@@ -101,15 +101,13 @@ export const groupBy = <T>(arr: T[], func: (a: T, b: T) => boolean): T[][] => {
     return ret;
 }
 
-export const updateStorageItems = (items: any[], data: any[]): any[] => {
+export const updateStorageItems = (items: any[], data: any[], key='id'): any[] => {
     const clonedState = clone(items);
 
-    const existingIds = clonedState.map(({id}: {id: number}) => id);
-
-    const addItems = data.filter(d => existingIds.indexOf(d.id) === -1);
-
+    const existingIds = clonedState.map(item => item[key]);
+    const addItems = data.filter(d => existingIds.indexOf(d[key]) === -1);
     return clonedState.map((d) => {
-        const [ updateItem ] = data.filter(p => p.id === d.id);
+        const [ updateItem ] = data.filter(p => p[key] === d[key]);
         return {
             ...d,
             ...updateItem,

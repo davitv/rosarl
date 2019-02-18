@@ -11,6 +11,14 @@ export interface Attribute {
     value: string;
 }
 
+export interface FilteringAttribute {
+    name: string;
+    choices: {
+        name: string;
+        value: number;
+    }[];
+}
+
 export interface Product {
     product_id: number;
     name: string;
@@ -31,4 +39,5 @@ export interface Product {
 
 export interface ProductsState {
     products: Product[];
+    filteringAttributes: FilteringAttribute[];
 }

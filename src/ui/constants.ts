@@ -10,3 +10,6 @@ export type TOGGLE_CATEGORY = typeof TOGGLE_CATEGORY;
 
 export const TOGGLE_PRODUCT = 'TOGGLE_PRODUCT';
 export type TOGGLE_PRODUCT = typeof TOGGLE_PRODUCT;
+
+export const TOGGLE_FILTERS = 'TOGGLE_FILTERS';
+export type TOGGLE_FILTERS = typeof TOGGLE_FILTERS;

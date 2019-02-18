@@ -26,10 +26,16 @@ export interface ToggleProduct {
     payload: number;
 }
 
+export interface ToggleFilters {
+    type: constants.TOGGLE_FILTERS;
+    payload: boolean;
+}
+
 export type UIAction = (
     SetHeaderCallbackFormSubmitted |
     ToggleCategory |
     ToggleProduct |
+    ToggleFilters |
     SelectCategory
 );
 
@@ -42,6 +48,15 @@ export function setHeaderCallbackFormSubmitted(submittedBy: string, phoneNumber:
                 phoneNumber
             }
 
+        });
+    }
+}
+
+export function toggleFilters(isOpen: boolean) {
+    return (dispatch: Dispatch<ToggleFilters>) => {
+        dispatch({
+            type: constants.TOGGLE_FILTERS,
+            payload: isOpen,
         });
     }
 }

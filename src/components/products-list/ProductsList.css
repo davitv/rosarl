@@ -2,12 +2,32 @@
 @import '../../scss/clearfix';
 @import '../../scss/buttons';
 
+
+@mixin textOverflow() {
+    overflow-x: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+:local .loading {
+    padding: 10px 0 30px 0;
+};
 :local .className {
-    padding: 15px;
+    padding: 15px 15px 0 15px;
     float: left;
     width: 83.33333%;
     height: calc(100vh - 60px);
-    overflow: auto;
+
+    display: flex;
+    flex-direction: column;
+}
+
+:local .flexTop {
+
+}
+
+:local .flexBottom {
+    overflow-y: auto;
 }
 
 :local .listWrapper {
@@ -18,6 +38,7 @@
 
     box-shadow: 0 2px 2px grey;
     margin-bottom: 4px;
+    margin-top: 15px;
 }
 
 :local .product {
@@ -37,18 +58,22 @@
 
 :local .w5 {
     @include column(5%);
+    @include textOverflow()
 }
 
 :local .w10 {
     @include column(10%);
+    @include textOverflow();
 }
 
 :local .w15 {
     @include column(15%);
+    @include textOverflow();
 }
 
 :local .w45 {
     @include column(45%);
+    @include textOverflow()
 }
 
 :local .mainPhoto {
@@ -59,7 +84,7 @@
 
 :local .article,
 :local .name,
-:local .attributes,
+:local .attributesList,
 :local .price {
     padding: 8px 0;
 }
@@ -165,10 +190,41 @@
     display: block;
 }
 
-:local .attributesList {
+:local .propsList {
     list-style: none;
     margin: 0;
     padding: 0;
+}
+
+:local .attribute {
+    @include resetButtonStyles();
+    background-color: #999;
+    padding: .3em;
+    font-size: 75%;
+    line-height: 1;
+    color: #fff;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: baseline;
+    cursor: pointer;
+    float: left;
+    margin-left: 2px;
+    margin-bottom: 2px;
+    max-width: 50px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+
+    &:hover {
+        background-color: gray;
+    }
+}
+
+:local .attributeSelected {
+    background-color: #5095cf;
+
+    &:hover {
+        background-color: #5095cf;
+    }
 }
 
 :local .productDetails {

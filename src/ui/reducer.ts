@@ -12,6 +12,7 @@ const getDefaultState = (): types.UIState => ({
     headerCallbackFormSubmittedBy: '',
     headerCallbackFormSubmittedPhone: '',
     selectedCategory: 0,
+    isFilteringOpen: false,
     openCategories: [],
     openProducts: []
 });
@@ -29,6 +30,11 @@ export const reducer = (state: types.UIState = getDefaultState(), action: UIActi
             return {
                 ...state,
                 openCategories: addOrRemove(state.openCategories, action.payload)
+            };
+        case constants.TOGGLE_FILTERS:
+            return {
+                ...state,
+                isFilteringOpen: action.payload
             };
         case constants.TOGGLE_PRODUCT:
             return {

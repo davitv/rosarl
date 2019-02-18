@@ -1,0 +1,69 @@
+@import '../../scss/buttons';
+
+:local .className {
+
+}
+
+:local .btnToggle {
+    @include resetButtonStyles();
+    color: #fff;
+    background: #3d5165;
+    border: 1px solid #46b8da;
+    display: inline-block;
+    padding: 1px 5px;
+    font-size: 12px;
+    line-height: 1.5;
+    margin-bottom: 0;
+    font-weight: 400;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+
+    &:hover {
+        background-color: #39b3d7;
+        border-color: #269abc;
+    }
+}
+
+:local .row {
+    margin-bottom: 5px;
+}
+:local .name {
+    color: #999;
+    margin-right: 15px;
+}
+
+:local .btnAttr {
+    @include resetButtonStyles();
+    color: #428bca;
+    text-decoration: none;
+    padding: 3px 7px;
+
+    &:hover {
+        background-color: #eee;
+    }
+}
+
+:local .btnAttrSelected {
+    background-color: #5095cf;
+    color: #fff;
+    &:hover {
+        background-color: #5095cf;
+        color: #fff;
+    }
+}
+
+:local .attributesWrapper {
+    display: none;
+}
+
+:local .attributesWrapperOpen {
+    display: block;
+}
+
+:local .empty {
+    background: rgba(90,184,212,.1);
+    padding: 15px;
+    border: solid 1px #a2bee0;
+    margin-bottom: 10px;
+}

@@ -1,3 +1,4 @@
+import { updateStorageItems } from '../utils/fp';
 
 import * as types from './types';
 import * as constants from './constants';
@@ -5,7 +6,8 @@ import * as constants from './constants';
 import { ProductsAction } from './actions';
 
 const getDefaultState = (): types.ProductsState => ({
-    products: []
+    products: [],
+    filteringAttributes: []
 });
 
 export const reducer = (state: types.ProductsState = getDefaultState(), action: ProductsAction) => {
@@ -13,7 +15,12 @@ export const reducer = (state: types.ProductsState = getDefaultState(), action: 
         case constants.LOAD_PRODUCTS:
             return {
                 ...state,
-                products: action.payload.results
+                products: updateStorageItems(state.products, action.payload.results, 'product_id')
+            };
+        case constants.LOAD_FILTERING_ATTRIBUTES:
+            return {
+                ...state,
+                filteringAttributes: action.payload.results
             };
         default:
             return state;

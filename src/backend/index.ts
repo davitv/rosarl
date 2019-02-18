@@ -61,9 +61,10 @@ export function persistData<T>(apiPath: string, data: Partial<T>, accessToken: s
 export const retrieveData = <T>(apiPath: string, accessToken: string, queryParams?: {[key: string]: string | number | undefined}) => new Promise<T[]>((resolve, reject) => {
     const headers = new Headers();
     headers.append('Authorization', accessToken);
+    const getParams = serialize(queryParams);
 
     fetch(
-        apiPath + '?' + serialize(queryParams),
+        apiPath + (getParams ? '?' + getParams : ''),
         {
             method: 'GET',
             headers,
