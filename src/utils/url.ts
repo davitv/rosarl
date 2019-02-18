@@ -1,5 +1,5 @@
 
-export const serialize = (dict?: {[key: string]: string | undefined}) => {
+export const serialize = (dict?: {[key: string]: string | number | undefined}) => {
     if (dict === undefined) {
         return '';
     }

@@ -21,9 +21,15 @@ export interface ToggleCategory {
     payload: number;
 }
 
+export interface ToggleProduct {
+    type: constants.TOGGLE_PRODUCT;
+    payload: number;
+}
+
 export type UIAction = (
     SetHeaderCallbackFormSubmitted |
     ToggleCategory |
+    ToggleProduct |
     SelectCategory
 );
 
@@ -54,6 +60,15 @@ export function toggleCategory(categoryId: number) {
         dispatch({
             type: constants.TOGGLE_CATEGORY,
             payload: categoryId,
+        });
+    }
+}
+
+export function toggleProduct(productId: number) {
+    return (dispatch: Dispatch<ToggleProduct>) => {
+        dispatch({
+            type: constants.TOGGLE_PRODUCT,
+            payload: productId,
         });
     }
 }

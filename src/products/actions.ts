@@ -3,23 +3,25 @@ import {
     retrieveData,
 } from '../actions';
 import * as constants from './constants';
+import { Product } from './types';
 
 export interface QueryParams {
-    category: string;
+    category: number;
     q: string;
 }
 
-
-export interface SearchProducts {
+export interface LoadProducts {
     type: constants.LOAD_PRODUCTS;
-    payload: any[];
+    payload: {
+        results: Product[];
+    };
 }
 
 export type ProductsAction = (
-    SearchProducts
+    LoadProducts
 );
 
 export const loadProducts = (queryParams?: Partial<QueryParams>) => retrieveData(
-    (token: string) => backendRetrieve('/api/products/', token, queryParams),
+    (token: string) => backendRetrieve('http://78.155.206.50/api/products/', token, queryParams),
     constants.LOAD_PRODUCTS
 );

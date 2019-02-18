@@ -14,12 +14,16 @@ import {
     faSearch,
     faCaretDown,
     faCaretUp,
+    faChevronDown,
+    faChevronUp,
+    faPrint,
 } from '@fortawesome/free-solid-svg-icons';
 
 library.add(
     faBuilding,
     faUsers,
     faFileAlt,
+    faPrint,
     faSortNumericDown,
     faMoneyBill,
     faTruck,
@@ -29,4 +33,6 @@ library.add(
     faSearch,
     faCaretDown,
     faCaretUp,
+    faChevronDown,
+    faChevronUp,
 );

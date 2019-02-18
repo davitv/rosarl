@@ -12,7 +12,8 @@ const getDefaultState = (): types.UIState => ({
     headerCallbackFormSubmittedBy: '',
     headerCallbackFormSubmittedPhone: '',
     selectedCategory: 0,
-    openCategories: []
+    openCategories: [],
+    openProducts: []
 });
 
 export const reducer = (state: types.UIState = getDefaultState(), action: UIAction) => {
@@ -28,6 +29,11 @@ export const reducer = (state: types.UIState = getDefaultState(), action: UIActi
             return {
                 ...state,
                 openCategories: addOrRemove(state.openCategories, action.payload)
+            };
+        case constants.TOGGLE_PRODUCT:
+            return {
+                ...state,
+                openProducts: addOrRemove(state.openProducts, action.payload)
             };
         case constants.SELECT_CATEGORY:
             return {

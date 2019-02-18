@@ -11,3 +11,9 @@ $container-width: $md-screen-width;
         width: 100%;
     }
 }
+
+@mixin column($width) {
+    float: left;
+    min-height: 1px;
+    width: $width;
+}

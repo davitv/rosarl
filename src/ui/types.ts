@@ -6,4 +6,5 @@ export interface UIState {
 
     selectedCategory: number;
     openCategories: number[];
+    openProducts: number[];
 }

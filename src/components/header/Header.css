@@ -3,20 +3,24 @@
 @import '../../scss/buttons';
 @import '../../scss/vars';
 
+
+$height: 60px;
+
 :local .className {
     @include clearfix;
 
-    height: 60px;
+    height: $height;
     background-color: #023466;
 }
 
-
 :local .floatLeft {
     float: left;
+    height: $height;
 }
 
 :local .floatRight {
     float: right;
+    height: $height;
 }
 
 :local .logo {
@@ -41,8 +45,6 @@
 :local .phone {
     display: block;
 }
-
-
 
 :local .navigation {
     @include clearfix;
