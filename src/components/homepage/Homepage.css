@@ -1,0 +1,18 @@
+@import '../../scss/clearfix';
+
+:local .className {
+    @include clearfix;
+}
+
+
+:local .mapWrapper {
+    float: left;
+    width: 83.33333333%;
+    height: calc(100vh - 60px);
+    background-image: url(../../assets/homepage-bg.png);
+    background-position: top;
+    background-size: 100% auto;
+    overflow-y: auto;
+    background-repeat: no-repeat;
+    background-color: hsla(0,0%,77%,.77);
+}

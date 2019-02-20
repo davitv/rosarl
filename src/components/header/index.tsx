@@ -1,20 +1,31 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { ThunkDispatch } from 'redux-thunk';
-import { Route, RouteComponentProps, withRouter } from 'react-router-dom';
 import * as types from '../../types';
 
 import { logout, AuthAction } from '../../auth/actions';
 
 import Header from './Header';
 
-export class HeaderContainer extends React.Component {
+export interface Props {
+    cartItemsAmount: number;
+}
+
+const mapStateToProps = (state: types.AppState) => ({
+    cartItemsAmount: Object.keys(state.cart.selectedItems).reduce((p, c) => p + state.cart.selectedItems[c], 0)
+});
+
+const mapDispatchToProps = (dispatch: ThunkDispatch<types.AppState, {}, any>) => ({});
+
+export class HeaderContainer extends React.Component<Props> {
 
     public render() {
         return (
-            <Header />
+            <Header
+                cartItemsAmount={this.props.cartItemsAmount}
+            />
         );
     }
 }
 
-export default connect()(HeaderContainer);
+export default connect(mapStateToProps)(HeaderContainer);

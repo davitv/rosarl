@@ -42,7 +42,7 @@ export const loadProducts = (queryParams?: Partial<QueryParams>, path='/api/prod
 );
 
 export const loadFilteringAttributes = (categoryId: number) => retrieveData(
-    (token: string) => backendRetrieve('http://78.155.206.50/api/attributes/', token, {category_id: categoryId}),
+    (token: string) => backendRetrieve('/api/attributes/', token, {category_id: categoryId}),
     constants.LOAD_FILTERING_ATTRIBUTES
 );
 

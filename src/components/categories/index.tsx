@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { RouteComponentProps } from 'react-router-dom';
+import { RouteComponentProps, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { ThunkDispatch } from 'redux-thunk';
 
@@ -62,4 +62,4 @@ export class CategoriesContainer extends React.Component<Props> {
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(CategoriesContainer);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(CategoriesContainer));

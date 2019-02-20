@@ -74,7 +74,7 @@ class CategoryItem extends React.Component<CategoryProps> {
                 )}
             >
                 <Link
-                    to={'/category/' + id + '/'}
+                    to={'/catalogue/' + id + '/'}
                     className={cn(
                         styles.link,
                         {[styles.linkSelected]: id === selectedCategoryId}

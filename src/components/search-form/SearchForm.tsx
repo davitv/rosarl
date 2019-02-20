@@ -11,6 +11,7 @@ export interface FormValues {
 
 export interface Props {
     onSubmit: (values: FormValues) => Promise<void>;
+    initialValues: FormValues;
 }
 
 export default class SearchForm extends React.Component<Props> {
@@ -18,13 +19,10 @@ export default class SearchForm extends React.Component<Props> {
         return (
             <div className={styles.className} >
                 <Formik
-                    initialValues={{
-                        keyword: ''
-                    }}
+                    initialValues={this.props.initialValues}
                     onSubmit={(values: FormValues, actions) => {
-                        this.props.onSubmit(values).then(_ => {
-                            actions.setSubmitting(false)
-                        });
+                        actions.setSubmitting(false);
+                        this.props.onSubmit(values);
                     }}
                 >
                     {(props) =>

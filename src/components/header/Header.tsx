@@ -5,11 +5,12 @@ import * as React from 'react';
 import cx from 'classnames';
 
 import { Location } from 'history';
-import { Link, NavLink, withRouter } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 import TextInput from '../form-fields/TextInput';
 import Dropdown from '../dropdown';
 
+import CallBackForm from '../callback-form';
 
 const TEXT = `
 Lorem ipsum dolor sit amet, consectetur adipisicing elit.
@@ -20,11 +21,13 @@ provident veniam, sed enim modi!
 
 const loaderURL = require('../../assets/loader-white.png');
 
-import CallBackForm from '../callback-form';
 
+export interface Props {
+    cartItemsAmount: number;
+}
 
-class Header extends React.Component {
-    constructor(props: {}) {
+class Header extends React.Component<Props> {
+    constructor(props: Props) {
         super(props);
         this.handleLogoutClick = this.handleLogoutClick.bind(this);
         this.handleLoginClick = this.handleLoginClick.bind(this);
@@ -37,12 +40,12 @@ class Header extends React.Component {
 
                 <div className={styles.logo}>
                     <h1 className={styles.title}>
-                        <a href="/" className={styles.link}>
+                        <Link to="/" className={styles.link}>
                             Росар-Л
                             <small className={styles.phone}>
                                 +7(499) 248-09-09
                             </small>
-                        </a>
+                        </Link>
                     </h1>
                 </div>
 
@@ -261,7 +264,7 @@ class Header extends React.Component {
                         <div className={styles.item}>
                             <a href="#" className={styles.navigationLink}>
                                 <span className={styles.cartInfo}>
-                                    12
+                                    {this.props.cartItemsAmount}
                                     <i className={styles.icon}>
                                         <img src={loaderURL} alt="Корзина" className={styles.loaderIconImage} />
                                     </i>

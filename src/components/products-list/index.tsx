@@ -1,6 +1,8 @@
 import * as React from 'react';
+import * as queryString from 'query-string';
 
 import { connect } from 'react-redux';
+import { withRouter, RouteComponentProps } from 'react-router-dom';
 import { ThunkDispatch } from 'redux-thunk';
 
 import * as types from '../../types';
@@ -13,16 +15,51 @@ import { addOrRemove } from '../../utils/fp';
 
 import ProductsList from './ProductsList';
 
+export interface OwnProps extends RouteComponentProps<{category: string}> {
 
-const mapStateToProps = (state: types.AppState) => ({
-    selectedCategory: parseInt((state.router.location as any).pathname.split('/')[2], 10),
-    products: state.products.products,
-    openProducts: state.ui.openProducts,
-});
+}
 
-const mapDispatchToProps = (dispatch: ThunkDispatch<types.AppState, {}, ProductsAction & UIAction>) => ({
-    load: (categoryId: number, filters?: string) => {
-        return dispatch(loadProducts({category: categoryId, attributes: filters}));
+export interface Props {
+    selectedCategory: number;
+    products: Product[];
+    openProducts: number[];
+    searchKeyword: string | undefined;
+    load: (filters?: string) => Promise<any>;
+    resetList: () => void;
+    loadNextPage: (path: string) => Promise<any>;
+    toggleProduct: (productId: number) => void;
+}
+
+const mapStateToProps = (state: types.AppState, {match: {params}, ...rest}: OwnProps) => {
+    const urlQuery = queryString.parse(rest.location.search);
+    const searchKeyword = urlQuery['q'] !== undefined ? (urlQuery['q'] as string) : undefined;
+
+    return {
+        searchKeyword,
+        selectedCategory: parseInt(params.category, 10),
+        products: state.products.products,
+        openProducts: state.ui.openProducts,
+    }
+};
+
+const mapDispatchToProps = (dispatch: ThunkDispatch<types.AppState, {}, ProductsAction & UIAction>, {match: {params}, ...rest}: OwnProps) => ({
+    load: (filters?: string) => {
+        let category: number | undefined = parseInt(params.category, 10);
+        if (isNaN(category)) {
+            category = undefined;
+        }
+        const urlQuery = queryString.parse(rest.location.search);
+        const searchQuery: Partial<{
+            category: number;
+            attributes: string;
+            q: string
+        }> = {
+            attributes: filters,
+            q: urlQuery['q'] !== undefined ? (urlQuery['q'] as string) : undefined,
+            category
+        };
+
+        return dispatch(loadProducts(searchQuery));
     },
     resetList: () => dispatch(resetProducts()),
     loadNextPage: (path: string) => {
@@ -33,16 +70,6 @@ const mapDispatchToProps = (dispatch: ThunkDispatch<types.AppState, {}, Products
     },
 });
 
-export interface Props {
-    selectedCategory: number;
-    products: Product[];
-    openProducts: number[];
-
-    load: (categoryId: number, filters?: string) => Promise<any>;
-    resetList: () => void;
-    loadNextPage: (path: string) => Promise<any>;
-    toggleProduct: (productId: number) => void;
-}
 
 export interface State {
     selectedFilters: number[];
@@ -65,13 +92,16 @@ export class ProductsListContainer extends React.Component<Props, State> {
     }
 
     componentDidMount() {
-        if (this.props.selectedCategory) {
-            this.loadProducts();
-        }
+        this.props.resetList();
+        this.loadProducts();
     }
 
     componentDidUpdate(prevProps: Props) {
         if (!isNaN(this.props.selectedCategory) && prevProps.selectedCategory !== this.props.selectedCategory) {
+            this.props.resetList();
+            this.setState({selectedFilters: []}, this.loadProducts);
+        }
+        else if (this.props.searchKeyword !== prevProps.searchKeyword) {
             this.props.resetList();
             this.setState({selectedFilters: []}, this.loadProducts);
         }
@@ -87,7 +117,7 @@ export class ProductsListContainer extends React.Component<Props, State> {
         const func = nextPage ?
             this.props.loadNextPage.bind(this, this.state.nextPage)
             :
-            this.props.load.bind(this, this.props.selectedCategory, filters)
+            this.props.load.bind(this, filters)
         ;
         func().then((res: any) => {
             this.setState({
@@ -149,4 +179,4 @@ export class ProductsListContainer extends React.Component<Props, State> {
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(ProductsListContainer);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(ProductsListContainer));
