@@ -13,7 +13,7 @@ export const history = createBrowserHostory();
 const persistedReducer = persistReducer({
     key: 'dayspot-data',
     storage,
-    whitelist: ['auth', 'ui'],
+    whitelist: ['auth', 'ui', 'cart',],
 }, reducer);
 
 

@@ -1,3 +1,4 @@
+import { Dispatch } from 'redux';
 import { retrieveData as backendRetrieve } from '../backend';
 import {
     retrieveData,
@@ -18,6 +19,10 @@ export interface LoadProducts {
     };
 }
 
+export interface ResetProducts {
+    type: constants.RESET_PRODUCTS;
+}
+
 export interface LoadFilteringAttributes {
     type: constants.LOAD_FILTERING_ATTRIBUTES;
     payload: {
@@ -27,6 +32,7 @@ export interface LoadFilteringAttributes {
 
 export type ProductsAction = (
     LoadProducts |
+    ResetProducts |
     LoadFilteringAttributes
 );
 
@@ -39,3 +45,11 @@ export const loadFilteringAttributes = (categoryId: number) => retrieveData(
     (token: string) => backendRetrieve('http://78.155.206.50/api/attributes/', token, {category_id: categoryId}),
     constants.LOAD_FILTERING_ATTRIBUTES
 );
+
+export function resetProducts() {
+    return (dispatch: Dispatch<ResetProducts>) => {
+        dispatch({
+            type: constants.RESET_PRODUCTS
+        });
+    }
+}

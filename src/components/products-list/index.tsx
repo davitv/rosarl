@@ -5,7 +5,7 @@ import { ThunkDispatch } from 'redux-thunk';
 
 import * as types from '../../types';
 
-import { loadProducts, ProductsAction } from '../../products/actions';
+import { loadProducts, resetProducts, ProductsAction } from '../../products/actions';
 import { Product } from '../../products/types';
 
 import { toggleProduct, UIAction } from '../../ui/actions';
@@ -24,6 +24,7 @@ const mapDispatchToProps = (dispatch: ThunkDispatch<types.AppState, {}, Products
     load: (categoryId: number, filters?: string) => {
         return dispatch(loadProducts({category: categoryId, attributes: filters}));
     },
+    resetList: () => dispatch(resetProducts()),
     loadNextPage: (path: string) => {
         return dispatch(loadProducts(undefined, path));
     },
@@ -38,6 +39,7 @@ export interface Props {
     openProducts: number[];
 
     load: (categoryId: number, filters?: string) => Promise<any>;
+    resetList: () => void;
     loadNextPage: (path: string) => Promise<any>;
     toggleProduct: (productId: number) => void;
 }
@@ -70,7 +72,8 @@ export class ProductsListContainer extends React.Component<Props, State> {
 
     componentDidUpdate(prevProps: Props) {
         if (prevProps.selectedCategory !== this.props.selectedCategory) {
-            this.loadProducts();
+            this.props.resetList();
+            this.setState({selectedFilters: []}, this.loadProducts);
         }
     }
 
@@ -139,6 +142,10 @@ export class ProductsListContainer extends React.Component<Props, State> {
         }, () => {
             this.loadProducts();
         });
+    }
+
+    private resetFilters() {
+        this.setState({selectedFilters: []});
     }
 }
 

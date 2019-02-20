@@ -5,7 +5,7 @@ import { FontAwesomeIcon as Icon } from '@fortawesome/react-fontawesome';
 import { Product } from '../../products/types';
 import { IMAGES_PATH_URL } from '../../products/constants';
 
-const styles = require('./ProductsList.css');
+const styles = require('./Product.css');
 
 const loaderWhiteURL = require('../../assets/loader-white.png');
 const loaderDarkURL = require('../../assets/loader-black.png');
@@ -15,19 +15,23 @@ export enum ActiveTabChoices {
     TECH_DATA
 }
 
-export interface ProductItemState {
+export interface State {
     activeTab: ActiveTabChoices;
 }
 
-export interface ProductItemProps extends Product {
+export interface Props extends Product {
     showDetails: boolean;
     selectedAttributes: number[];
+    cartAmount: number;
+    onCartIncrementClick: () => void;
+    onCartDecrementClick: () => void;
+    onCartAmountSet: (amount: number) => void;
     onTitleClick: (productId: number) => void;
     onAttributeClick: (attributeId: number) => void;
 }
 
-export default class ProductItem extends React.Component<ProductItemProps, ProductItemState> {
-    constructor(props: ProductItemProps) {
+export default class ProductComponent extends React.Component<Props, State> {
+    constructor(props: Props) {
         super(props);
         this.state = {
             activeTab: ActiveTabChoices.DESCRIPTION
@@ -36,6 +40,11 @@ export default class ProductItem extends React.Component<ProductItemProps, Produ
         this.handleTabClick = this.handleTabClick.bind(this);
         this.handleTitleClick = this.handleTitleClick.bind(this);
         this.handleAttributeButtonClick = this.handleAttributeButtonClick.bind(this);
+        this.handleIncrementButtonClick = this.handleIncrementButtonClick.bind(this);
+        this.handleDecrementButtonClick = this.handleDecrementButtonClick.bind(this);
+        this.handleAddButtonClick = this.handleAddButtonClick.bind(this);
+        this.handleInputChange = this.handleInputChange.bind(this);
+        this.handleInputClick = this.handleInputClick.bind(this);
     }
 
     public render() {
@@ -51,6 +60,7 @@ export default class ProductItem extends React.Component<ProductItemProps, Produ
             attributes,
             selectedAttributes,
             showDetails,
+            cartAmount,
             images
         } = this.props;
 
@@ -58,22 +68,26 @@ export default class ProductItem extends React.Component<ProductItemProps, Produ
             activeTab
         } = this.state;
 
+        const inCart = cartAmount > 0;
+
         return (
             <div
                 className={cn(
-                    styles.product,
-                    {[styles.productOpen]: showDetails}
+                    styles.className,
+                    {
+                        [styles.open]: showDetails,
+                        [styles.inCart]: inCart,
+                    }
                 )}
             >
                 <div
-                    className={styles.productTitle}
+                    className={styles.title}
                     onClick={this.handleTitleClick}
                 >
                     <div className={styles.w5}>
                         <img
-                            className={styles.mainPhoto}
+                            className={styles.photo}
                             src={images.length ? IMAGES_PATH_URL + images[0].image_url : undefined}
-                            alt=""
                         />
                     </div>
                     <div
@@ -133,8 +147,15 @@ export default class ProductItem extends React.Component<ProductItemProps, Produ
                         )}
                     >
                         <div className={styles.inputWrapper}>
-                            <input type="text" className={styles.input} />
+                            <input
+                                onChange={this.handleInputChange}
+                                onClick={this.handleInputClick}
+                                value={cartAmount ? cartAmount : ''}
+                                type="text"
+                                className={styles.input}
+                            />
                             <button
+                                onClick={this.handleIncrementButtonClick}
                                 className={cn(
                                     styles.btn,
                                     styles.btnIncrement
@@ -143,6 +164,7 @@ export default class ProductItem extends React.Component<ProductItemProps, Produ
                                  <Icon icon="chevron-up" />
                             </button>
                             <button
+                                onClick={this.handleDecrementButtonClick}
                                 className={cn(
                                     styles.btn,
                                     styles.btnDecrement
@@ -151,8 +173,17 @@ export default class ProductItem extends React.Component<ProductItemProps, Produ
                                  <Icon icon="chevron-down" />
                             </button>
                         </div>
-                        <button className={styles.btnAdd}>
-                            <img src={loaderDarkURL} alt="Добавить в корзину" />
+                        <button
+                            onClick={this.handleAddButtonClick}
+                            className={cn(
+                                styles.btnAdd,
+                                {[styles.btnAddActive]: inCart}
+                            )}
+                        >
+                            <img
+                                src={inCart ? loaderWhiteURL : loaderDarkURL}
+                                alt="Добавить в корзину"
+                            />
                         </button>
 
                     </div>
@@ -160,8 +191,8 @@ export default class ProductItem extends React.Component<ProductItemProps, Produ
 
                 <div
                     className={cn(
-                        styles.productDetails,
-                        {[styles.productDetailsShown]: showDetails}
+                        styles.details,
+                        {[styles.detailsShown]: showDetails}
                     )}
                 >
                     <div className={styles.tabs}>
@@ -261,5 +292,37 @@ export default class ProductItem extends React.Component<ProductItemProps, Produ
         this.props.onAttributeClick(
             parseInt(e.currentTarget.value, 10)
         );
+    }
+
+    private handleIncrementButtonClick(e: React.SyntheticEvent<HTMLButtonElement>) {
+        e.preventDefault();
+        e.stopPropagation();
+        this.props.onCartIncrementClick();
+    }
+
+    private handleDecrementButtonClick(e: React.SyntheticEvent<HTMLButtonElement>) {
+        e.preventDefault();
+        e.stopPropagation();
+        this.props.onCartDecrementClick();
+    }
+
+    private handleAddButtonClick(e: React.SyntheticEvent<HTMLButtonElement>) {
+        e.preventDefault();
+        e.stopPropagation();
+        if (this.props.cartAmount === 0) {
+            this.props.onCartIncrementClick();
+        }
+    }
+
+    private handleInputChange(e: React.SyntheticEvent<HTMLInputElement>) {
+        if (!isNaN(parseInt(e.currentTarget.value, 10))) {
+            this.props.onCartAmountSet(parseInt(e.currentTarget.value, 10));
+        }
+        if (e.currentTarget.value === '') {
+            this.props.onCartAmountSet(0);
+        }
+    }
+    private handleInputClick(e: React.SyntheticEvent<HTMLInputElement>) {
+        e.stopPropagation();
     }
 }

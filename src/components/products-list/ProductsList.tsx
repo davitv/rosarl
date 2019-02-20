@@ -1,10 +1,10 @@
 import * as React from 'react';
 import { FontAwesomeIcon as Icon } from '@fortawesome/react-fontawesome';
 
-import { Product } from '../../products/types';
+import { Product as ProductType } from '../../products/types';
 
 import ProductFilters from '../product-filters';
-import ProductItem from './ListItem';
+import Product from '../product';
 import BottomScrollListener from 'react-bottom-scroll-listener';
 
 const styles = require('./ProductsList.css');
@@ -13,7 +13,7 @@ const loaderWhiteURL = require('../../assets/loader-white.png');
 const loaderDarkURL = require('../../assets/loader-black.png');
 
 export interface Props {
-    products: Product[];
+    products: ProductType[];
     openProducts: number[];
     isLoading: boolean;
     selectedFilters: number[];
@@ -66,7 +66,7 @@ export default class ProductsList extends React.Component<Props> {
                         <div className={styles.flexBottom} ref={scrollRef} >
                             <div className={styles.listWrapper}>
                                 {this.props.products.map(p =>
-                                    <ProductItem
+                                    <Product
                                         key={p.product_id}
                                         selectedAttributes={selectedFilters}
                                         onAttributeClick={onAttributeClick}

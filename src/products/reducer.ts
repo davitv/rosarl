@@ -17,6 +17,11 @@ export const reducer = (state: types.ProductsState = getDefaultState(), action: 
                 ...state,
                 products: updateStorageItems(state.products, action.payload.results, 'product_id')
             };
+        case constants.RESET_PRODUCTS:
+            return {
+                ...state,
+                products: []
+            };
         case constants.LOAD_FILTERING_ATTRIBUTES:
             return {
                 ...state,

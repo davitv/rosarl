@@ -47,7 +47,6 @@ export function setHeaderCallbackFormSubmitted(submittedBy: string, phoneNumber:
                 submittedBy,
                 phoneNumber
             }
-
         });
     }
 }
