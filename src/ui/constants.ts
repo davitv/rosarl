@@ -13,3 +13,6 @@ export type TOGGLE_PRODUCT = typeof TOGGLE_PRODUCT;
 
 export const TOGGLE_FILTERS = 'TOGGLE_FILTERS';
 export type TOGGLE_FILTERS = typeof TOGGLE_FILTERS;
+
+export const TOGGLE_CART = 'TOGGLE_CART';
+export type TOGGLE_CART = typeof TOGGLE_CART;

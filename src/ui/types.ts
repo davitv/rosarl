@@ -5,6 +5,7 @@ export interface UIState {
     headerCallbackFormSubmittedPhone: string;
 
     isFilteringOpen: boolean;
+    isCartOpen: boolean;
 
     selectedCategory: number;
     openCategories: number[];

@@ -21,6 +21,11 @@ export interface ToggleCategory {
     payload: number;
 }
 
+export interface ToggleCart {
+    type: constants.TOGGLE_CART;
+    payload: boolean;
+}
+
 export interface ToggleProduct {
     type: constants.TOGGLE_PRODUCT;
     payload: number;
@@ -34,6 +39,7 @@ export interface ToggleFilters {
 export type UIAction = (
     SetHeaderCallbackFormSubmitted |
     ToggleCategory |
+    ToggleCart |
     ToggleProduct |
     ToggleFilters |
     SelectCategory
@@ -83,6 +89,15 @@ export function toggleProduct(productId: number) {
         dispatch({
             type: constants.TOGGLE_PRODUCT,
             payload: productId,
+        });
+    }
+}
+
+export function toggleCart(isOpen: boolean) {
+    return (dispatch: Dispatch<ToggleCart>) => {
+        dispatch({
+            type: constants.TOGGLE_CART,
+            payload: isOpen,
         });
     }
 }

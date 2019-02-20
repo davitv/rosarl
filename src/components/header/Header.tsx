@@ -24,6 +24,7 @@ const loaderURL = require('../../assets/loader-white.png');
 
 export interface Props {
     cartItemsAmount: number;
+    onCartClick: () => void;
 }
 
 class Header extends React.Component<Props> {
@@ -32,6 +33,7 @@ class Header extends React.Component<Props> {
         this.handleLogoutClick = this.handleLogoutClick.bind(this);
         this.handleLoginClick = this.handleLoginClick.bind(this);
         this.handleLoginCloseClick = this.handleLoginCloseClick.bind(this);
+        this.handleCartClick = this.handleCartClick.bind(this);
     }
 
     public render() {
@@ -262,7 +264,11 @@ class Header extends React.Component<Props> {
                         </Dropdown>
 
                         <div className={styles.item}>
-                            <a href="#" className={styles.navigationLink}>
+                            <a
+                                onClick={this.handleCartClick}
+                                href="#"
+                                className={styles.navigationLink}
+                            >
                                 <span className={styles.cartInfo}>
                                     {this.props.cartItemsAmount}
                                     <i className={styles.icon}>
@@ -295,6 +301,11 @@ class Header extends React.Component<Props> {
         if (e !== undefined) {
             e.preventDefault();
         }
+    }
+
+    private handleCartClick(e: React.SyntheticEvent<HTMLAnchorElement>) {
+        e.preventDefault();
+        this.props.onCartClick();
     }
 }
 
