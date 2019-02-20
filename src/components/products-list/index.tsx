@@ -71,7 +71,7 @@ export class ProductsListContainer extends React.Component<Props, State> {
     }
 
     componentDidUpdate(prevProps: Props) {
-        if (prevProps.selectedCategory !== this.props.selectedCategory) {
+        if (!isNaN(this.props.selectedCategory) && prevProps.selectedCategory !== this.props.selectedCategory) {
             this.props.resetList();
             this.setState({selectedFilters: []}, this.loadProducts);
         }
