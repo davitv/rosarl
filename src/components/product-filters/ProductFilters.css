@@ -55,6 +55,8 @@
 
 :local .attributesWrapper {
     display: none;
+    max-height: 40vh;
+    overflow-y: auto;
 }
 
 :local .attributesWrapperOpen {

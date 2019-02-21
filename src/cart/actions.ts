@@ -1,7 +1,12 @@
 import { Dispatch } from 'redux';
 
+import { retrieveData as backendRetrieve } from '../backend';
+import {
+    retrieveData,
+} from '../actions';
+
 import * as constants from './constants';
-import * as types from '../types';
+import * as types from './types';
 
 export interface IncrementCartItem {
     type: constants.INCREMENT_CART_ITEM;
@@ -11,6 +16,14 @@ export interface IncrementCartItem {
 export interface DecrementCartItem {
     type: constants.DECREMENT_CART_ITEM;
     payload: number;
+}
+
+
+export interface LoadCartProducts {
+    type: constants.LOAD_CART_PRODUCTS;
+    payload: {
+        results: types.CartProduct[];
+    };
 }
 
 export interface SetCartItemAmount {
@@ -24,8 +37,16 @@ export interface SetCartItemAmount {
 export type CartAction = (
     IncrementCartItem |
     SetCartItemAmount |
+    LoadCartProducts |
     DecrementCartItem
 );
+
+
+export const loadCartProducts = (ids: number[], path='/api/cart/products/') => retrieveData(
+    (token: string) => backendRetrieve(path, token, {idx: ids.join(',')}),
+    constants.LOAD_CART_PRODUCTS
+);
+
 
 export function increment(itemId: number) {
     return (dispatch: Dispatch<IncrementCartItem>) => {

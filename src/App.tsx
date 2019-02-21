@@ -7,12 +7,14 @@ import './icons';
 import Header from './components/header';
 import Homepage from './components/homepage';
 import Catalogue from './components/catalogue';
+import Cart from './components/cart';
 
 class App extends React.Component {
   public render() {
     return (
       <div >
         <Header />
+        <Cart />
         <Route
             path='/'
             exact={true}

@@ -1,0 +1,74 @@
+@import '../../scss/buttons';
+@import '../../scss/clearfix';
+
+
+:local .className {
+    position: fixed;
+    top: 60px;
+    width: 637px;
+    height: calc(100vh - 60px);
+    right: 0;
+    z-index: 9;
+    overflow: hidden;
+    background: #f7f7f7;
+    box-shadow: 0 3px 3px #8c8b8b;
+    transition: right .7s;
+}
+
+:local .collapsed {
+    right: -637px;
+}
+
+
+:local .productsList {
+    padding: 10px;
+}
+
+:local .product {
+    @include clearfix;
+    border-bottom: 1px solid #ccc;
+}
+
+:local .removeWrapper {
+    float: left;
+    padding: 13px 10px;
+}
+
+:local .btnRemove {
+    @include resetButtonStyles();
+}
+
+:local .photoWrapper {
+    float: left;
+    padding: 10px;
+
+}
+
+:local .photo {
+    float: left;
+    width: 30px;
+    max-height: 30px;
+}
+
+:local .nameWrapper {
+    float: left;
+    width: 320px;
+
+    overflow-x: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+
+    padding: 13px 10px;
+}
+
+
+:local .cartInputWrapper {
+    float: right;
+    padding: 2px 0 0 0;
+}
+
+:local .priceWrapper {
+    float: right;
+    padding: 13px 10px;
+
+}

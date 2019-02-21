@@ -9,6 +9,7 @@ import { CartAction } from './actions';
 
 const getDefaultState = (): types.CartState => ({
     selectedItems: {},
+    products: [],
 });
 
 export const reducer = (state: types.CartState = getDefaultState(), action: CartAction) => {

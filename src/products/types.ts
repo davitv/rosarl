@@ -5,6 +5,13 @@ export interface Photo {
     product: number;
 }
 
+export interface CartProduct {
+    product_id: number;
+    name: string;
+    price: number;
+    images: Photo[];
+}
+
 export interface Attribute {
     id: number;
     name: string;

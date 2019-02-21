@@ -5,6 +5,8 @@ import { FontAwesomeIcon as Icon } from '@fortawesome/react-fontawesome';
 import { Product } from '../../products/types';
 import { IMAGES_PATH_URL } from '../../products/constants';
 
+import CartInput from '../cart-input';
+
 const styles = require('./Product.css');
 
 const loaderWhiteURL = require('../../assets/loader-white.png');
@@ -49,6 +51,7 @@ export default class ProductComponent extends React.Component<Props, State> {
 
     public render() {
         const {
+            product_id,
             article,
             name,
             description,
@@ -146,46 +149,7 @@ export default class ProductComponent extends React.Component<Props, State> {
                             styles.cartConrols,
                         )}
                     >
-                        <div className={styles.inputWrapper}>
-                            <input
-                                onChange={this.handleInputChange}
-                                onClick={this.handleInputClick}
-                                value={cartAmount ? cartAmount : ''}
-                                type="text"
-                                className={styles.input}
-                            />
-                            <button
-                                onClick={this.handleIncrementButtonClick}
-                                className={cn(
-                                    styles.btn,
-                                    styles.btnIncrement
-                                )}
-                            >
-                                 <Icon icon="chevron-up" />
-                            </button>
-                            <button
-                                onClick={this.handleDecrementButtonClick}
-                                className={cn(
-                                    styles.btn,
-                                    styles.btnDecrement
-                                )}
-                            >
-                                 <Icon icon="chevron-down" />
-                            </button>
-                        </div>
-                        <button
-                            onClick={this.handleAddButtonClick}
-                            className={cn(
-                                styles.btnAdd,
-                                {[styles.btnAddActive]: inCart}
-                            )}
-                        >
-                            <img
-                                src={inCart ? loaderWhiteURL : loaderDarkURL}
-                                alt="Добавить в корзину"
-                            />
-                        </button>
-
+                        <CartInput productId={product_id} />
                     </div>
                 </div>
 
