@@ -1,6 +1,7 @@
 import { Dispatch } from 'redux';
 
 import * as constants from './constants';
+import * as types from './types';
 
 
 export interface SetHeaderCallbackFormSubmitted {
@@ -36,10 +37,21 @@ export interface ToggleFilters {
     payload: boolean;
 }
 
+export interface ToggleFilters {
+    type: constants.TOGGLE_FILTERS;
+    payload: boolean;
+}
+
+export interface SetCart {
+    type: constants.SET_CART;
+    payload: types.CartState;
+}
+
 export type UIAction = (
     SetHeaderCallbackFormSubmitted |
     ToggleCategory |
     ToggleCart |
+    SetCart |
     ToggleProduct |
     ToggleFilters |
     SelectCategory

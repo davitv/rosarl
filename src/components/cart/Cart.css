@@ -22,6 +22,8 @@
 
 :local .productsList {
     padding: 10px;
+    height: calc(100% - 70px);
+    overflow-y: auto;
 }
 
 :local .product {
@@ -52,7 +54,7 @@
 
 :local .nameWrapper {
     float: left;
-    width: 320px;
+    width: 300px;
 
     overflow-x: hidden;
     white-space: nowrap;
@@ -70,5 +72,54 @@
 :local .priceWrapper {
     float: right;
     padding: 13px 10px;
+    width: 130px;
+    overflow-x: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
 
+:local .tabButton {
+    @include resetButtonStyles();
+    padding: 4px 7px;
+    width: 25%;
+    position: relative;
+    background: #023466;
+    text-align: center;
+    border-right: 2px solid #fff;
+    border-top: 1px solid #fff;
+    color: #fff;
+}
+
+:local .tabButtonDisabled {
+    color: #5d5d5d;
+}
+
+:local .tabButtonActive {
+    background-color: #f7f7f7;
+    color: #023466;
+}
+
+
+:local .totals {
+    @include clearfix;
+    padding: 10px 15px;
+    border-top: solid 1px #ccc;
+}
+
+:local .button {
+    @include resetButtonStyles();
+    color: #fff;
+    border: 1px solid #46b8da;
+    padding: 1px 5px;
+    font-size: 12px;
+    vertical-align: middle;
+    cursor: pointer;
+    background: #3d5165 none;
+    padding: 4px 7px;
+}
+:local .hidden {
+    display: none;
+}
+:local .floatRight {
+    float: right;
 }

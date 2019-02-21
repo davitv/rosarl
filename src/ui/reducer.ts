@@ -10,6 +10,7 @@ import { UIAction } from './actions';
 const getDefaultState = (): types.UIState => ({
     isHeaderCallbackFormSubmitted: false,
     isCartOpen: false,
+    cartState: types.CartState.productsList,
     headerCallbackFormSubmittedBy: '',
     headerCallbackFormSubmittedPhone: '',
     selectedCategory: 0,
@@ -36,6 +37,11 @@ export const reducer = (state: types.UIState = getDefaultState(), action: UIActi
             return {
                 ...state,
                 isFilteringOpen: action.payload
+            };
+        case constants.SET_CART:
+            return {
+                ...state,
+                cartState: action.payload
             };
         case constants.TOGGLE_PRODUCT:
             return {

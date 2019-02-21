@@ -16,3 +16,6 @@ export type TOGGLE_FILTERS = typeof TOGGLE_FILTERS;
 
 export const TOGGLE_CART = 'TOGGLE_CART';
 export type TOGGLE_CART = typeof TOGGLE_CART;
+
+export const SET_CART = 'SET_CART';
+export type SET_CART = typeof SET_CART;

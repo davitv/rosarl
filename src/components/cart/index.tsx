@@ -6,6 +6,7 @@ import { CartProduct } from '../../cart/types';
 import { loadCartProducts, setAmount, CartAction } from '../../cart/actions';
 import { updateStorageItems } from '../../utils/fp';
 import { Product as ProductInterface } from '../../products/types';
+import { CartState } from '../../ui/types';
 
 import * as types from '../../types';
 
@@ -13,6 +14,7 @@ import Cart from './Cart';
 
 const mapStateToProps = (state: types.AppState) => ({
     isOpen: state.ui.isCartOpen,
+    cartState: state.ui.cartState,
     selectedProducts: state.cart.selectedItems,
     products: Object.keys(state.cart.selectedItems).map(k => {
         return state.products.products.filter(p => p.product_id == parseInt(k, 10))
@@ -34,6 +36,7 @@ export interface Props {
     isOpen: boolean;
     selectedProducts: {[key: string]: number};
     products: CartProduct[];
+    cartState: CartState;
     removeFromCart: (productId: number) => void;
     loadProducts: (ids: number[]) => Promise<CartProduct[]>;
 }
@@ -72,6 +75,7 @@ export class CartContainer extends React.Component<Props, State> {
 
         return (
             <Cart
+                cartState={this.props.cartState}
                 onRemoveClick={this.props.removeFromCart}
                 products={products}
                 isOpen={isOpen}

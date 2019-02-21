@@ -2,6 +2,8 @@ import * as React from 'react';
 import cn from 'classnames';
 import { FontAwesomeIcon as Icon } from '@fortawesome/react-fontawesome';
 
+import { CartState } from '../../ui/types';
+
 import CartInput from '../cart-input';
 
 import { IMAGES_PATH_URL } from '../../products/constants';
@@ -10,6 +12,7 @@ const styles = require('./Cart.css');
 
 export interface Props {
     isOpen: boolean;
+    cartState: CartState;
     onRemoveClick: (productId: number) => void;
     products: {
         product_id: number;
@@ -29,9 +32,10 @@ export default class Cart extends React.Component<Props> {
     public render() {
         const {
             isOpen,
+            cartState,
             products,
         } = this.props;
-
+        console.log(cartState, CartState.productsList);
         return (
             <div
                 className={cn(
@@ -39,7 +43,54 @@ export default class Cart extends React.Component<Props> {
                     {[styles.collapsed]: !isOpen}
                 )}
             >
-                <div className={styles.productsList}>
+                <div className={styles.tabs}>
+                    <button
+                        type="button"
+                        className={cn(
+                            styles.tabButton,
+                            {[styles.tabButtonActive]: cartState === CartState.productsList}
+                        )}
+                    >
+                        Корзина
+                    </button>
+                    <button
+                        type="button"
+                        className={cn(
+                            styles.tabButton,
+                            {[styles.tabButtonActive]: cartState === CartState.deliveryMethod}
+                        )}
+                    >
+                        Способ получения
+                    </button>
+                    <button
+                        type="button"
+
+                        className={cn(
+                            styles.tabButton,
+                            {[styles.tabButtonActive]: cartState === CartState.form},
+                        )}
+                    >
+                        Оформление
+                    </button>
+                    <button
+                        type="button"
+                        disabled={cartState !== CartState.result}
+                        className={cn(
+                            styles.tabButton,
+                            {[styles.tabButtonDisabled]: cartState !== CartState.result},
+                            {[styles.tabButtonActive]: cartState === CartState.result}
+                        )}
+                    >
+                        Результат
+                    </button>
+                </div>
+
+                <div
+                    className={cn(
+                        styles.productsList,
+                        {[styles.hidden]: cartState !== CartState.productsList}
+                    )}
+                >
                     {products.map(product =>
                         <div
                             className={styles.product}
@@ -78,6 +129,59 @@ export default class Cart extends React.Component<Props> {
                     )}
                 </div>
 
+                <div
+                    className={cn(
+                        styles.deliveryMethod,
+                        {[styles.hidden]: cartState !== CartState.deliveryMethod}
+                    )}
+                >
+                    {products.map(product =>
+                        <div
+                            className={styles.product}
+                            key={product.product_id}
+                        >
+                            <div className={styles.removeWrapper}>
+                                <button
+                                     type="button"
+                                     onClick={this.handleRemoveButtonClick}
+                                     value={product.product_id}
+                                     className={styles.btnRemove}
+                                >
+                                    <Icon icon="times" />
+                                </button>
+                            </div>
+
+                            <div className={styles.photoWrapper}>
+                                <img
+                                    className={styles.photo}
+                                    src={product.images.length ? IMAGES_PATH_URL + product.images[0] : undefined}
+                                />
+                            </div>
+
+                            <div className={styles.nameWrapper}>
+                                {product.name}
+                            </div>
+
+                            <div className={styles.cartInputWrapper}>
+                                <CartInput productId={product.product_id} />
+                            </div>
+
+                            <div className={styles.priceWrapper}>
+                                {(product.price * product.amount).toFixed(2)} Руб.
+                            </div>
+                        </div>
+                    )}
+                </div>
+
+                <div className={styles.totals}>
+                    Общая стоимость товаров: {products.reduce((p, c) => p + (c.price * c.amount), 0).toFixed(2)} Руб.
+                    <button
+                        type="button"
+                        className={cn(styles.button, styles.floatRight)}
+                    >
+                        Далее
+                    </button>
+                </div>
             </div>
         );
     }
