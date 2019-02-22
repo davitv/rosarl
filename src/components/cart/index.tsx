@@ -6,11 +6,13 @@ import { CartProduct } from '../../cart/types';
 import { loadCartProducts, setAmount, CartAction } from '../../cart/actions';
 import { updateStorageItems } from '../../utils/fp';
 import { Product as ProductInterface } from '../../products/types';
-import { CartState } from '../../ui/types';
+import {  CartState } from '../../ui/types';
+import {  setCart, UIAction } from '../../ui/actions';
 
 import * as types from '../../types';
 
 import Cart from './Cart';
+
 
 const mapStateToProps = (state: types.AppState) => ({
     isOpen: state.ui.isCartOpen,
@@ -27,8 +29,9 @@ const mapStateToProps = (state: types.AppState) => ({
 });
 
 
-const mapDispatchToProps = (dispatch: ThunkDispatch<types.AppState, {}, CartAction>) => ({
+const mapDispatchToProps = (dispatch: ThunkDispatch<types.AppState, {}, CartAction & UIAction>) => ({
     loadProducts: (ids: number[]) => dispatch(loadCartProducts(ids)),
+    setCartState: (state: CartState) => dispatch(setCart(state)),
     removeFromCart: (productId: number) => dispatch(setAmount(productId, 0)),
 });
 
@@ -37,6 +40,7 @@ export interface Props {
     selectedProducts: {[key: string]: number};
     products: CartProduct[];
     cartState: CartState;
+    setCartState: (state: CartState) => void;
     removeFromCart: (productId: number) => void;
     loadProducts: (ids: number[]) => Promise<CartProduct[]>;
 }
@@ -63,6 +67,7 @@ export class CartContainer extends React.Component<Props, State> {
     public render() {
         const {
             isOpen,
+            setCartState,
             selectedProducts,
         } = this.props;
 
@@ -76,6 +81,7 @@ export class CartContainer extends React.Component<Props, State> {
         return (
             <Cart
                 cartState={this.props.cartState}
+                onCartStateButtonClick={setCartState}
                 onRemoveClick={this.props.removeFromCart}
                 products={products}
                 isOpen={isOpen}

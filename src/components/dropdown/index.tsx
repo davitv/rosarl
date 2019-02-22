@@ -81,7 +81,6 @@ class Dropdown extends React.Component<DropdownProps, DropdownState> {
 
             if (this.state.isOpen) {
                 if (this.props.isContentToggling) {
-                    console.error('j')
                     this.setState({isOpen: false});
                 } else if (node !== findDOMNode(this.contentRef) && !this.allParents(e.target, findDOMNode(this.contentRef))) {
                     this.setState({isOpen: false});

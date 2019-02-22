@@ -13,7 +13,6 @@ const styles = require('./Cart.css');
 export interface Props {
     isOpen: boolean;
     cartState: CartState;
-    onRemoveClick: (productId: number) => void;
     products: {
         product_id: number;
         name: string;
@@ -21,12 +20,16 @@ export interface Props {
         price: number;
         amount: number;
     }[];
+
+    onRemoveClick: (productId: number) => void;
+    onCartStateButtonClick: (state: CartState) => void;
 }
 
 export default class Cart extends React.Component<Props> {
     constructor(props: Props) {
         super(props);
         this.handleRemoveButtonClick = this.handleRemoveButtonClick.bind(this);
+        this.handleCartStateButtonClick = this.handleCartStateButtonClick.bind(this);
     }
 
     public render() {
@@ -35,7 +38,7 @@ export default class Cart extends React.Component<Props> {
             cartState,
             products,
         } = this.props;
-        console.log(cartState, CartState.productsList);
+
         return (
             <div
                 className={cn(
@@ -46,6 +49,8 @@ export default class Cart extends React.Component<Props> {
                 <div className={styles.tabs}>
                     <button
                         type="button"
+                        value={CartState.productsList}
+                        onClick={this.handleCartStateButtonClick}
                         className={cn(
                             styles.tabButton,
                             {[styles.tabButtonActive]: cartState === CartState.productsList}
@@ -55,6 +60,8 @@ export default class Cart extends React.Component<Props> {
                     </button>
                     <button
                         type="button"
+                        value={CartState.deliveryMethod}
+                        onClick={this.handleCartStateButtonClick}
                         className={cn(
                             styles.tabButton,
                             {[styles.tabButtonActive]: cartState === CartState.deliveryMethod}
@@ -64,7 +71,8 @@ export default class Cart extends React.Component<Props> {
                     </button>
                     <button
                         type="button"
-
+                        value={CartState.form}
+                        onClick={this.handleCartStateButtonClick}
                         className={cn(
                             styles.tabButton,
                             {[styles.tabButtonActive]: cartState === CartState.form},
@@ -128,52 +136,12 @@ export default class Cart extends React.Component<Props> {
                         </div>
                     )}
                 </div>
-
                 <div
                     className={cn(
-                        styles.deliveryMethod,
-                        {[styles.hidden]: cartState !== CartState.deliveryMethod}
+                        styles.totals,
+                        {[styles.hidden]: cartState !== CartState.productsList}
                     )}
                 >
-                    {products.map(product =>
-                        <div
-                            className={styles.product}
-                            key={product.product_id}
-                        >
-                            <div className={styles.removeWrapper}>
-                                <button
-                                     type="button"
-                                     onClick={this.handleRemoveButtonClick}
-                                     value={product.product_id}
-                                     className={styles.btnRemove}
-                                >
-                                    <Icon icon="times" />
-                                </button>
-                            </div>
-
-                            <div className={styles.photoWrapper}>
-                                <img
-                                    className={styles.photo}
-                                    src={product.images.length ? IMAGES_PATH_URL + product.images[0] : undefined}
-                                />
-                            </div>
-
-                            <div className={styles.nameWrapper}>
-                                {product.name}
-                            </div>
-
-                            <div className={styles.cartInputWrapper}>
-                                <CartInput productId={product.product_id} />
-                            </div>
-
-                            <div className={styles.priceWrapper}>
-                                {(product.price * product.amount).toFixed(2)} Руб.
-                            </div>
-                        </div>
-                    )}
-                </div>
-
-                <div className={styles.totals}>
                     Общая стоимость товаров: {products.reduce((p, c) => p + (c.price * c.amount), 0).toFixed(2)} Руб.
                     <button
                         type="button"
@@ -182,6 +150,30 @@ export default class Cart extends React.Component<Props> {
                         Далее
                     </button>
                 </div>
+
+                <div
+                    className={cn(
+                        styles.deliveryMethod,
+                        {[styles.hidden]: cartState !== CartState.deliveryMethod}
+                    )}
+                >
+                    <div className={styles.methodsTabs}>
+                        <button
+                            type="button"
+                            className={styles.methodChoice}
+                        >
+                            <Icon icon="truck" />
+                        </button>
+                        <button
+                            type="button"
+                            className={styles.methodChoice}
+                        >
+                            <Icon icon="globe-americas" />
+                        </button>
+                    </div>
+                </div>
+
+
             </div>
         );
     }
@@ -189,5 +181,11 @@ export default class Cart extends React.Component<Props> {
     private handleRemoveButtonClick(e: React.SyntheticEvent<HTMLButtonElement>) {
         e.preventDefault();
         this.props.onRemoveClick(parseInt(e.currentTarget.value, 10));
+    }
+
+    private handleCartStateButtonClick(e: React.SyntheticEvent<HTMLButtonElement>) {
+        e.preventDefault();
+        const nextState = parseInt(e.currentTarget.value, 10);
+        this.props.onCartStateButtonClick(nextState);
     }
 }

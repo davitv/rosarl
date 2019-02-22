@@ -57,6 +57,15 @@ export type UIAction = (
     SelectCategory
 );
 
+export function setCart(state: types.CartState) {
+    return (dispatch: Dispatch<SetCart>) => {
+        dispatch({
+            type: constants.SET_CART,
+            payload: state
+        });
+    }
+}
+
 export function setHeaderCallbackFormSubmitted(submittedBy: string, phoneNumber: string) {
     return (dispatch: Dispatch<SetHeaderCallbackFormSubmitted>) => {
         dispatch({
