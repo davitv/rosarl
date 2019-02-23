@@ -117,9 +117,14 @@
     background: #3d5165 none;
     padding: 4px 7px;
 }
+
 :local .hidden {
     display: none;
 }
 :local .floatRight {
     float: right;
+}
+
+:local .deliveryMethod {
+    padding: 15px;
 }

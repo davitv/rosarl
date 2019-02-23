@@ -6,6 +6,12 @@ export enum CartState {
     result,
 }
 
+export enum DeliveryMethod {
+    MOSCOW = 0,
+    RUSSIA,
+    PICKUP
+}
+
 export interface UIState {
     isHeaderCallbackFormSubmitted: boolean;
     headerCallbackFormSubmittedBy: string;
@@ -13,7 +19,6 @@ export interface UIState {
     cartState: CartState;
     isFilteringOpen: boolean;
     isCartOpen: boolean;
-
     selectedCategory: number;
     openCategories: number[];
     openProducts: number[];

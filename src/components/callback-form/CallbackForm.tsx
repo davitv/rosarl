@@ -6,6 +6,7 @@ import { Formik, Field, FormikErrors, FormikActions } from 'formik';
 import TextInput from '../text-input';
 import UniqueID from '../unique-id';
 import { FontAwesomeIcon as Icon } from '@fortawesome/react-fontawesome';
+
 export interface FormValues {
     name: string;
     phone: string;

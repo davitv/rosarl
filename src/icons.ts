@@ -18,8 +18,8 @@ import {
     faChevronUp,
     faPrint,
     faTimes,
-    faGlobe,
     faGlobeAmericas,
+    faUser,
 } from '@fortawesome/free-solid-svg-icons';
 
 library.add(
@@ -39,6 +39,6 @@ library.add(
     faCaretUp,
     faChevronDown,
     faChevronUp,
-    faGlobe,
     faGlobeAmericas,
+    faUser,
 );

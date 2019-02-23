@@ -5,6 +5,7 @@ import { FontAwesomeIcon as Icon } from '@fortawesome/react-fontawesome';
 import { CartState } from '../../ui/types';
 
 import CartInput from '../cart-input';
+import DeliveryForm from '../delivery-form';
 
 import { IMAGES_PATH_URL } from '../../products/constants';
 
@@ -157,20 +158,8 @@ export default class Cart extends React.Component<Props> {
                         {[styles.hidden]: cartState !== CartState.deliveryMethod}
                     )}
                 >
-                    <div className={styles.methodsTabs}>
-                        <button
-                            type="button"
-                            className={styles.methodChoice}
-                        >
-                            <Icon icon="truck" />
-                        </button>
-                        <button
-                            type="button"
-                            className={styles.methodChoice}
-                        >
-                            <Icon icon="globe-americas" />
-                        </button>
-                    </div>
+
+                    <DeliveryForm />
                 </div>
 
 
