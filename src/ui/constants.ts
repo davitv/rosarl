@@ -19,3 +19,6 @@ export type TOGGLE_CART = typeof TOGGLE_CART;
 
 export const SET_CART = 'SET_CART';
 export type SET_CART = typeof SET_CART;
+
+export const LOAD_COMPANY_INFO = 'LOAD_COMPANY_INFO';
+export type LOAD_COMPANY_INFO = typeof LOAD_COMPANY_INFO;

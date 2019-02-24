@@ -16,7 +16,23 @@ const getDefaultState = (): types.UIState => ({
     selectedCategory: 0,
     isFilteringOpen: false,
     openCategories: [],
-    openProducts: []
+    openProducts: [],
+    companyInfo: {
+        about: '',
+        contacts: {
+            address: '',
+            managers: [],
+            route: '',
+            routeScheme: '',
+            textAfter: '',
+            textBefore: '',
+            warehouseAddress: '',
+        },
+        payment: {
+            image_url: '',
+            text: '',
+        }
+    }
 });
 
 export const reducer = (state: types.UIState = getDefaultState(), action: UIAction) => {
@@ -32,6 +48,11 @@ export const reducer = (state: types.UIState = getDefaultState(), action: UIActi
             return {
                 ...state,
                 openCategories: addOrRemove(state.openCategories, action.payload)
+            };
+        case constants.LOAD_COMPANY_INFO:
+            return {
+                ...state,
+                companyInfo: action.payload
             };
         case constants.TOGGLE_FILTERS:
             return {

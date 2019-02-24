@@ -5,6 +5,8 @@ import { Formik, Field, FormikErrors, FormikActions } from 'formik';
 
 import { FontAwesomeIcon as Icon } from '@fortawesome/react-fontawesome';
 
+import { IMAGES_PATH_URL } from '../../products/constants';
+
 import TextInput from '../text-input';
 import SelectInput from '../select-input';
 import UniqueID from '../unique-id';
@@ -27,21 +29,29 @@ export interface FormValues {
     city: string;
 
     // Russia delivery only
-    carrier: number;
+    carrier: string;
 }
 
 export interface Props {
+    warehouseAddress: string;
+    warehouseImageURL: string;
     onSubmit: (values: FormValues) => Promise<void>;
 }
 
 export default class DeliveryForm extends React.Component<Props> {
     public render() {
+        const {
+            warehouseAddress,
+            warehouseImageURL,
+        } = this.props;
+
         return (
             <div className={styles.className}>
 
                 <Formik
                     initialValues={{
                         method: DeliveryMethod.MOSCOW,
+                        carrier: '',
                         phone: '',
                     }}
                     onSubmit={(values: FormValues, actions: FormikActions<FormValues>) => {
@@ -65,6 +75,26 @@ export default class DeliveryForm extends React.Component<Props> {
                     }}
                     validate={(values: Partial<FormValues>) => {
                         const err: FormikErrors<FormValues> = {};
+                        if (values.method === DeliveryMethod.PICKUP) {
+                            return err;
+                        }
+
+                        if (!values.full_name) {
+                            err.full_name = 'Введите имя';
+                        }
+
+                        if (!values.phone) {
+                            err.phone = 'Введите номер телефона';
+                        }
+
+                        if (!values.address) {
+                            err.address = 'Введите адрес';
+                        }
+
+                        if (!values.city) {
+                            err.city = 'Введите город';
+                        }
+
                         return err;
                     }}
                 >
@@ -76,6 +106,7 @@ export default class DeliveryForm extends React.Component<Props> {
                         error,
                         isSubmitting,
                         setFieldValue,
+                        isValid,
                         values,
                     }) =>
                         <form
@@ -126,6 +157,7 @@ export default class DeliveryForm extends React.Component<Props> {
 
                             <div
                                 className={cn(
+                                    styles.formFieldsWrapper,
                                     {[styles.hidden]: values.method === DeliveryMethod.PICKUP}
                                 )}
                             >
@@ -133,7 +165,12 @@ export default class DeliveryForm extends React.Component<Props> {
                                     <div className={styles.column50}>
                                         <UniqueID>
                                         {(id) =>
-                                            <div className={styles.field}>
+                                            <div
+                                                className={cn(
+                                                    styles.field,
+                                                    {[styles.hasError]: errors.full_name && touched.full_name}
+                                                )}
+                                            >
                                                 <label htmlFor={id}>ФИО получателя</label>
                                                 <Field
                                                     id={id}
@@ -154,7 +191,12 @@ export default class DeliveryForm extends React.Component<Props> {
                                     <div className={styles.column50}>
                                         <UniqueID>
                                         {(id) =>
-                                            <div className={styles.field}>
+                                            <div
+                                                className={cn(
+                                                    styles.field,
+                                                    {[styles.hasError]: errors.phone && touched.phone}
+                                                )}
+                                            >
                                                 <label htmlFor={id}>Телефон</label>
                                                 <Field
                                                     id={id}
@@ -177,7 +219,12 @@ export default class DeliveryForm extends React.Component<Props> {
                                     <div className={styles.column50}>
                                         <UniqueID>
                                         {(id) =>
-                                            <div className={styles.field}>
+                                            <div
+                                                className={cn(
+                                                    styles.field,
+                                                    {[styles.hasError]: errors.address && touched.address}
+                                                )}
+                                            >
                                                 <label htmlFor={id}>Адрес</label>
                                                 <Field
                                                     id={id}
@@ -198,7 +245,12 @@ export default class DeliveryForm extends React.Component<Props> {
                                     <div className={styles.column50}>
                                         <UniqueID>
                                         {(id) =>
-                                            <div className={styles.field}>
+                                            <div
+                                                className={cn(
+                                                    styles.field,
+                                                    {[styles.hasError]: errors.city && touched.city}
+                                                )}
+                                            >
                                                 <label htmlFor={id}>Город</label>
                                                 <Field
                                                     id={id}
@@ -222,26 +274,38 @@ export default class DeliveryForm extends React.Component<Props> {
                                     <div
                                         className={cn(
                                             styles.field,
-                                            {[styles.hidden]: values.method !== DeliveryMethod.RUSSIA}
+                                            {
+                                                [styles.hidden]: values.method !== DeliveryMethod.RUSSIA,
+                                                [styles.hasError]: errors.carrier && touched.carrier
+                                            }
                                         )}
                                     >
                                         <label htmlFor={id}>Транспортная компания</label>
                                         <Field
                                             id={id}
-                                            name="city"
-                                            options={[['1', 'Пуп-перевозчик'], ['2', 'Морковь-сити'], ]}
+                                            name="carrier"
+                                            placeholder="Выберите транспортную компанию"
+                                            options={[ ['1', 'Пуп-перевозчик'], ['2', 'Морковь-сити'], ]}
                                             component={SelectInput}
                                         />
-                                        {errors.city && touched.city &&
+                                        {errors.carrier && touched.carrier &&
                                             <div
                                                 className={styles.fieldError}
                                             >
-                                                {errors.city}
+                                                {errors.carrier}
                                             </div>
                                         }
                                     </div>
                                 }
                                 </UniqueID>
+                            </div>
+                            <div
+                                className={cn(
+                                    {[styles.hidden]: values.method !== DeliveryMethod.PICKUP}
+                                )}
+                            >
+                                <p>{warehouseAddress}</p>
+                                <p><img src={IMAGES_PATH_URL + warehouseImageURL} /></p>
                             </div>
                             {status &&
                                 <div className={styles.error}>
@@ -251,7 +315,7 @@ export default class DeliveryForm extends React.Component<Props> {
                             <button
                                 className={styles.buttonSubmit}
                                 type="submit"
-                                disabled={isSubmitting}
+                                disabled={isSubmitting || !isValid}
                             >
                                 {isSubmitting ?
                                     <span>

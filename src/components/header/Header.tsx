@@ -6,6 +6,7 @@ import cx from 'classnames';
 
 import { Location } from 'history';
 import { Link } from 'react-router-dom';
+import { IMAGES_PATH_URL } from '../../products/constants';
 
 import TextInput from '../form-fields/TextInput';
 import Dropdown from '../dropdown';
@@ -24,6 +25,20 @@ const loaderURL = require('../../assets/loader-white.png');
 
 export interface Props {
     cartItemsAmount: number;
+    aboutText: string;
+    paymentText: string;
+    paymentImageURL: string;
+
+    contacts: {
+        address: string;
+        managers: [string, string][];
+        route: string;
+        routeScheme: string;
+        textAfter: string;
+        textBefore: string;
+        warehouseAddress: string;
+    };
+
     onCartClick: () => void;
 }
 
@@ -37,6 +52,14 @@ class Header extends React.Component<Props> {
     }
 
     public render() {
+        const {
+            aboutText,
+            paymentText,
+            contacts,
+        } = this.props;
+        const about = aboutText.split('\r\n');
+        const payment = paymentText.split('\r\n');
+
         return (
             <div className={styles.className}>
 
@@ -72,7 +95,15 @@ class Header extends React.Component<Props> {
                                         ref={contentRef}
                                     >
                                         <div className={styles.dropdownContent}>
-                                            Hey!
+                                            <p>
+                                                <button
+                                                    type="button"
+                                                    className={styles.btnPrint}
+                                                >
+                                                    <Icon icon="print" />
+                                                </button>
+                                            </p>
+                                            {about.map((text, index) => <p key={index}>{text}</p>)}
                                         </div>
                                     </div>
                                 </div>
@@ -96,9 +127,7 @@ class Header extends React.Component<Props> {
                                         )}
                                         ref={contentRef}
                                     >
-                                        <div className={styles.dropdownContent}>
-                                            You!
-                                        </div>
+                                        <div className={styles.dropdownContent} />
                                     </div>
                                 </div>
                             }
@@ -121,9 +150,7 @@ class Header extends React.Component<Props> {
                                         )}
                                         ref={contentRef}
                                     >
-                                        <div className={styles.dropdownContent}>
-                                            See
-                                        </div>
+                                        <div className={styles.dropdownContent} />
                                     </div>
                                 </div>
                             }
@@ -147,9 +174,7 @@ class Header extends React.Component<Props> {
                                         )}
                                         ref={contentRef}
                                     >
-                                        <div className={styles.dropdownContent}>
-                                            me
-                                        </div>
+                                        <div className={styles.dropdownContent} />
                                     </div>
                                 </div>
                             }
@@ -174,7 +199,15 @@ class Header extends React.Component<Props> {
                                         ref={contentRef}
                                     >
                                         <div className={styles.dropdownContent}>
-                                            Pictures
+                                            <p>
+                                                <button
+                                                    type="button"
+                                                    className={styles.btnPrint}
+                                                >
+                                                    <Icon icon="print" />
+                                                </button>
+                                            </p>
+                                            {payment.map((text, index) => <p key={index}>{text}</p>)}
                                         </div>
                                     </div>
                                 </div>
@@ -198,9 +231,7 @@ class Header extends React.Component<Props> {
                                         )}
                                         ref={contentRef}
                                     >
-                                        <div className={styles.dropdownContent}>
-                                            crazy
-                                        </div>
+                                        <div className={styles.dropdownContent} />
                                     </div>
                                 </div>
                             }
@@ -225,7 +256,21 @@ class Header extends React.Component<Props> {
                                         ref={contentRef}
                                     >
                                         <div className={styles.dropdownContent}>
-                                            Silent
+                                            <p>
+                                                <button
+                                                    type="button"
+                                                    className={styles.btnPrint}
+                                                >
+                                                    <Icon icon="print" />
+                                                </button>
+                                            </p>
+                                            <p>{contacts.address}</p>
+                                            <p>{contacts.route}</p>
+                                            <p>{contacts.textBefore}</p>
+                                            {contacts.managers.map(([name, email], i) => <p key={i}>{name}: <a href={"mailto:" + email}>{email}</a></p>)}
+                                            {contacts.textAfter.split('\n').map((p, i) => <p key={i}>{p}</p>)}
+                                            <p>{contacts.warehouseAddress}</p>
+                                            <p><img src={contacts.routeScheme ? IMAGES_PATH_URL + contacts.routeScheme : ''} alt=""/></p>
                                         </div>
                                     </div>
                                 </div>

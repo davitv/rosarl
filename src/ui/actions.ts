@@ -2,7 +2,10 @@ import { Dispatch } from 'redux';
 
 import * as constants from './constants';
 import * as types from './types';
-
+import { retrieveData as backendRetrieve } from '../backend';
+import {
+    retrieveData,
+} from '../actions';
 
 export interface SetHeaderCallbackFormSubmitted {
     type: constants.SET_HEADER_CALLBACK_FORM_SUBMITTED;
@@ -10,6 +13,11 @@ export interface SetHeaderCallbackFormSubmitted {
         submittedBy: string;
         phoneNumber: string;
     };
+}
+
+export interface LoadCompanyInfo {
+    type: constants.LOAD_COMPANY_INFO;
+    payload: types.CompanyInfo;
 }
 
 export interface SelectCategory {
@@ -53,8 +61,15 @@ export type UIAction = (
     ToggleCart |
     SetCart |
     ToggleProduct |
+    LoadCompanyInfo |
     ToggleFilters |
     SelectCategory
+);
+
+
+export const loadCompanyInfo = () => retrieveData(
+    (token: string) => backendRetrieve('/api/company-info/', token),
+    constants.LOAD_COMPANY_INFO
 );
 
 export function setCart(state: types.CartState) {

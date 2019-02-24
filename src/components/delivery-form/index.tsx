@@ -1,10 +1,22 @@
 import * as React from 'react';
+import { connect } from 'react-redux';
+
+import * as types from '../../types';
 
 import DeliveryForm, { FormValues } from './DeliveryForm';
 
+const mapStateToProps = (state: types.AppState) => ({
+    companyInfo: state.ui.companyInfo
+});
 
-export class DeliveryFormContainer extends React.Component {
-    constructor(props: {}) {
+
+export interface Props {
+    companyInfo: types.CompanyInfo;
+}
+
+
+export class DeliveryFormContainer extends React.Component<Props> {
+    constructor(props: Props) {
         super(props);
 
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -12,6 +24,8 @@ export class DeliveryFormContainer extends React.Component {
     public render() {
         return (
             <DeliveryForm
+                warehouseAddress={this.props.companyInfo.contacts.warehouseAddress}
+                warehouseImageURL={this.props.companyInfo.contacts.routeScheme}
                 onSubmit={this.handleSubmit}
             />
         );
@@ -24,4 +38,4 @@ export class DeliveryFormContainer extends React.Component {
     }
 }
 
-export default DeliveryFormContainer;
+export default connect(mapStateToProps)(DeliveryFormContainer);

@@ -41,8 +41,22 @@
     display: none;
 }
 :local .field {
-    margin-bottom: 15px;
+    margin-bottom: 25px;
+    position: relative;
 }
+
+:local .fieldError {
+    color: red;
+    position: absolute;
+}
+
+:local .hasError {
+    input,
+    select {
+        border-color: red;
+    }
+}
+
 :local .column50 {
     width: 50%;
     float: left;
@@ -61,4 +75,10 @@
     background: #3d5165 none;
     padding: 4px 7px;
     margin-top: 15px;
+
+    &[disabled] {
+        color: #ccc;
+        background-color: #f0f0f0;
+        cursor: disabled;
+    }
 }

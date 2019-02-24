@@ -12,7 +12,25 @@ export enum DeliveryMethod {
     PICKUP
 }
 
+export interface CompanyInfo {
+    about: string;
+    contacts: {
+        address: string;
+        managers: [string, string][];
+        route: string;
+        routeScheme: string;
+        textAfter: string;
+        textBefore: string;
+        warehouseAddress: string;
+    };
+    payment: {
+        image_url: string;
+        text: string;
+    };
+}
+
 export interface UIState {
+    companyInfo: CompanyInfo;
     isHeaderCallbackFormSubmitted: boolean;
     headerCallbackFormSubmittedBy: string;
     headerCallbackFormSubmittedPhone: string;
