@@ -6,6 +6,7 @@ import { CartState } from '../../ui/types';
 
 import CartInput from '../cart-input';
 import DeliveryForm from '../delivery-form';
+import OrderForm from '../order-form';
 
 import { IMAGES_PATH_URL } from '../../products/constants';
 
@@ -160,6 +161,16 @@ export default class Cart extends React.Component<Props> {
                 >
 
                     <DeliveryForm />
+                </div>
+
+                <div
+                    className={cn(
+                        styles.orderForm,
+                        {[styles.hidden]: cartState !== CartState.form}
+                    )}
+                >
+
+                    <OrderForm />
                 </div>
 
 

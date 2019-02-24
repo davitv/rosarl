@@ -1,0 +1,125 @@
+@import '../../scss/clearfix';
+@import '../../scss/buttons';
+
+:local .className {
+}
+
+:local .methodChoices {
+    @include clearfix;
+    margin-bottom: 15px;
+    border: solid 1px #ccc;
+}
+
+:local .methodChoice {
+    @include resetButtonStyles();
+    width: 33.3333333%;
+    float: left;
+    padding: 10px 0;
+    text-align: center;
+    border-right: solid 1px #ccc;
+
+    &:last-child {
+        border: none;
+    }
+}
+
+:local .methodChoiceActive {
+    background-color: #ccc;
+    color: #fff;
+    cursor: default;
+}
+
+:local .deliveryIcon {
+    font-size: 50px;
+}
+
+:local .row {
+    @include clearfix;
+    margin: 0 -10px;
+}
+
+:local .column50 {
+    width: 50%;
+    float: left;
+    padding: 0 10px;
+}
+
+
+:local .column33 {
+    width: 33%;
+    float: left;
+    padding: 0 10px;
+}
+
+
+
+:local .column25 {
+    width: 25%;
+    float: left;
+    padding: 0 10px;
+}
+
+
+:local .column20 {
+    width: 20%;
+    float: left;
+    padding: 0 10px;
+}
+
+
+
+:local .hidden {
+    display: none;
+}
+:local .field {
+    margin-bottom: 25px;
+    position: relative;
+}
+
+:local .fieldRadio {
+    display: inline-block;
+    margin-right: 15px;
+
+    input {
+        margin: 0 7px 3px 0;
+
+        vertical-align: middle;
+    }
+}
+
+:local .fieldError {
+    color: red;
+    position: absolute;
+}
+
+:local .hasError {
+    input,
+    select {
+        border-color: red;
+    }
+}
+
+:local .buttonSubmit {
+    @include resetButtonStyles();
+    color: #fff;
+    border: 1px solid #46b8da;
+    padding: 1px 5px;
+    font-size: 12px;
+    vertical-align: middle;
+    cursor: pointer;
+    background: #3d5165 none;
+    padding: 4px 7px;
+    margin-top: 15px;
+
+    &[disabled] {
+        color: #ccc;
+        background-color: #f0f0f0;
+        cursor: disabled;
+    }
+}
+
+
+:local .businessTypeLabel {
+    display: inline-block;
+    padding: 0 15px 0 0;
+}

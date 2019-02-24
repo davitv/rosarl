@@ -128,3 +128,7 @@
 :local .deliveryMethod {
     padding: 15px;
 }
+
+:local .orderForm {
+    padding: 15px;
+}
