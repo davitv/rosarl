@@ -161,6 +161,7 @@ export default class OrderForm extends React.Component<Props> {
                         values,
                     }) => {
                         const renderField = (name: string, label: string) => renderInputTextField(name, label, errors, touched);
+                        const legalRetailerInfoColumnStyle = values.business_type === 'legal' ? styles.column20 : styles.column25;
 
                         return (
                             <form
@@ -250,36 +251,24 @@ export default class OrderForm extends React.Component<Props> {
 
                                         <div className={styles.row}>
                                             <div
-                                                className={cn({
-                                                    [styles.column20]: values.business_type === 'legal',
-                                                    [styles.column25]: values.business_type !== 'legal',
-                                                })}
+                                                className={legalRetailerInfoColumnStyle}
                                             >
                                                 {renderField('rsn', 'Р/с N')}
                                             </div>
 
                                             <div
-                                                className={cn({
-                                                    [styles.column20]: values.business_type === 'legal',
-                                                    [styles.column25]: values.business_type !== 'legal',
-                                                })}
+                                                className={legalRetailerInfoColumnStyle}
                                             >
                                                 {renderField('korn', 'Кор/с N')}
                                             </div>
 
                                             <div
-                                                className={cn({
-                                                    [styles.column20]: values.business_type === 'legal',
-                                                    [styles.column25]: values.business_type !== 'legal',
-                                                })}
+                                                className={legalRetailerInfoColumnStyle}
                                             >
                                                 {renderField('bik', 'БИК')}
                                             </div>
                                             <div
-                                                className={cn({
-                                                    [styles.column20]: values.business_type === 'legal',
-                                                    [styles.column25]: values.business_type !== 'legal',
-                                                })}
+                                                className={legalRetailerInfoColumnStyle}
                                             >
                                                 {renderField('inn', 'ИНН')}
                                             </div>
