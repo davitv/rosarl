@@ -22,7 +22,7 @@ export interface Props {
         price: number;
         amount: number;
     }[];
-
+    isDeliveryFormValid: boolean;
     onRemoveClick: (productId: number) => void;
     onCartStateButtonClick: (state: CartState) => void;
 }
@@ -37,6 +37,7 @@ export default class Cart extends React.Component<Props> {
     public render() {
         const {
             isOpen,
+            isDeliveryFormValid,
             cartState,
             products,
         } = this.props;
@@ -77,6 +78,7 @@ export default class Cart extends React.Component<Props> {
                         onClick={this.handleCartStateButtonClick}
                         className={cn(
                             styles.tabButton,
+                            {[styles.tabButtonDisabled]: !isDeliveryFormValid},
                             {[styles.tabButtonActive]: cartState === CartState.form},
                         )}
                     >

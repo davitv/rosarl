@@ -10,6 +10,7 @@ import { CartAction } from './actions';
 const getDefaultState = (): types.CartState => ({
     selectedItems: {},
     products: [],
+    isDeliveryFormValid: false,
 });
 
 export const reducer = (state: types.CartState = getDefaultState(), action: CartAction) => {
@@ -53,6 +54,11 @@ export const reducer = (state: types.CartState = getDefaultState(), action: Cart
             return {
                 ...state,
                 selectedItems: clonedItemsSet
+            };
+        case constants.SET_DELIVERY_FORM_VALIDITY:
+            return {
+                ...state,
+                isDeliveryFormValid: action.payload
             };
         default:
             return state;

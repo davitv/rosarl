@@ -33,9 +33,14 @@ export interface SetCartItemAmount {
         amount: number;
     };
 }
+export interface SetCartDeliveryFormValidity {
+    type: constants.SET_DELIVERY_FORM_VALIDITY;
+    payload: boolean;
+}
 
 export type CartAction = (
     IncrementCartItem |
+    SetCartDeliveryFormValidity |
     SetCartItemAmount |
     LoadCartProducts |
     DecrementCartItem
@@ -47,6 +52,15 @@ export const loadCartProducts = (ids: number[], path='/api/cart/products/') => r
     constants.LOAD_CART_PRODUCTS
 );
 
+
+export function setDeliveryFormValidity(isValid: boolean) {
+    return (dispatch: Dispatch<SetCartDeliveryFormValidity>) => {
+        dispatch({
+            type: constants.SET_DELIVERY_FORM_VALIDITY,
+            payload: isValid
+        });
+    }
+}
 
 export function increment(itemId: number) {
     return (dispatch: Dispatch<IncrementCartItem>) => {

@@ -31,6 +31,7 @@ export interface FormValues {
     kpp: string;
     bik: string;
     korn: string;
+    rsn: string;
 
     first_name: string;
     last_name: string;

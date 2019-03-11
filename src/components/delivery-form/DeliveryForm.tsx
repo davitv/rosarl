@@ -1,9 +1,17 @@
 import * as React from 'react';
-import cn from 'classnames';
-
-import { Formik, Field, FormikErrors, FormikActions } from 'formik';
 
 import { FontAwesomeIcon as Icon } from '@fortawesome/react-fontawesome';
+
+import cn from 'classnames';
+
+import {
+    Formik,
+    Field,
+    FormikErrors,
+    FormikActions
+} from 'formik';
+
+import { isEmpty } from '../../utils/check';
 
 import { IMAGES_PATH_URL } from '../../products/constants';
 
@@ -35,6 +43,7 @@ export interface FormValues {
 export interface Props {
     warehouseAddress: string;
     warehouseImageURL: string;
+    onValidityChange: (isValid: boolean) => void;
     onSubmit: (values: FormValues) => Promise<void>;
 }
 
@@ -43,6 +52,7 @@ export default class DeliveryForm extends React.Component<Props> {
         const {
             warehouseAddress,
             warehouseImageURL,
+            onValidityChange,
         } = this.props;
 
         return (
@@ -51,6 +61,9 @@ export default class DeliveryForm extends React.Component<Props> {
                 <Formik
                     initialValues={{
                         method: DeliveryMethod.MOSCOW,
+                        full_name: '',
+                        address: '',
+                        city: '',
                         carrier: '',
                         phone: '',
                     }}
@@ -75,7 +88,9 @@ export default class DeliveryForm extends React.Component<Props> {
                     }}
                     validate={(values: Partial<FormValues>) => {
                         const err: FormikErrors<FormValues> = {};
+
                         if (values.method === DeliveryMethod.PICKUP) {
+                            onValidityChange(true);
                             return err;
                         }
 
@@ -95,6 +110,8 @@ export default class DeliveryForm extends React.Component<Props> {
                             err.city = 'Введите город';
                         }
 
+                        onValidityChange(isEmpty(err));
+
                         return err;
                     }}
                 >
@@ -108,6 +125,7 @@ export default class DeliveryForm extends React.Component<Props> {
                         setFieldValue,
                         isValid,
                         values,
+                        validateForm,
                     }) =>
                         <form
                             onSubmit={handleSubmit}

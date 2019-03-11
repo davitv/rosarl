@@ -7,6 +7,7 @@ export interface CartProduct {
 }
 
 export interface CartState {
+    isDeliveryFormValid: boolean;
     selectedItems: {[key: string]: number};
     products: CartProduct[];
 }
