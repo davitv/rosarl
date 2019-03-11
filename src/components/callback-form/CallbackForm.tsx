@@ -22,8 +22,8 @@ export default class CallbackForm extends React.Component<Props> {
             <div className={styles.className}>
                 <Formik
                     initialValues={{
-                        name: 'TEST',
-                        phone: '+79261234567',
+                        name: '',
+                        phone: '',
                     }}
                     onSubmit={(values: FormValues, actions: FormikActions<FormValues>) => {
                         actions.setSubmitting(true);

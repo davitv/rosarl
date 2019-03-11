@@ -61,7 +61,7 @@ const renderInputTextField = (
         <div
             className={cn(
                 styles.field,
-                {[styles.hasError]: errors.organization_name && touched.organization_name}
+                {[styles.hasError]: errors[name] && touched[name]}
             )}
         >
             <label htmlFor={id}>{label}</label>
@@ -94,8 +94,8 @@ export default class OrderForm extends React.Component<Props> {
 
                 <Formik
                     initialValues={{
-                        business_type: 'legal',
-                        organization_name: '',
+                        business_type: 'individual',
+                        organization_name: 'aaa',
                         email: '',
 
                         kpp: '',
@@ -118,9 +118,11 @@ export default class OrderForm extends React.Component<Props> {
                         postal_code: '',
 
                     }}
+                    isInitialValid={true}
                     onSubmit={(values: FormValues, actions: FormikActions<FormValues>) => {
                         actions.setSubmitting(true);
                         return this.props.onSubmit(values).catch(err => {
+                            console.log('ERRORS', err);
 
                             actions.setErrors(err);
                             actions.setSubmitting(false);
@@ -139,7 +141,6 @@ export default class OrderForm extends React.Component<Props> {
                     }}
                     validate={(values: Partial<FormValues>) => {
                         const err: FormikErrors<FormValues> = {};
-
                         return err;
                     }}
                 >
@@ -150,184 +151,168 @@ export default class OrderForm extends React.Component<Props> {
                         status,
                         error,
                         isSubmitting,
-                        setFieldValue,
                         isValid,
                         values,
-                    }) =>
-                        <form
-                            onSubmit={handleSubmit}
-                            className={styles.form}
-                        >
-                            <div className={styles.businessTypeChoices}>
-                                <span className={styles.businessTypeLabel}>К какой категории вы относитесь:</span>
-                                <UniqueID>
-                                {(id) =>
-                                    <div
-                                        className={cn(
-                                            styles.field,
-                                            styles.fieldRadio,
-                                            {[styles.hasError]: errors.business_type && touched.business_type}
-                                        )}
-                                    >
-                                        <Field
-                                            id={id}
-                                            name="business_type"
-                                            value="individual"
-                                            type="radio"
-                                        />
-                                        <label htmlFor={id}>Физ. лицо</label>
-                                        {errors.business_type && touched.business_type &&
-                                            <div
-                                                className={styles.fieldError}
-                                            >
-                                                {errors.business_type}
-                                            </div>
-                                        }
-                                    </div>
-                                }
-                                </UniqueID>
-                                <UniqueID>
-                                {(id) =>
-                                    <div
-                                        className={cn(
-                                            styles.field,
-                                            styles.fieldRadio,
-                                            {[styles.hasError]: errors.business_type && touched.business_type}
-                                        )}
-                                    >
-                                        <Field
-                                            id={id}
-                                            name="business_type"
-                                            value="legal"
-                                            type="radio"
-                                        />
-                                        <label htmlFor={id}>Юр. лицо</label>
-                                        {errors.business_type && touched.business_type &&
-                                            <div
-                                                className={styles.fieldError}
-                                            >
-                                                {errors.business_type}
-                                            </div>
-                                        }
-                                    </div>
-                                }
-                                </UniqueID>
-                                <UniqueID>
-                                {(id) =>
-                                    <div
-                                        className={cn(
-                                            styles.field,
-                                            styles.fieldRadio,
-                                            {[styles.hasError]: errors.business_type && touched.business_type}
-                                        )}
-                                    >
-                                        <Field
-                                            id={id}
-                                            name="business_type"
-                                            value="retailer"
-                                            type="radio"
-                                        />
-                                        <label htmlFor={id}>ИП</label>
-                                        {errors.business_type && touched.business_type &&
-                                            <div
-                                                className={styles.fieldError}
-                                            >
-                                                {errors.business_type}
-                                            </div>
-                                        }
-                                    </div>
-                                }
-                                </UniqueID>
-                            </div>
-                            <div
-                                className={cn(
-                                    styles.formFieldsWrapper,
-                                )}
+                    }) => {
+                        const renderField = (name: string, label: string) => renderInputTextField(name, label, errors, touched);
+
+                        return (
+                            <form
+                                onSubmit={handleSubmit}
+                                className={styles.form}
                             >
-                                <div className={styles.row}>
-                                    <div className={styles.column50}>
-                                        {renderInputTextField('organization_name', 'Название организации', errors, touched)}
-                                    </div>
-                                    <div className={styles.column25}>
-                                        {renderInputTextField('email', 'Эл. почта', errors, touched)}
-                                    </div>
-                                    <div className={styles.column25}>
-                                        {renderInputTextField('phone', 'Телефон', errors, touched)}
-                                    </div>
+                                <div className={styles.businessTypeChoices}>
+                                    <span className={styles.businessTypeLabel}>К какой категории вы относитесь:</span>
+                                    <UniqueID>
+                                    {(id) =>
+                                        <div
+                                            className={cn(
+                                                styles.field,
+                                                styles.fieldRadio,
+                                                {[styles.hasError]: errors.business_type && touched.business_type}
+                                            )}
+                                        >
+                                            <Field
+                                                id={id}
+                                                name="business_type"
+                                                value="individual"
+                                                type="radio"
+                                            />
+                                            <label htmlFor={id}>Физ. лицо</label>
+
+                                        </div>
+                                    }
+                                    </UniqueID>
+                                    <UniqueID>
+                                    {(id) =>
+                                        <div
+                                            className={cn(
+                                                styles.field,
+                                                styles.fieldRadio,
+                                                {[styles.hasError]: errors.business_type && touched.business_type}
+                                            )}
+                                        >
+                                            <Field
+                                                id={id}
+                                                name="business_type"
+                                                value="legal"
+                                                type="radio"
+                                            />
+                                            <label htmlFor={id}>Юр. лицо</label>
+
+                                        </div>
+                                    }
+                                    </UniqueID>
+                                    <UniqueID>
+                                    {(id) =>
+                                        <div
+                                            className={cn(
+                                                styles.field,
+                                                styles.fieldRadio,
+                                                {[styles.hasError]: errors.business_type && touched.business_type}
+                                            )}
+                                        >
+                                            <Field
+                                                id={id}
+                                                name="business_type"
+                                                value="retailer"
+                                                type="radio"
+                                            />
+                                            <label htmlFor={id}>ИП</label>
+                                        </div>
+                                    }
+                                    </UniqueID>
                                 </div>
-                                <div className={styles.row}>
-                                    <div className={styles.column20}>
-                                        {renderInputTextField('rsn', 'Р/с N', errors, touched)}
+                                <div
+                                    className={cn(
+                                        styles.formFieldsWrapper,
+                                    )}
+                                >
+                                    <div className={styles.row}>
+                                        <div className={styles.column50}>
+                                            {renderField('organization_name', 'Название организации')}
+                                        </div>
+                                        <div className={styles.column25}>
+                                            {renderField('email', 'Эл. почта')}
+                                        </div>
+                                        <div className={styles.column25}>
+                                            {renderField('phone', 'Телефон')}
+                                        </div>
                                     </div>
-                                    <div className={styles.column20}>
-                                        {renderInputTextField('korn', 'Кор/с N', errors, touched)}
+                                    <div className={styles.row}>
+                                        <div className={styles.column20}>
+                                            {renderField('rsn', 'Р/с N')}
+                                        </div>
+                                        <div className={styles.column20}>
+                                            {renderField('korn', 'Кор/с N')}
+                                        </div>
+                                        <div className={styles.column20}>
+                                            {renderField('bik', 'БИК')}
+                                        </div>
+                                        <div className={styles.column20}>
+                                            {renderField('inn', 'ИНН')}
+                                        </div>
+                                        <div className={styles.column20}>
+                                            {renderField('kpp', 'КПП')}
+                                        </div>
                                     </div>
-                                    <div className={styles.column20}>
-                                        {renderInputTextField('bik', 'БИК', errors, touched)}
+
+                                    {renderField('bank_name', 'Название банка')}
+
+                                    <div className={styles.row}>
+                                        <div className={styles.column33}>
+                                            {renderField('first_name', 'Имя')}
+                                        </div>
+                                        <div className={styles.column33}>
+                                            {renderField('last_name', 'Фамилия')}
+                                        </div>
+                                        <div className={styles.column33}>
+                                            {renderField('patronymic', 'Отчество')}
+                                        </div>
                                     </div>
-                                    <div className={styles.column20}>
-                                        {renderInputTextField('inn', 'ИНН', errors, touched)}
+
+                                     <div className={styles.row}>
+                                        <div className={styles.column50}>
+                                            {renderField('legal_address', 'Юридический адрес')}
+                                        </div>
+                                        <div className={styles.column50}>
+                                            {renderField('address', 'Почтовый адрес')}
+                                        </div>
                                     </div>
-                                    <div className={styles.column20}>
-                                        {renderInputTextField('kpp', 'КПП', errors, touched)}
+                                     <div className={styles.row}>
+                                        <div className={styles.column50}>
+                                            {renderField('city', 'Город')}
+                                        </div>
+                                        <div className={styles.column50}>
+                                            {renderField('postal_code', 'Индекс')}
+                                        </div>
                                     </div>
                                 </div>
 
-                                {renderInputTextField('bank_name', 'Название банка', errors, touched)}
-
-                                <div className={styles.row}>
-                                    <div className={styles.column33}>
-                                        {renderInputTextField('first_name', 'Имя', errors, touched)}
+                                {status &&
+                                    <div className={styles.error}>
+                                         {status}
                                     </div>
-                                    <div className={styles.column33}>
-                                        {renderInputTextField('last_name', 'Фамилия', errors, touched)}
-                                    </div>
-                                    <div className={styles.column33}>
-                                        {renderInputTextField('patronymic', 'Отчество', errors, touched)}
-                                    </div>
-                                </div>
-
-                                 <div className={styles.row}>
-                                    <div className={styles.column50}>
-                                        {renderInputTextField('legal_address', 'Юридический адрес', errors, touched)}
-                                    </div>
-                                    <div className={styles.column50}>
-                                        {renderInputTextField('address', 'Почтовый адрес', errors, touched)}
-                                    </div>
-                                </div>
-                                 <div className={styles.row}>
-                                    <div className={styles.column50}>
-                                        {renderInputTextField('city', 'Город', errors, touched)}
-                                    </div>
-                                    <div className={styles.column50}>
-                                        {renderInputTextField('postal_code', 'Индекс', errors, touched)}
-                                    </div>
-                                </div>
-                            </div>
-
-                            {status &&
-                                <div className={styles.error}>
-                                     {status}
-                                </div>
-                            }
-                            <button
-                                className={styles.buttonSubmit}
-                                type="submit"
-                                disabled={isSubmitting || !isValid}
-                            >
-                                {isSubmitting ?
-                                    <span>
-                                        <Icon icon="spinner" spin fixedWidth />
-                                        Отправка запроса...
-                                    </span>
-                                    :
-                                    <span>
-                                        Подтвердить
-                                    </span>
                                 }
-                            </button>
-                        </form>
-                    }
+                                <button
+                                    className={styles.buttonSubmit}
+                                    type="submit"
+                                    disabled={!isValid}
+                                >
+                                    {isSubmitting ?
+                                        <span>
+                                            <Icon icon="spinner" spin fixedWidth />
+                                            Отправка запроса...
+                                        </span>
+                                        :
+                                        <span>
+                                            Подтвердить
+                                        </span>
+                                    }
+                                </button>
+                            </form>
+                        )
+                    }}
                 </Formik>
             </div>
         );

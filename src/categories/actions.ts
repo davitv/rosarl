@@ -18,6 +18,6 @@ export type CategoriesAction = (
 );
 
 export const loadCategories = () => retrieveData(
-    (token: string) => backendRetrieve('http://78.155.206.50/api/categories/', token),
+    (token: string) => backendRetrieve('/api/categories/', token),
     constants.LOAD_CATEGORIES
 );

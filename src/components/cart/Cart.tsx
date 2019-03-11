@@ -75,6 +75,7 @@ export default class Cart extends React.Component<Props> {
                     <button
                         type="button"
                         value={CartState.form}
+                        disabled={!isDeliveryFormValid}
                         onClick={this.handleCartStateButtonClick}
                         className={cn(
                             styles.tabButton,
