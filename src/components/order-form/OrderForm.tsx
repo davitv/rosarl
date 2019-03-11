@@ -21,8 +21,14 @@ export enum DeliveryMethod {
     PICKUP
 }
 
+export enum BusinessType {
+    INDIVIDUAL = 'individual',
+    LEGAL = 'legal',
+    RETAILER = 'retailer',
+}
+
 export interface FormValues {
-    business_type: string;
+    business_type: BusinessType;
     organization_name: string;
     phone: string;
     email: string;
@@ -94,7 +100,7 @@ export default class OrderForm extends React.Component<Props> {
 
                 <Formik
                     initialValues={{
-                        business_type: 'individual',
+                        business_type: BusinessType.INDIVIDUAL,
                         organization_name: 'aaa',
                         email: '',
 
@@ -175,7 +181,7 @@ export default class OrderForm extends React.Component<Props> {
                                             <Field
                                                 id={id}
                                                 name="business_type"
-                                                value="individual"
+                                                value={BusinessType.INDIVIDUAL}
                                                 type="radio"
                                             />
                                             <label htmlFor={id}>Физ. лицо</label>
@@ -195,7 +201,7 @@ export default class OrderForm extends React.Component<Props> {
                                             <Field
                                                 id={id}
                                                 name="business_type"
-                                                value="legal"
+                                                value={BusinessType.LEGAL}
                                                 type="radio"
                                             />
                                             <label htmlFor={id}>Юр. лицо</label>
@@ -215,7 +221,7 @@ export default class OrderForm extends React.Component<Props> {
                                             <Field
                                                 id={id}
                                                 name="business_type"
-                                                value="retailer"
+                                                value={BusinessType.RETAILER}
                                                 type="radio"
                                             />
                                             <label htmlFor={id}>ИП</label>
@@ -223,71 +229,136 @@ export default class OrderForm extends React.Component<Props> {
                                     }
                                     </UniqueID>
                                 </div>
-                                <div
-                                    className={cn(
-                                        styles.formFieldsWrapper,
-                                    )}
-                                >
-                                    <div className={styles.row}>
-                                        <div className={styles.column50}>
-                                            {renderField('organization_name', 'Название организации')}
-                                        </div>
-                                        <div className={styles.column25}>
-                                            {renderField('email', 'Эл. почта')}
-                                        </div>
-                                        <div className={styles.column25}>
-                                            {renderField('phone', 'Телефон')}
-                                        </div>
-                                    </div>
-                                    <div className={styles.row}>
-                                        <div className={styles.column20}>
-                                            {renderField('rsn', 'Р/с N')}
-                                        </div>
-                                        <div className={styles.column20}>
-                                            {renderField('korn', 'Кор/с N')}
-                                        </div>
-                                        <div className={styles.column20}>
-                                            {renderField('bik', 'БИК')}
-                                        </div>
-                                        <div className={styles.column20}>
-                                            {renderField('inn', 'ИНН')}
-                                        </div>
-                                        <div className={styles.column20}>
-                                            {renderField('kpp', 'КПП')}
-                                        </div>
-                                    </div>
 
-                                    {renderField('bank_name', 'Название банка')}
+                                {values.business_type !== BusinessType.INDIVIDUAL &&
+                                    <div
+                                        className={cn(
+                                            styles.formFieldsWrapper,
+                                        )}
+                                    >
+                                        <div className={styles.row}>
+                                            <div className={styles.column50}>
+                                                {renderField('organization_name', 'Название организации')}
+                                            </div>
+                                            <div className={styles.column25}>
+                                                {renderField('email', 'Эл. почта')}
+                                            </div>
+                                            <div className={styles.column25}>
+                                                {renderField('phone', 'Телефон')}
+                                            </div>
+                                        </div>
 
-                                    <div className={styles.row}>
-                                        <div className={styles.column33}>
-                                            {renderField('first_name', 'Имя')}
-                                        </div>
-                                        <div className={styles.column33}>
-                                            {renderField('last_name', 'Фамилия')}
-                                        </div>
-                                        <div className={styles.column33}>
-                                            {renderField('patronymic', 'Отчество')}
-                                        </div>
-                                    </div>
+                                        <div className={styles.row}>
+                                            <div
+                                                className={cn({
+                                                    [styles.column20]: values.business_type === 'legal',
+                                                    [styles.column25]: values.business_type !== 'legal',
+                                                })}
+                                            >
+                                                {renderField('rsn', 'Р/с N')}
+                                            </div>
 
-                                     <div className={styles.row}>
-                                        <div className={styles.column50}>
-                                            {renderField('legal_address', 'Юридический адрес')}
+                                            <div
+                                                className={cn({
+                                                    [styles.column20]: values.business_type === 'legal',
+                                                    [styles.column25]: values.business_type !== 'legal',
+                                                })}
+                                            >
+                                                {renderField('korn', 'Кор/с N')}
+                                            </div>
+
+                                            <div
+                                                className={cn({
+                                                    [styles.column20]: values.business_type === 'legal',
+                                                    [styles.column25]: values.business_type !== 'legal',
+                                                })}
+                                            >
+                                                {renderField('bik', 'БИК')}
+                                            </div>
+                                            <div
+                                                className={cn({
+                                                    [styles.column20]: values.business_type === 'legal',
+                                                    [styles.column25]: values.business_type !== 'legal',
+                                                })}
+                                            >
+                                                {renderField('inn', 'ИНН')}
+                                            </div>
+                                            {values.business_type === 'legal' &&
+                                                <div className={styles.column20}>
+                                                    {renderField('kpp', 'КПП')}
+                                                </div>
+                                            }
                                         </div>
-                                        <div className={styles.column50}>
-                                            {renderField('address', 'Почтовый адрес')}
+
+                                        {renderField('bank_name', 'Название банка')}
+
+                                        <div className={styles.row}>
+                                            <div className={styles.column33}>
+                                                {renderField('first_name', 'Имя')}
+                                            </div>
+                                            <div className={styles.column33}>
+                                                {renderField('last_name', 'Фамилия')}
+                                            </div>
+                                            <div className={styles.column33}>
+                                                {renderField('patronymic', 'Отчество')}
+                                            </div>
+                                        </div>
+
+                                         <div className={styles.row}>
+                                            <div className={styles.column50}>
+                                                {renderField('legal_address', 'Юридический адрес')}
+                                            </div>
+                                            <div className={styles.column50}>
+                                                {renderField('address', 'Почтовый адрес')}
+                                            </div>
+                                        </div>
+                                         <div className={styles.row}>
+                                            <div className={styles.column50}>
+                                                {renderField('city', 'Город')}
+                                            </div>
+                                            <div className={styles.column50}>
+                                                {renderField('postal_code', 'Индекс')}
+                                            </div>
                                         </div>
                                     </div>
-                                     <div className={styles.row}>
-                                        <div className={styles.column50}>
-                                            {renderField('city', 'Город')}
+                                }
+
+                                {values.business_type === BusinessType.INDIVIDUAL &&
+                                    <div
+                                        className={cn(
+                                            styles.formFieldsWrapper,
+                                        )}
+                                    >
+                                        <div className={styles.row}>
+                                            <div className={styles.column33}>
+                                                {renderField('first_name', 'Имя')}
+                                            </div>
+                                            <div className={styles.column33}>
+                                                {renderField('last_name', 'Фамилия')}
+                                            </div>
+                                            <div className={styles.column33}>
+                                                {renderField('patronymic', 'Отчество')}
+                                            </div>
                                         </div>
-                                        <div className={styles.column50}>
-                                            {renderField('postal_code', 'Индекс')}
+                                        <div className={styles.row}>
+                                            <div className={styles.column50}>
+                                                {renderField('email', 'Эл. почта')}
+                                            </div>
+                                            <div className={styles.column50}>
+                                                {renderField('phone', 'Телефон')}
+                                            </div>
+                                        </div>
+
+                                         <div className={styles.row}>
+                                            <div className={styles.column50}>
+                                                {renderField('address', 'Адрес')}
+                                            </div>
+                                            <div className={styles.column50}>
+                                                {renderField('city', 'Город')}
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
+                                }
 
                                 {status &&
                                     <div className={styles.error}>
