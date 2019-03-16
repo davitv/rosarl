@@ -42,6 +42,8 @@ export default class Cart extends React.Component<Props> {
             products,
         } = this.props;
 
+        const isEmpty = products.length === 0;
+
         return (
             <div
                 className={cn(
@@ -63,10 +65,12 @@ export default class Cart extends React.Component<Props> {
                     </button>
                     <button
                         type="button"
+                        disabled={isEmpty}
                         value={CartState.deliveryMethod}
                         onClick={this.handleCartStateButtonClick}
                         className={cn(
                             styles.tabButton,
+                            {[styles.tabButtonDisabled]: isEmpty},
                             {[styles.tabButtonActive]: cartState === CartState.deliveryMethod}
                         )}
                     >
@@ -75,11 +79,11 @@ export default class Cart extends React.Component<Props> {
                     <button
                         type="button"
                         value={CartState.form}
-                        disabled={!isDeliveryFormValid}
+                        disabled={!isDeliveryFormValid || isEmpty}
                         onClick={this.handleCartStateButtonClick}
                         className={cn(
                             styles.tabButton,
-                            {[styles.tabButtonDisabled]: !isDeliveryFormValid},
+                            {[styles.tabButtonDisabled]: !isDeliveryFormValid || isEmpty},
                             {[styles.tabButtonActive]: cartState === CartState.form},
                         )}
                     >
@@ -104,6 +108,11 @@ export default class Cart extends React.Component<Props> {
                         {[styles.hidden]: cartState !== CartState.productsList}
                     )}
                 >
+                    {isEmpty &&
+                        <div className={styles.empty}>
+                            <strong>Корзина пуста</strong>. Пожалуйста, добавьте товар для продолжения оформления заказа.
+                        </div>
+                    }
                     {products.map(product =>
                         <div
                             className={styles.product}
