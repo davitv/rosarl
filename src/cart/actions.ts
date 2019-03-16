@@ -1,14 +1,16 @@
 import { Dispatch } from 'redux';
+import { Action } from 'redux';
+import { ThunkDispatch } from 'redux-thunk';
 
-import { DeliveryData } from './types';
-
-import { retrieveData as backendRetrieve } from '../backend';
+import { AppState } from '../types';
+import { persistData, retrieveData as backendRetrieve } from '../backend';
 import {
     retrieveData,
 } from '../actions';
 
 import * as constants from './constants';
 import * as types from './types';
+import { DeliveryData } from './types';
 
 export interface IncrementCartItem {
     type: constants.INCREMENT_CART_ITEM;
@@ -108,4 +110,17 @@ export function setAmount(itemId: number, amount: number) {
             }
         });
     }
+}
+
+export const submitOrder = (data: Partial<types.OrderData>) => {
+    return (dispatch: ThunkDispatch<{}, {}, Action>,  getState: () => AppState): Promise<types.OrderData> => {
+        const token = getState().auth.token;
+        return persistData('/api/orders/', data, token).then(res => {
+            dispatch({
+                type: constants.SUBMIT_ORDER,
+                payload: res
+            });
+            return res;
+        });
+    };
 }

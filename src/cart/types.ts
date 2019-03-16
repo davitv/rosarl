@@ -1,4 +1,37 @@
 
+export enum BusinessType {
+    INDIVIDUAL = 'individual',
+    LEGAL = 'legal',
+    RETAILER = 'retailer',
+}
+
+export interface OrderData {
+    order_type: BusinessType;
+    organization_name: string;
+    phone: string;
+    email: string;
+
+    inn: string;
+    kpp: string;
+    bik: string;
+    korn: string;
+    rsn: string;
+
+    first_name: string;
+    last_name: string;
+    patronymic: string;
+    legal_address: string;
+    address: string;
+    city: string;
+    postal_code: string;
+
+    bank_name: string;
+
+    products: {
+        id: number;
+        amount: number;
+    }[];
+}
 
 export enum DeliveryMethod {
     MOSCOW = 0,
@@ -29,3 +62,4 @@ export interface CartState {
     products: CartProduct[];
     deliveryData: Partial<DeliveryData>;
 }
+

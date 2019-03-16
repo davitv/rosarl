@@ -14,13 +14,6 @@ import UniqueID from '../unique-id';
 
 const styles = require('./OrderForm.css');
 
-
-export enum DeliveryMethod {
-    MOSCOW = 0,
-    RUSSIA,
-    PICKUP
-}
-
 export enum BusinessType {
     INDIVIDUAL = 'individual',
     LEGAL = 'legal',
@@ -28,7 +21,7 @@ export enum BusinessType {
 }
 
 export interface FormValues {
-    business_type: BusinessType;
+    order_type: BusinessType;
     organization_name: string;
     phone: string;
     email: string;
@@ -53,7 +46,7 @@ export interface FormValues {
 export interface Props {
     warehouseAddress: string;
     warehouseImageURL: string;
-    onSubmit: (values: FormValues) => Promise<void>;
+    onSubmit: (values: FormValues) => Promise<FormValues>;
 }
 
 
@@ -100,7 +93,7 @@ export default class OrderForm extends React.Component<Props> {
 
                 <Formik
                     initialValues={{
-                        business_type: BusinessType.INDIVIDUAL,
+                        order_type: BusinessType.INDIVIDUAL,
                         organization_name: 'aaa',
                         email: '',
 
@@ -122,7 +115,6 @@ export default class OrderForm extends React.Component<Props> {
                         address: '',
                         city: '',
                         postal_code: '',
-
                     }}
                     isInitialValid={true}
                     onSubmit={(values: FormValues, actions: FormikActions<FormValues>) => {
@@ -143,6 +135,8 @@ export default class OrderForm extends React.Component<Props> {
                                     err.non_field_errors
                                 );
                             }
+                        }).then(res => {
+                            actions.setSubmitting(false);
                         });
                     }}
                     validate={(values: Partial<FormValues>) => {
@@ -161,7 +155,7 @@ export default class OrderForm extends React.Component<Props> {
                         values,
                     }) => {
                         const renderField = (name: string, label: string) => renderInputTextField(name, label, errors, touched);
-                        const legalRetailerInfoColumnStyle = values.business_type === 'legal' ? styles.column20 : styles.column25;
+                        const legalRetailerInfoColumnStyle = values.order_type === 'legal' ? styles.column20 : styles.column25;
 
                         return (
                             <form
@@ -176,14 +170,14 @@ export default class OrderForm extends React.Component<Props> {
                                             className={cn(
                                                 styles.field,
                                                 styles.fieldRadio,
-                                                {[styles.hasError]: errors.business_type && touched.business_type}
+                                                {[styles.hasError]: errors.order_type && touched.order_type}
                                             )}
                                         >
                                             <Field
                                                 id={id}
-                                                name="business_type"
+                                                name="order_type"
                                                 value={BusinessType.INDIVIDUAL}
-                                                checked={values.business_type === BusinessType.INDIVIDUAL}
+                                                checked={values.order_type === BusinessType.INDIVIDUAL}
                                                 type="radio"
                                             />
                                             <label htmlFor={id}>Физ. лицо</label>
@@ -196,12 +190,12 @@ export default class OrderForm extends React.Component<Props> {
                                             className={cn(
                                                 styles.field,
                                                 styles.fieldRadio,
-                                                {[styles.hasError]: errors.business_type && touched.business_type}
+                                                {[styles.hasError]: errors.order_type && touched.order_type}
                                             )}
                                         >
                                             <Field
                                                 id={id}
-                                                name="business_type"
+                                                name="order_type"
                                                 value={BusinessType.LEGAL}
                                                 type="radio"
                                             />
@@ -216,12 +210,12 @@ export default class OrderForm extends React.Component<Props> {
                                             className={cn(
                                                 styles.field,
                                                 styles.fieldRadio,
-                                                {[styles.hasError]: errors.business_type && touched.business_type}
+                                                {[styles.hasError]: errors.order_type && touched.order_type}
                                             )}
                                         >
                                             <Field
                                                 id={id}
-                                                name="business_type"
+                                                name="order_type"
                                                 value={BusinessType.RETAILER}
                                                 type="radio"
                                             />
@@ -231,7 +225,7 @@ export default class OrderForm extends React.Component<Props> {
                                     </UniqueID>
                                 </div>
 
-                                {values.business_type !== BusinessType.INDIVIDUAL &&
+                                {values.order_type !== BusinessType.INDIVIDUAL &&
                                     <div
                                         className={cn(
                                             styles.formFieldsWrapper,
@@ -272,7 +266,7 @@ export default class OrderForm extends React.Component<Props> {
                                             >
                                                 {renderField('inn', 'ИНН')}
                                             </div>
-                                            {values.business_type === 'legal' &&
+                                            {values.order_type === 'legal' &&
                                                 <div className={styles.column20}>
                                                     {renderField('kpp', 'КПП')}
                                                 </div>
@@ -312,7 +306,7 @@ export default class OrderForm extends React.Component<Props> {
                                     </div>
                                 }
 
-                                {values.business_type === BusinessType.INDIVIDUAL &&
+                                {values.order_type === BusinessType.INDIVIDUAL &&
                                     <div
                                         className={cn(
                                             styles.formFieldsWrapper,
