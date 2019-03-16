@@ -13,13 +13,6 @@ import Dropdown from '../dropdown';
 
 import CallBackForm from '../callback-form';
 
-const TEXT = `
-Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-Illo, ratione, corrupti. Corporis eveniet rem, soluta non aut.
-Facere tempore accusamus excepturi ducimus ullam cumque eius
-provident veniam, sed enim modi!
-`;
-
 const loaderURL = require('../../assets/loader-white.png');
 
 
@@ -348,11 +341,6 @@ class Header extends React.Component<Props> {
                                 </span>
                                 Корзина
                             </a>
-                            <div className={styles.dropdown}>
-                                <div className={styles.dropdownContent}>
-                                    {TEXT}
-                                </div>
-                            </div>
                         </div>
                     </div>
                 </div>
