@@ -1,5 +1,7 @@
 import { Dispatch } from 'redux';
 
+import { DeliveryData } from './types';
+
 import { retrieveData as backendRetrieve } from '../backend';
 import {
     retrieveData,
@@ -33,9 +35,15 @@ export interface SetCartItemAmount {
         amount: number;
     };
 }
+
 export interface SetCartDeliveryFormValidity {
     type: constants.SET_DELIVERY_FORM_VALIDITY;
     payload: boolean;
+}
+
+export interface SetCartDeliveryData {
+    type: constants.SET_DELIVERY_DATA;
+    payload: Partial<DeliveryData>;
 }
 
 export type CartAction = (
@@ -43,6 +51,7 @@ export type CartAction = (
     SetCartDeliveryFormValidity |
     SetCartItemAmount |
     LoadCartProducts |
+    SetCartDeliveryData |
     DecrementCartItem
 );
 
@@ -58,6 +67,15 @@ export function setDeliveryFormValidity(isValid: boolean) {
         dispatch({
             type: constants.SET_DELIVERY_FORM_VALIDITY,
             payload: isValid
+        });
+    }
+}
+
+export function setDeliveryFormData(data: Partial<DeliveryData>) {
+    return (dispatch: Dispatch<SetCartDeliveryData>) => {
+        dispatch({
+            type: constants.SET_DELIVERY_DATA,
+            payload: data
         });
     }
 }

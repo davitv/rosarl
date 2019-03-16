@@ -19,32 +19,16 @@ import TextInput from '../text-input';
 import SelectInput from '../select-input';
 import UniqueID from '../unique-id';
 
+import { DeliveryData, DeliveryMethod } from '../../cart/types';
+import { deliveryDataValidator } from '../../cart/validators';
 
 const styles = require('./DeliveryForm.css');
-
-
-export enum DeliveryMethod {
-    MOSCOW = 0,
-    RUSSIA,
-    PICKUP
-}
-
-export interface FormValues {
-    full_name: string;
-    method: DeliveryMethod;
-    phone: string;
-    address: string;
-    city: string;
-
-    // Russia delivery only
-    carrier: string;
-}
 
 export interface Props {
     warehouseAddress: string;
     warehouseImageURL: string;
-    onValidityChange: (isValid: boolean) => void;
-    onSubmit: (values: FormValues) => Promise<void>;
+    onValuesChange: (data: Partial<DeliveryData>) => void;
+    onSubmit: (values: DeliveryData) => Promise<void>;
 }
 
 export default class DeliveryForm extends React.Component<Props> {
@@ -52,7 +36,7 @@ export default class DeliveryForm extends React.Component<Props> {
         const {
             warehouseAddress,
             warehouseImageURL,
-            onValidityChange,
+            onValuesChange,
         } = this.props;
 
         return (
@@ -67,7 +51,7 @@ export default class DeliveryForm extends React.Component<Props> {
                         carrier: '',
                         phone: '',
                     }}
-                    onSubmit={(values: FormValues, actions: FormikActions<FormValues>) => {
+                    onSubmit={(values: DeliveryData, actions: FormikActions<DeliveryData>) => {
                         actions.setSubmitting(true);
                         return this.props.onSubmit(values).catch(err => {
 
@@ -86,31 +70,10 @@ export default class DeliveryForm extends React.Component<Props> {
                             }
                         });
                     }}
-                    validate={(values: Partial<FormValues>) => {
-                        const err: FormikErrors<FormValues> = {};
+                    validate={(values: Partial<DeliveryData>) => {
+                        const err = deliveryDataValidator(values);
 
-                        if (values.method === DeliveryMethod.PICKUP) {
-                            onValidityChange(true);
-                            return err;
-                        }
-
-                        if (!values.full_name) {
-                            err.full_name = 'Введите имя';
-                        }
-
-                        if (!values.phone) {
-                            err.phone = 'Введите номер телефона';
-                        }
-
-                        if (!values.address) {
-                            err.address = 'Введите адрес';
-                        }
-
-                        if (!values.city) {
-                            err.city = 'Введите город';
-                        }
-
-                        onValidityChange(isEmpty(err));
+                        onValuesChange(values);
 
                         return err;
                     }}
@@ -303,7 +266,7 @@ export default class DeliveryForm extends React.Component<Props> {
                                             id={id}
                                             name="carrier"
                                             placeholder="Выберите транспортную компанию"
-                                            options={[ ['1', 'Пуп-перевозчик'], ['2', 'Морковь-сити'], ]}
+                                            options={[['', 'Выберите перевозчика'], ['1', 'Первый перевозчик'], ['2', 'Второй перевозчик'], ]}
                                             component={SelectInput}
                                         />
                                         {errors.carrier && touched.carrier &&

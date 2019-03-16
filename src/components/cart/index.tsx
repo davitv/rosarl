@@ -2,7 +2,10 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 import { ThunkDispatch } from 'redux-thunk';
 
+import { isEmpty } from '../../utils/check';
+
 import { CartProduct } from '../../cart/types';
+import { deliveryDataValidator } from '../../cart/validators';
 import { loadCartProducts, setAmount, CartAction } from '../../cart/actions';
 import { updateStorageItems } from '../../utils/fp';
 import { Product as ProductInterface } from '../../products/types';
@@ -17,7 +20,7 @@ import Cart from './Cart';
 const mapStateToProps = (state: types.AppState) => ({
     isOpen: state.ui.isCartOpen,
     cartState: state.ui.cartState,
-    isDeliveryFormValid: state.cart.isDeliveryFormValid,
+    isDeliveryFormValid: isEmpty(deliveryDataValidator(state.cart.deliveryData)),
     selectedProducts: state.cart.selectedItems,
     products: Object.keys(state.cart.selectedItems).map(k => {
         return state.products.products.filter(p => p.product_id == parseInt(k, 10))

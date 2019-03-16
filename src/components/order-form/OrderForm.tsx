@@ -183,7 +183,7 @@ export default class OrderForm extends React.Component<Props> {
                                                 id={id}
                                                 name="business_type"
                                                 value={BusinessType.INDIVIDUAL}
-                                                selected={true}
+                                                checked={values.business_type === BusinessType.INDIVIDUAL}
                                                 type="radio"
                                             />
                                             <label htmlFor={id}>Физ. лицо</label>
