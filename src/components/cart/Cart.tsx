@@ -159,6 +159,8 @@ export default class Cart extends React.Component<Props> {
                     Общая стоимость товаров: {products.reduce((p, c) => p + (c.price * c.amount), 0).toFixed(2)} Руб.
                     <button
                         type="button"
+                        value={CartState.deliveryMethod}
+                        onClick={this.handleCartStateButtonClick}
                         className={cn(styles.button, styles.floatRight)}
                     >
                         Далее
