@@ -27,6 +27,7 @@ const styles = require('./DeliveryForm.css');
 export interface Props {
     warehouseAddress: string;
     warehouseImageURL: string;
+    initialValues: Partial<DeliveryData>;
     onValuesChange: (data: Partial<DeliveryData>) => void;
     onSubmit: (values: DeliveryData) => Promise<void>;
 }
@@ -37,20 +38,14 @@ export default class DeliveryForm extends React.Component<Props> {
             warehouseAddress,
             warehouseImageURL,
             onValuesChange,
+            initialValues,
         } = this.props;
 
         return (
             <div className={styles.className}>
 
                 <Formik
-                    initialValues={{
-                        method: DeliveryMethod.MOSCOW,
-                        full_name: '',
-                        address: '',
-                        city: '',
-                        carrier: '',
-                        phone: '',
-                    }}
+                    initialValues={initialValues}
                     onSubmit={(values: DeliveryData, actions: FormikActions<DeliveryData>) => {
                         actions.setSubmitting(true);
                         return this.props.onSubmit(values).catch(err => {
@@ -70,6 +65,7 @@ export default class DeliveryForm extends React.Component<Props> {
                             }
                         });
                     }}
+                    isInitialValid={true}
                     validate={(values: Partial<DeliveryData>) => {
                         const err = deliveryDataValidator(values);
 
