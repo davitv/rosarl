@@ -187,6 +187,15 @@ export default class Cart extends React.Component<Props> {
                     <OrderForm />
                 </div>
 
+                <div
+                    className={cn(
+                        styles.orderResult,
+                        {[styles.hidden]: cartState !== CartState.result}
+                    )}
+                >
+                    Hey! You are done with your order! Thank you!
+                </div>
+
 
             </div>
         );
