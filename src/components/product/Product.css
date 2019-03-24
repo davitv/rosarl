@@ -30,7 +30,8 @@
 
 :local .w5 {
     @include column(5%);
-    @include textOverflow()
+    @include textOverflow();
+    overflow-y: hidden;
 }
 
 :local .w10 {
