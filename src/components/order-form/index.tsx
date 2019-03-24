@@ -4,12 +4,13 @@ import { ThunkDispatch } from 'redux-thunk';
 
 import * as types from '../../types';
 import { submitOrder, CartAction } from '../../cart/actions';
-import { OrderData } from '../../cart/types';
+import { OrderData, DeliveryData } from '../../cart/types';
 
 import OrderForm, { FormValues } from './OrderForm';
 
 const mapStateToProps = (state: types.AppState) => ({
     companyInfo: state.ui.companyInfo,
+    deliveryData: state.cart.deliveryData,
     selectedProducts: Object.keys(state.cart.selectedItems).map((k) => ({
         id: parseInt(k, 10),
         amount: state.cart.selectedItems[k]
@@ -22,6 +23,7 @@ const mapDispatchToProps = (dispatch: ThunkDispatch<types.AppState, {}, CartActi
 
 export interface Props {
     companyInfo: types.CompanyInfo;
+    deliveryData: DeliveryData;
     selectedProducts: {id: number; amount: number}[];
     submitOrder: (data: OrderData) => Promise<OrderData>;
 }
@@ -49,7 +51,8 @@ export class OrderFormContainer extends React.Component<Props> {
             const data = {
                 ...values,
                 delivery_method: 0,
-                products: this.props.selectedProducts
+                products: this.props.selectedProducts,
+                delivery: this.props.deliveryData,
             };
             this.props.submitOrder(data).then(res => {
                 resolve(res);
