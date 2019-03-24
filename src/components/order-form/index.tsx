@@ -5,6 +5,7 @@ import { ThunkDispatch } from 'redux-thunk';
 import * as types from '../../types';
 import {
     submitOrder,
+    setOrderData,
     CartAction
 } from '../../cart/actions';
 import { OrderData, DeliveryData } from '../../cart/types';
@@ -25,14 +26,16 @@ const mapStateToProps = (state: types.AppState) => ({
 const mapDispatchToProps = (dispatch: ThunkDispatch<types.AppState, {}, CartAction & UIAction>) => ({
     setCartState: (state: types.CartState) => dispatch(setCart(state)),
     submitOrder: (data: OrderData) => dispatch(submitOrder(data)),
+    setOrderData: (data: OrderData) => dispatch(setOrderData(data)),
 });
 
 export interface Props {
     companyInfo: types.CompanyInfo;
     deliveryData: DeliveryData;
     selectedProducts: {id: number; amount: number}[];
+    setOrderData: (data: OrderData) => void;
     setCartState: (state: types.CartState) => void;
-    submitOrder: (data: OrderData) => Promise<OrderData>;
+    submitOrder: (data: Partial<OrderData>) => Promise<OrderData>;
 }
 
 
@@ -63,6 +66,7 @@ export class OrderFormContainer extends React.Component<Props> {
             };
             this.props.submitOrder(data).then(res => {
                 this.props.setCartState(types.CartState.result);
+                this.props.setOrderData(res);
                 resolve(res);
             }).catch(err => {
                 reject(err);

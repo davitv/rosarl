@@ -4,8 +4,8 @@ import { RouterState } from 'react-router-redux';
 import { IAuth } from './auth/types';
 import { CategoriesState } from './categories/types';
 import { UIState } from './ui/types';
-import { ProductsState } from './products/types';
-import { CartState } from './cart/types';
+import { ProductsState, Product } from './products/types';
+import { CartState, OrderData } from './cart/types';
 
 
 export interface AppState {
@@ -16,4 +16,6 @@ export interface AppState {
     categories: CategoriesState;
     products: ProductsState;
 }
+
 export * from './ui/types';
+export * from './products/types';

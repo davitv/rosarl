@@ -10,7 +10,7 @@ import {
 
 import * as constants from './constants';
 import * as types from './types';
-import { DeliveryData } from './types';
+import { DeliveryData, OrderData } from './types';
 
 export interface IncrementCartItem {
     type: constants.INCREMENT_CART_ITEM;
@@ -48,11 +48,17 @@ export interface SetCartDeliveryData {
     payload: Partial<DeliveryData>;
 }
 
+export interface SetCartOrderData {
+    type: constants.SET_ORDER_DATA;
+    payload: Partial<OrderData>;
+}
+
 export type CartAction = (
     IncrementCartItem |
     SetCartDeliveryFormValidity |
     SetCartItemAmount |
     LoadCartProducts |
+    SetCartOrderData |
     SetCartDeliveryData |
     DecrementCartItem
 );
@@ -77,6 +83,15 @@ export function setDeliveryFormData(data: Partial<DeliveryData>) {
     return (dispatch: Dispatch<SetCartDeliveryData>) => {
         dispatch({
             type: constants.SET_DELIVERY_DATA,
+            payload: data
+        });
+    }
+}
+
+export function setOrderData(data: Partial<OrderData>) {
+    return (dispatch: Dispatch<SetCartOrderData>) => {
+        dispatch({
+            type: constants.SET_ORDER_DATA,
             payload: data
         });
     }

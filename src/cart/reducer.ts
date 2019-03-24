@@ -11,6 +11,9 @@ const getDefaultState = (): types.CartState => ({
     selectedItems: {},
     products: [],
     deliveryData: {},
+    orderData: {
+        products: []
+    },
 });
 
 export const reducer = (state: types.CartState = getDefaultState(), action: CartAction) => {
@@ -59,6 +62,11 @@ export const reducer = (state: types.CartState = getDefaultState(), action: Cart
             return {
                 ...state,
                 deliveryData: action.payload
+            };
+        case constants.SET_ORDER_DATA:
+            return {
+                ...state,
+                orderData: action.payload
             };
         default:
             return state;

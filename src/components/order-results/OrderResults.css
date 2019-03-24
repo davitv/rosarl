@@ -1,0 +1,48 @@
+@import '../../scss/clearfix';
+
+@mixin textOverflow() {
+    overflow-x: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+:local .orderName,
+:local .headline,
+:local .productsListHeadline {
+    margin-bottom: 10px;
+}
+
+:local .className {
+    padding: 15px;
+}
+
+
+:local .product {
+    @include clearfix;
+    font-size: 14px;
+}
+
+:local .productName {
+    @include textOverflow();
+    max-width: 400px;
+    display: inline-block;
+}
+
+:local .productPrice {
+    display: inline-block;
+    float: right;
+}
+
+:local .priceSummary {
+    @include clearfix;
+}
+
+:local .total {
+    float: right;
+}
+
+:local .printLink {
+    margin: 10px 0;
+    text-decoration: none;
+    display: inline-block;
+}

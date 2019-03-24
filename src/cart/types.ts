@@ -1,3 +1,4 @@
+import {Product} from '../products/types';
 
 export enum BusinessType {
     INDIVIDUAL = 'individual',
@@ -6,6 +7,7 @@ export enum BusinessType {
 }
 
 export interface OrderData {
+    id?: number;
     order_type: BusinessType;
     organization_name: string;
     phone: string;
@@ -30,6 +32,8 @@ export interface OrderData {
     products: {
         id: number;
         amount: number;
+
+        product?: Product;
     }[];
 }
 
@@ -60,6 +64,7 @@ export interface DeliveryData {
 export interface CartState {
     selectedItems: {[key: string]: number};
     products: CartProduct[];
+    orderData: Partial<OrderData>;
     deliveryData: Partial<DeliveryData>;
 }
 

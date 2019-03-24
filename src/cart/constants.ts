@@ -18,6 +18,9 @@ export type SET_DELIVERY_FORM_VALIDITY = typeof SET_DELIVERY_FORM_VALIDITY;
 export const SET_DELIVERY_DATA = 'SET_DELIVERY_DATA';
 export type SET_DELIVERY_DATA = typeof SET_DELIVERY_DATA;
 
+export const SET_ORDER_DATA = 'SET_ORDER_DATA';
+export type SET_ORDER_DATA = typeof SET_ORDER_DATA;
+
 export const SUBMIT_ORDER = 'SUBMIT_ORDER';
 export type SUBMIT_ORDER = typeof SUBMIT_ORDER;
 

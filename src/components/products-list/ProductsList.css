@@ -12,6 +12,7 @@
 :local .loading {
     padding: 10px 0 30px 0;
 };
+
 :local .className {
     padding: 15px 15px 0 15px;
     float: left;
@@ -33,6 +34,7 @@
 :local .listWrapper {
     padding: 15px 0;
 }
+
 :local .headline {
     @include clearfix;
 
