@@ -1,0 +1,3 @@
+
+export const SET_USER_DETAILS = 'SET_USER_DETAILS';
+export type SET_USER_DETAILS = typeof SET_USER_DETAILS;

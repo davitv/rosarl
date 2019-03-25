@@ -22,7 +22,7 @@ export interface Props {
     aboutText: string;
     paymentText: string;
     paymentImageURL: string;
-
+    isAuthenticated: boolean;
     contacts: {
         address: string;
         managers: [string, string][];
@@ -50,6 +50,7 @@ class Header extends React.Component<Props> {
             aboutText,
             paymentText,
             contacts,
+            isAuthenticated,
         } = this.props;
         const about = aboutText.split('\r\n');
         const payment = paymentText.split('\r\n');
@@ -274,33 +275,45 @@ class Header extends React.Component<Props> {
                 </div>
                 <div className={styles.floatRight}>
                     <div className={styles.navigation}>
-
-                        <Dropdown>
-                            {(togglerRef, contentRef, isOpen) =>
-                                <div className={styles.item}>
-                                    <a
-                                        href="#"
-                                        className={styles.navigationLink}
-                                        ref={togglerRef}
-                                    >
-                                        <i className={styles.icon}><Icon icon="user" /></i>
-                                        Войти
-                                    </a>
-                                    <div
-                                        className={cx(
-                                            styles.dropdown,
-                                            styles.dropdownSmall,
-                                            {[styles.dropdownOpen]: isOpen}
-                                        )}
-                                        ref={contentRef}
-                                    >
-                                        <div className={styles.dropdownContent}>
-                                            <SigninForm />
+                        {isAuthenticated ?
+                            <div className={styles.item}>
+                                <Link
+                                    to="/account/"
+                                    className={styles.navigationLink}
+                                >
+                                    <i className={styles.icon}><Icon icon="user" /></i>
+                                    Аккаунт
+                                </Link>
+                            </div>
+                            :
+                            <Dropdown>
+                                {(togglerRef, contentRef, isOpen) =>
+                                    <div className={styles.item}>
+                                        <a
+                                            href="#"
+                                            className={styles.navigationLink}
+                                            ref={togglerRef}
+                                        >
+                                            <i className={styles.icon}><Icon icon="user" /></i>
+                                            Войти
+                                        </a>
+                                        <div
+                                            className={cx(
+                                                styles.dropdown,
+                                                styles.dropdownSmall,
+                                                {[styles.dropdownOpen]: isOpen}
+                                            )}
+                                            ref={contentRef}
+                                        >
+                                            <div className={styles.dropdownContent}>
+                                                <SigninForm />
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                            }
-                        </Dropdown>
+                                }
+                            </Dropdown>
+                        }
+
                         <Dropdown>
                             {(togglerRef, contentRef, isOpen) =>
                                 <div className={styles.item}>

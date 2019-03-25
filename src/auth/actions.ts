@@ -47,16 +47,3 @@ export const login = (data: {username: string; password: string}) => {
     };
 }
 
-
-export const getUserDetails = () => {
-    return (dispatch: ThunkDispatch<{}, {}, any>,  getState: () => any): Promise<any> => {
-        const token = getState().auth.token;
-        return retrieveData('/api/user-info/', token).then((res: any) => {
-            dispatch({
-                type: constants.SET_AUTH_CREDENTIALS,
-                payload: res
-            });
-            return res;
-        });
-    };
-}
