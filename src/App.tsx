@@ -26,6 +26,11 @@ class App extends React.Component {
             component={Catalogue}
         />
         <Route
+            path='/category/:category/'
+            exact={true}
+            component={Catalogue}
+        />
+        <Route
             path='/catalogue/'
             exact={true}
             component={Catalogue}

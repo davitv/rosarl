@@ -8,6 +8,7 @@
 :local .mapWrapper {
     float: left;
     width: 83.33333333%;
+    padding: 0 25px;
     height: calc(100vh - 60px);
     background-image: url(../../assets/homepage-bg.png);
     background-position: top;
@@ -16,3 +17,38 @@
     background-repeat: no-repeat;
     background-color: hsla(0,0%,77%,.77);
 }
+
+
+:local .manufacturerRow {
+    @include clearfix();
+    height: 80px;
+    &:first-child {
+        margin-top: 50px;
+    }
+
+}
+
+:local .manufacturer {
+    float: left;
+    display: block;
+    img {
+        max-height: 60px;
+        max-width: 100%;
+    }
+}
+
+:local .categories {
+    float: left;
+    display: block;
+    margin-left: 80px;
+    img {
+        max-height: 60px;
+        max-width: 100%;
+    }
+}
+
+
+:local .category {
+    display: inline-block;
+    margin-left: 50px;
+};
