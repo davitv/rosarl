@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { ThunkDispatch } from 'redux-thunk';
 import * as types from '../../types';
 
-import { logout, AuthAction } from '../../auth/actions';
+import { logout, getUserDetails, AuthAction } from '../../auth/actions';
 import { toggleCart, loadCompanyInfo, UIAction } from '../../ui/actions';
 import { CompanyInfo } from '../../ui/types';
 
@@ -16,6 +16,7 @@ export interface Props {
 
     toggleCart: (isOpen: boolean) => void;
     loadCompanyInfo: () => Promise<any>;
+    getUserDetails: () => Promise<any>;
 }
 
 const mapStateToProps = (state: types.AppState) => ({
@@ -29,13 +30,14 @@ const mapDispatchToProps = (dispatch: ThunkDispatch<types.AppState, {}, UIAction
         dispatch(toggleCart(isOpen))
     },
     loadCompanyInfo: () => dispatch(loadCompanyInfo()),
+    getUserDetails: () => dispatch(getUserDetails()),
 });
 
 export class HeaderContainer extends React.Component<Props> {
     constructor(props: Props) {
         super(props);
         this.toggleCart = this.toggleCart.bind(this);
-
+        props.getUserDetails();
         props.loadCompanyInfo();
     }
 

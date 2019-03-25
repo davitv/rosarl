@@ -12,6 +12,7 @@ import TextInput from '../form-fields/TextInput';
 import Dropdown from '../dropdown';
 
 import CallBackForm from '../callback-form';
+import SigninForm from '../signin-form';
 
 const loaderURL = require('../../assets/loader-white.png');
 
@@ -294,7 +295,7 @@ class Header extends React.Component<Props> {
                                         ref={contentRef}
                                     >
                                         <div className={styles.dropdownContent}>
-                                            <CallBackForm />
+                                            <SigninForm />
                                         </div>
                                     </div>
                                 </div>
