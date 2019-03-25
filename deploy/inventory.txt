@@ -1,1 +1,2 @@
-dayspot ansible_host=77.244.213.11 ansible_user=root
+[rosar]
+95.213.236.60 ansible_user=root

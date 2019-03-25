@@ -20,7 +20,7 @@ export type PhoneCallsAction = RequestCallAction;
 export const requestPhoneCall = (data: {name: string; phone: string}) => {
     return (dispatch: ThunkDispatch<{}, {}, Action>,  getState: () => types.AppState): Promise<PhoneCallRequestData> => {
         const token = getState().auth.token;
-        return persistData('http://78.155.206.50/api/callback-request/', data, token).then(res => {
+        return persistData('/api/callback-request/', data, token).then(res => {
             dispatch({
                 type: constants.REQUEST_PHONE_CALL,
                 payload: res

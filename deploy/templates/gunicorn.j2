@@ -1,0 +1,11 @@
+description "Gunicorn application server handling Rosar-L"
+
+start on runlevel [2345]
+stop on runlevel [!2345]
+
+respawn
+setuid root
+setgid www-data
+chdir {{app_folder}}
+
+exec {{app_folder}}/venv//bin/gunicorn --workers 3 --bind unix:{{nginx_sock_path}} rosarl.wsgi:application

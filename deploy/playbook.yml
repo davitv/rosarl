@@ -1,38 +1,79 @@
 ---
-- hosts: dayspot
+- hosts: rosar
+  gather_facts: no
   vars:
-    app_name: 'dayspot'
-    app_folder: '/webapp/spa/'
-
-  gather_facts: False
+    app_name: 'rosar'
+    app_folder: '/webapps/rosar/'
+    virtualenv_path: '/webapps/rosar/venv/'
+    media_root: '/public/rosar/media/'
+    static_root: '/public/rosar/static/'
+    site_folder_path: '/public/rosar/site/'
+    nginx_sock_path: '/tmp/rosar.sock'
+    nginx_conf_path: '/etc/nginx/sites-available/default'
+    gunicorn_conf_path: '/etc/init/rosar.conf'
   pre_tasks:
-
-    # - apt_repository:
-    #     repo: 'ppa:jonathonf/python-3.6'
-    #     state: 'absent'
-    # - name: apt-get update
-    #   raw: apt-get update -qq
-
-    # - name: 'Install python 2 (ansible dep)'
-    #   raw: sudo apt-get -y install python
-    #   become: yes
-
-  tasks:
     - name: test connection
       ping:
+    # - name: install software-properties-common
+    #   raw: apt-get install -y software-properties-common
+    # - name: apt-get update
+    #   raw: apt-get update -qq
+    # - name: 'install python2'
+    #   raw: sudo apt-get -y install python-minimal
+    # - name: 'add apt repository ppa:jonathonf/python-3.6'
+    #   raw: add-apt-repository -y ppa:jonathonf/python-3.6
+    # - name: apt-get update
+    #   raw: apt-get update -qq
+  tasks:
 
-    - name: Ensure app directory exists
-      file: path="{{ app_folder }}" state=directory owner=www-data group=www-data mode=0775 recurse=yes
+    # - name: Ensure app directory exists
+    #   file: path="{{ app_folder }}" state=directory owner=www-data group=www-data mode=0775 recurse=yes
 
-    - name: Sync app build folder
+    # - name: Ensure site directory exists
+    #   file: path="{{ site_folder_path }}" state=directory owner=www-data group=www-data mode=0775 recurse=yes
+
+    # - name: Ensure app media directory exists
+    #   file: path="{{ media_root }}" state=directory owner=www-data group=www-data mode=0775 recurse=yes
+
+    # - name: Ensure static root directory exists
+    #   file: path="{{ static_root }}" state=directory owner=www-data group=www-data mode=0775 recurse=yes
+
+    # - name: Install needed apt packages
+    #   apt: name={{item}} state=installed
+    #   with_items:
+    #       - software-properties-common
+    #       - python-software-properties
+    #       - nginx
+    #       - libjpeg-dev
+    #       - libtiff-dev
+    #       - zlib1g-dev
+    #       - libfreetype6-dev
+    #       - liblcms2-dev
+    #       - libffi-dev # django post office dep
+    #       - vim
+    #       - build-essential
+    #       - python3.6
+    #       - python3.6-dev
+    #       - libpq-dev
+    #       - libmysqlclient-dev
+    #       - mysql-client
+    #       - mysql-server
+    #       - python-psycopg2
+    #       - python-virtualenv
+
+
+    - name: Copy site folder to server
       synchronize:
         src: '../build/'
-        dest: "{{app_folder}}"
+        dest: "{{site_folder_path}}"
 
-    - name: Restart "{{app_name}}" process
-      supervisorctl:
-          name: "{{app_name}}:"
-          state: restarted
-          config: /etc/supervisor/supervisord.conf
-      tags:
-         - supervisor
+    - name: Ensure rosarl gunicorn service is running
+      service:
+        name: rosarl
+        state: restarted
+
+    - name: Restart nginx
+      service:
+        name: nginx
+        state: restarted
+

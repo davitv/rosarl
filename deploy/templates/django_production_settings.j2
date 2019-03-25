@@ -1,0 +1,67 @@
+from .base import *
+
+DEBUG = False
+
+
+MEDIA_ROOT = "{{media_root}}"
+STATIC_ROOT = "{{static_root}}"
+FOLDER_FOR_1C_ORDERS = os.path.join(MEDIA_ROOT, 'orders')
+
+TEMP_FILES_URL = '/tmp/django-media/'
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'rosarl',
+        'USER': 'rosarl',
+        'PASSWORD': 'JJWEOIUWOEshjgsa23123jhg',
+    }
+}
+
+# EMAIL_BACKEND = 'post_office.EmailBackend'
+
+EMAIL_BACKEND = 'django_smtp_ssl.SSLEmailBackend'
+EMAIL_HOST='smtp.gmail.com'
+EMAIL_PORT=465
+EMAIL_HOST_USER = 'order@rosar-l.ru'
+EMAIL_HOST_PASSWORD = 'Qwerty2017'
+DEFAULT_EMAIL_FROM = 'order@rosar-l.ru'
+DEFAULT_ORDER_EMAIL = 'eadmin@rosar-l.ru'
+
+ALLOWED_HOSTS = ['82.202.204.97', '127.0.0.1', '78.155.206.50']
+
+EMAIL_LINKS_URL = 'https://fox-express.com'
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'filters': {
+        'require_debug_false': {
+            '()': 'django.utils.log.RequireDebugFalse'
+        }
+    },
+    'handlers': {
+        'mail_admins': {
+            'level': 'ERROR',
+            'filters': ['require_debug_false'],
+            'class': 'django.utils.log.AdminEmailHandler'
+        },
+        'file': {
+            'level': 'ERROR',
+            'class': 'logging.FileHandler',
+            'filename': os.path.join('/webapps/errors.rosar.log'),
+        }
+    },
+    'loggers': {
+        'django.request': {
+            'handlers': ['mail_admins'],
+            'level': 'ERROR',
+            'propagate': True,
+        },
+        'django': {
+            'handlers': ['file'],
+            'level': 'DEBUG',
+            'propagate': True,
+        }
+    }
+}
