@@ -41,9 +41,14 @@ export interface Props {
     initialDeliveryData: DeliveryData;
 }
 
+export interface OwnProps {
+    initialValues?: DeliveryData;
+    readOnly?: boolean;
+}
 
-export class DeliveryFormContainer extends React.Component<Props> {
-    constructor(props: Props) {
+
+export class DeliveryFormContainer extends React.Component<Props & OwnProps> {
+    constructor(props: Props & OwnProps) {
         super(props);
 
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -53,7 +58,8 @@ export class DeliveryFormContainer extends React.Component<Props> {
     public render() {
         return (
             <DeliveryForm
-                initialValues={this.props.initialDeliveryData}
+                readOnly={this.props.readOnly}
+                initialValues={this.props.initialValues || this.props.initialDeliveryData}
                 warehouseAddress={this.props.companyInfo.contacts.warehouseAddress}
                 warehouseImageURL={this.props.companyInfo.contacts.routeScheme}
                 onSubmit={this.handleSubmit}

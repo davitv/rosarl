@@ -4,6 +4,9 @@
 :local .className {
 }
 
+:local .headline {
+    margin-bottom: 20px;
+}
 :local .methodChoices {
     @include clearfix;
     margin-bottom: 15px;

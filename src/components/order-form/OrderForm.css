@@ -4,6 +4,18 @@
 :local .className {
 }
 
+
+:local .readOnly {
+    label {
+        color: #888;
+    }
+}
+
+
+:local .headline {
+    font-size: 18px;
+    margin-bottom: 20px;
+}
 :local .methodChoices {
     @include clearfix;
     margin-bottom: 15px;
@@ -76,6 +88,13 @@
     position: relative;
 }
 
+:local .readOnly {
+    .field {
+
+        padding: 10px;
+        background: #f0f0f0;
+    }
+}
 :local .fieldRadio {
     display: inline-block;
     margin-right: 15px;

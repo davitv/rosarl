@@ -10,3 +10,14 @@
     border: 1px solid #ccc;
     box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
 }
+
+:local .readOnly {
+    border: none;
+    box-shadow: none;
+    padding: 0;
+    font-size: 1rem;
+    background-color: transparent;
+    &:focus {
+        outline: none;
+    }
+}

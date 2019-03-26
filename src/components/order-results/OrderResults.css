@@ -12,6 +12,9 @@
     margin-bottom: 10px;
 }
 
+:local .listView {
+    background: #f0f0f0;
+}
 :local .className {
     padding: 15px;
 }

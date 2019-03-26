@@ -1,3 +1,4 @@
+import { BusinessType } from '../cart/types';
 
 export interface Address {
     id:  number;
@@ -7,7 +8,7 @@ export interface Address {
     city:  string;
     email:  null | string;
     full_name:  string;
-    carrier:  number;
+    carrier:  string;
 }
 
 export interface OrderProduct {
@@ -33,6 +34,27 @@ export interface OrderProduct {
 
 export interface Order {
     id: number;
+    bank_name: string;
+    bik: string;
+    city: string;
+    date_added: string;
+    date_modified: string;
+    delivery: number;
+    delivery_method: string;
+    email: string;
+    first_name: string;
+    individual_address: string;
+    inn: string;
+    korn: string;
+    kpp: string;
+    last_name: string;
+    legal_address: string;
+    order_type: BusinessType;
+    organization_name: string;
+    patronymic: string;
+    phone: string;
+    postal: string;
+    rsn: string;
     products: OrderProduct[];
 }
 

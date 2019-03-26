@@ -21,6 +21,7 @@ export enum BusinessType {
 }
 
 export interface FormValues {
+    id?: number;
     order_type: BusinessType;
     organization_name: string;
     phone: string;
@@ -36,9 +37,9 @@ export interface FormValues {
     last_name: string;
     patronymic: string;
     legal_address: string;
-    address: string;
+    individual_address: string;
     city: string;
-    postal_code: string;
+    postal: string;
 
     bank_name: string;
 }
@@ -70,7 +71,7 @@ const renderInputTextField = (
             <label htmlFor={id}>{label}</label>
             {readOnly ?
                 <div>
-                    {value}
+                    {value || 'Значение не указано.'}
                 </div>
                 :
                 <Field
@@ -100,6 +101,8 @@ export default class OrderForm extends React.Component<Props> {
             initialValues,
         } = this.props;
 
+        console.log(initialValues);
+
         return (
             <div className={styles.className}>
 
@@ -126,7 +129,7 @@ export default class OrderForm extends React.Component<Props> {
                         legal_address: '',
                         address: '',
                         city: '',
-                        postal_code: '',
+                        postal: '',
                     }}
                     isInitialValid={true}
                     onSubmit={(values: FormValues, actions: FormikActions<FormValues>) => {
@@ -171,70 +174,81 @@ export default class OrderForm extends React.Component<Props> {
                         return (
                             <form
                                 onSubmit={handleSubmit}
-                                className={styles.form}
+                                className={cn(
+                                    styles.form,
+                                    {
+                                        [styles.readOnly]: readOnly
+                                    }
+                                )}
                             >
-                                <div className={styles.businessTypeChoices}>
-                                    <span className={styles.businessTypeLabel}>К какой категории вы относитесь:</span>
-                                    <UniqueID>
-                                    {(id) =>
-                                        <div
-                                            className={cn(
-                                                styles.field,
-                                                styles.fieldRadio,
-                                                {[styles.hasError]: errors.order_type && touched.order_type}
-                                            )}
-                                        >
-                                            <Field
-                                                id={id}
-                                                name="order_type"
-                                                value={BusinessType.INDIVIDUAL}
-                                                checked={values.order_type === BusinessType.INDIVIDUAL}
-                                                type="radio"
-                                            />
-                                            <label htmlFor={id}>Физ. лицо</label>
-                                        </div>
-                                    }
-                                    </UniqueID>
-                                    <UniqueID>
-                                    {(id) =>
-                                        <div
-                                            className={cn(
-                                                styles.field,
-                                                styles.fieldRadio,
-                                                {[styles.hasError]: errors.order_type && touched.order_type}
-                                            )}
-                                        >
-                                            <Field
-                                                id={id}
-                                                name="order_type"
-                                                value={BusinessType.LEGAL}
-                                                type="radio"
-                                            />
-                                            <label htmlFor={id}>Юр. лицо</label>
+                                {readOnly ?
+                                    <div>
+                                        <h3 className={styles.headline}> Заказ номер {initialValues ? initialValues.id : ''}</h3>
+                                    </div>
+                                    :
+                                    <div className={styles.businessTypeChoices}>
+                                        <span className={styles.businessTypeLabel}>К какой категории вы относитесь:</span>
+                                        <UniqueID>
+                                        {(id) =>
+                                            <div
+                                                className={cn(
+                                                    styles.field,
+                                                    styles.fieldRadio,
+                                                    {[styles.hasError]: errors.order_type && touched.order_type}
+                                                )}
+                                            >
+                                                <Field
+                                                    id={id}
+                                                    name="order_type"
+                                                    value={BusinessType.INDIVIDUAL}
+                                                    checked={values.order_type === BusinessType.INDIVIDUAL}
+                                                    type="radio"
+                                                />
+                                                <label htmlFor={id}>Физ. лицо</label>
+                                            </div>
+                                        }
+                                        </UniqueID>
+                                        <UniqueID>
+                                        {(id) =>
+                                            <div
+                                                className={cn(
+                                                    styles.field,
+                                                    styles.fieldRadio,
+                                                    {[styles.hasError]: errors.order_type && touched.order_type}
+                                                )}
+                                            >
+                                                <Field
+                                                    id={id}
+                                                    name="order_type"
+                                                    value={BusinessType.LEGAL}
+                                                    type="radio"
+                                                />
+                                                <label htmlFor={id}>Юр. лицо</label>
 
-                                        </div>
-                                    }
-                                    </UniqueID>
-                                    <UniqueID>
-                                    {(id) =>
-                                        <div
-                                            className={cn(
-                                                styles.field,
-                                                styles.fieldRadio,
-                                                {[styles.hasError]: errors.order_type && touched.order_type}
-                                            )}
-                                        >
-                                            <Field
-                                                id={id}
-                                                name="order_type"
-                                                value={BusinessType.RETAILER}
-                                                type="radio"
-                                            />
-                                            <label htmlFor={id}>ИП</label>
-                                        </div>
-                                    }
-                                    </UniqueID>
-                                </div>
+                                            </div>
+                                        }
+                                        </UniqueID>
+                                        <UniqueID>
+                                        {(id) =>
+                                            <div
+                                                className={cn(
+                                                    styles.field,
+                                                    styles.fieldRadio,
+                                                    {[styles.hasError]: errors.order_type && touched.order_type}
+                                                )}
+                                            >
+                                                <Field
+                                                    id={id}
+                                                    name="order_type"
+                                                    value={BusinessType.RETAILER}
+                                                    type="radio"
+                                                />
+                                                <label htmlFor={id}>ИП</label>
+                                            </div>
+                                        }
+                                        </UniqueID>
+                                    </div>
+                                }
 
                                 {values.order_type !== BusinessType.INDIVIDUAL &&
                                     <div
@@ -303,7 +317,7 @@ export default class OrderForm extends React.Component<Props> {
                                                 {renderField('legal_address', 'Юридический адрес')}
                                             </div>
                                             <div className={styles.column50}>
-                                                {renderField('address', 'Почтовый адрес')}
+                                                {renderField('individual_address', 'Почтовый адрес')}
                                             </div>
                                         </div>
                                          <div className={styles.row}>
@@ -311,7 +325,7 @@ export default class OrderForm extends React.Component<Props> {
                                                 {renderField('city', 'Город')}
                                             </div>
                                             <div className={styles.column50}>
-                                                {renderField('postal_code', 'Индекс')}
+                                                {renderField('postal', 'Индекс')}
                                             </div>
                                         </div>
                                     </div>
@@ -359,22 +373,24 @@ export default class OrderForm extends React.Component<Props> {
                                          {status}
                                     </div>
                                 }
-                                <button
-                                    className={styles.buttonSubmit}
-                                    type="submit"
-                                    disabled={!isValid}
-                                >
-                                    {isSubmitting ?
-                                        <span>
-                                            <Icon icon="spinner" spin fixedWidth />
-                                            Отправка запроса...
-                                        </span>
-                                        :
-                                        <span>
-                                            Подтвердить
-                                        </span>
-                                    }
-                                </button>
+                                {!readOnly &&
+                                    <button
+                                        className={styles.buttonSubmit}
+                                        type="submit"
+                                        disabled={!isValid}
+                                    >
+                                        {isSubmitting ?
+                                            <span>
+                                                <Icon icon="spinner" spin fixedWidth />
+                                                Отправка запроса...
+                                            </span>
+                                            :
+                                            <span>
+                                                Подтвердить
+                                            </span>
+                                        }
+                                    </button>
+                                }
                             </form>
                         )
                     }}

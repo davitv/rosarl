@@ -4,7 +4,19 @@ import { OrderData } from '../../cart/types';
 import * as types from '../../types';
 
 export interface Props {
-    order: OrderData;
+    id: number;
+    first_name: string;
+    last_name: string;
+    patronymic: string;
+    products: {
+        amount: number;
+        product: {
+            product_id: number;
+            name: string;
+            price: number
+        }
+    }[];
+    productsListView?: boolean;
 }
 
 const styles = require('./OrderResults.css');
@@ -17,18 +29,24 @@ export default class OrderResults extends React.Component<Props> {
             first_name,
             last_name,
             patronymic,
-        } = this.props.order;
+            products,
+            productsListView,
+        } = this.props;
 
         return (
-            <div className={styles.className}>
+            <div className={styles.className + (productsListView ? ' ' + styles.listView : '')}>
+                {!productsListView &&
                 <h3 className={styles.headline}>
                     Спасибо! Заказ номер {id} принят!
                 </h3>
+                }
+                {!productsListView &&
                 <h3 className={styles.orderName}>
                     ФИО: {first_name} {last_name} {patronymic}
                 </h3>
+                }
                 <h3 className={styles.productsListHeadline}>Список товаров</h3>
-                {this.props.order.products.map(({amount, product: {product_id, name, price}}: any) =>
+                {products.map(({amount, product: {product_id, name, price}}: any) =>
                     <div key={product_id} className={styles.product}>
                         <span className={styles.productName}>
                             {name}
@@ -41,7 +59,7 @@ export default class OrderResults extends React.Component<Props> {
                 <h3 className={styles.priceSummary}>
                     Общая стоимость товаров
                     <span className={styles.total}>
-                        {this.props.order.products.reduce((p, {amount, product: {price}}: any) => amount * price, 0)} Руб.
+                        {Math.round(products.reduce((p, {amount, product: {price}}: any) => amount * price, 0) * 100) / 100 } Руб.
                     </span>
                 </h3>
 

@@ -5,4 +5,4 @@ const styles = require('./TextInput.css');
 
 export type Props = React.InputHTMLAttributes<HTMLInputElement>;
 
-export default (props: Props) => <input type="text" className={styles.className} {...props} />;
+export default (props: Props) => <input type="text" className={styles.className + (props.readOnly ? ' ' + styles.readOnly : '')} {...props} />;

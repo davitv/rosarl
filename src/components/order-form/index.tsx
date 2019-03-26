@@ -40,6 +40,7 @@ export interface Props {
 
 export class OwnProps {
     intialValues?: FormValues;
+    readOnly?: boolean;
 }
 
 export class OrderFormContainer extends React.Component<Props & OwnProps> {
@@ -52,7 +53,8 @@ export class OrderFormContainer extends React.Component<Props & OwnProps> {
     public render() {
         return (
             <OrderForm
-                readOnly={true}
+                readOnly={!!this.props.readOnly}
+                initialValues={this.props.intialValues}
                 warehouseAddress={this.props.companyInfo.contacts.warehouseAddress}
                 warehouseImageURL={this.props.companyInfo.contacts.routeScheme}
                 onSubmit={this.handleSubmit}

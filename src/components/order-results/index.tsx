@@ -9,6 +9,7 @@ import OrderResults from './OrderResults';
 export interface Props {
     products: types.Product[];
     order: OrderData;
+    productsListView?: boolean;
 }
 
 const mapStateToProps = (state: types.AppState) => ({
@@ -16,31 +17,16 @@ const mapStateToProps = (state: types.AppState) => ({
     order: state.cart.orderData,
 });
 
-const defaultProductData = {
-    product_id: 0,
-    name: '',
-    amount: 0,
-    article: '',
-    description: '',
-    product_s_desc: '',
-    price: 0,
-    width: 0,
-    height: 0,
-    length: 0,
-    weight: 0,
-
-    product_full_image: '',
-    product_thumb_image: '',
-    images: [],
-    attributes: [],
-}
-
 export class OrderResultsContainer extends React.Component<Props> {
     public render() {
-
         return (
             <OrderResults
-                order={this.props.order}
+                productsListView={this.props.productsListView}
+                id={this.props.order.id as number}
+                first_name={this.props.order.first_name}
+                last_name={this.props.order.last_name}
+                patronymic={this.props.order.patronymic}
+                products={this.props.order.products as any}
             />
         );
     }

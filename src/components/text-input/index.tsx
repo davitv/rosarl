@@ -5,18 +5,21 @@ import TextInput from './TextInput';
 
 export interface Props extends FieldProps {
     id?: string;
+    readOnly?: boolean;
 }
 
 export class TextInputFormikWrapper extends React.Component<Props> {
     public render() {
         const {
             id,
-            field
+            field,
+            readOnly
         } = this.props;
 
         return (
             <TextInput
                 id={id}
+                readOnly={readOnly}
                 name={name}
                 {...field}
             />

@@ -1,4 +1,4 @@
-import {Product} from '../products/types';
+import { Product } from '../products/types';
 
 export enum BusinessType {
     INDIVIDUAL = 'individual',
@@ -23,9 +23,9 @@ export interface OrderData {
     last_name: string;
     patronymic: string;
     legal_address: string;
-    address: string;
+    individual_address: string;
     city: string;
-    postal_code: string;
+    postal: string;
 
     bank_name: string;
 
@@ -51,6 +51,7 @@ export interface CartProduct {
 }
 
 export interface DeliveryData {
+    id?: number;
     full_name: string;
     method: DeliveryMethod;
     phone: string;

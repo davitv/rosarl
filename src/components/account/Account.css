@@ -1,4 +1,43 @@
+@import '../../scss/clearfix';
 
-local .className {
+:local .className {
+    @include clearfix;
+    padding: 15px;
+}
 
+:local .orders,
+:local .addresses {
+    float: left;
+    width: 50%;
+}
+
+:local .orders {
+    padding-right: 10px;
+}
+
+:local .addresses {
+    padding-left: 10px;
+}
+
+:local .ordersHeadline {
+    font-size: 22px;
+    color: #425d7b;
+    font-weight: 600;
+    margin: 10px 0 20px 0;
+}
+
+:local .order {
+    padding: 15px;
+    background-color: #fff;
+    box-shadow: 1px 1px 2px #ccc;
+
+    margin-bottom: 20px;
+}
+
+:local .address {
+    margin-bottom: 40px;
+    border-bottom: solid 1px #ccc;
+    border-top: solid 1px #ccc;
+    background-color: #f0f0f0;
+    padding: 10px;
 }

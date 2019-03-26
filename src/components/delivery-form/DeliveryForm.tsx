@@ -27,6 +27,7 @@ const styles = require('./DeliveryForm.css');
 export interface Props {
     warehouseAddress: string;
     warehouseImageURL: string;
+    readOnly?: boolean;
     initialValues: Partial<DeliveryData>;
     onValuesChange: (data: Partial<DeliveryData>) => void;
     onSubmit: (values: DeliveryData) => Promise<void>;
@@ -39,11 +40,16 @@ export default class DeliveryForm extends React.Component<Props> {
             warehouseImageURL,
             onValuesChange,
             initialValues,
+            readOnly
         } = this.props;
 
         return (
             <div className={styles.className}>
-
+                {readOnly &&
+                    <div>
+                        <h3 className={styles.headline}> Адрес {initialValues ? '#' + initialValues.id : ''}</h3>
+                    </div>
+                }
                 <Formik
                     initialValues={initialValues}
                     onSubmit={(values: DeliveryData, actions: FormikActions<DeliveryData>) => {
@@ -90,47 +96,49 @@ export default class DeliveryForm extends React.Component<Props> {
                             onSubmit={handleSubmit}
                             className={styles.form}
                         >
-                            <div className={styles.methodChoices}>
-                                <button
-                                    type="button"
-                                    onClick={() => setFieldValue('method', DeliveryMethod.MOSCOW)}
-                                    value={DeliveryMethod.MOSCOW}
-                                    className={cn(
-                                        styles.methodChoice,
-                                        {[styles.methodChoiceActive]: values.method === DeliveryMethod.MOSCOW}
-                                    )}
-                                >
-                                    <Icon className={styles.deliveryIcon} icon="truck" />
-                                    <br />
-                                    Доставка по москве
-                                </button>
-                                <button
-                                    type="button"
-                                    onClick={() => setFieldValue('method', DeliveryMethod.RUSSIA)}
-                                    value={DeliveryMethod.RUSSIA}
-                                    className={cn(
-                                        styles.methodChoice,
-                                        {[styles.methodChoiceActive]: values.method === DeliveryMethod.RUSSIA}
-                                    )}
-                                >
-                                    <Icon className={styles.deliveryIcon} icon="globe-americas" />
-                                    <br />
-                                    Доставка по России
-                                </button>
-                                <button
-                                    type="button"
-                                    value={DeliveryMethod.PICKUP}
-                                    onClick={() => setFieldValue('method', DeliveryMethod.PICKUP)}
-                                    className={cn(
-                                        styles.methodChoice,
-                                        {[styles.methodChoiceActive]: values.method === DeliveryMethod.PICKUP}
-                                    )}
-                                >
-                                    <Icon className={styles.deliveryIcon} icon="user" />
-                                    <br />
-                                    Самовывоз
-                                </button>
-                            </div>
+                            {!readOnly &&
+                                <div className={styles.methodChoices}>
+                                    <button
+                                        type="button"
+                                        onClick={() => setFieldValue('method', DeliveryMethod.MOSCOW)}
+                                        value={DeliveryMethod.MOSCOW}
+                                        className={cn(
+                                            styles.methodChoice,
+                                            {[styles.methodChoiceActive]: values.method === DeliveryMethod.MOSCOW}
+                                        )}
+                                    >
+                                        <Icon className={styles.deliveryIcon} icon="truck" />
+                                        <br />
+                                        Доставка по москве
+                                    </button>
+                                    <button
+                                        type="button"
+                                        onClick={() => setFieldValue('method', DeliveryMethod.RUSSIA)}
+                                        value={DeliveryMethod.RUSSIA}
+                                        className={cn(
+                                            styles.methodChoice,
+                                            {[styles.methodChoiceActive]: values.method === DeliveryMethod.RUSSIA}
+                                        )}
+                                    >
+                                        <Icon className={styles.deliveryIcon} icon="globe-americas" />
+                                        <br />
+                                        Доставка по России
+                                    </button>
+                                    <button
+                                        type="button"
+                                        value={DeliveryMethod.PICKUP}
+                                        onClick={() => setFieldValue('method', DeliveryMethod.PICKUP)}
+                                        className={cn(
+                                            styles.methodChoice,
+                                            {[styles.methodChoiceActive]: values.method === DeliveryMethod.PICKUP}
+                                        )}
+                                    >
+                                        <Icon className={styles.deliveryIcon} icon="user" />
+                                        <br />
+                                        Самовывоз
+                                    </button>
+                                </div>
+                            }
 
                             <div
                                 className={cn(
@@ -151,6 +159,7 @@ export default class DeliveryForm extends React.Component<Props> {
                                                 <label htmlFor={id}>ФИО получателя</label>
                                                 <Field
                                                     id={id}
+                                                    readOnly={readOnly}
                                                     name="full_name"
                                                     component={TextInput}
                                                 />
@@ -177,6 +186,7 @@ export default class DeliveryForm extends React.Component<Props> {
                                                 <label htmlFor={id}>Телефон</label>
                                                 <Field
                                                     id={id}
+                                                    readOnly={readOnly}
                                                     name="phone"
                                                     component={TextInput}
                                                 />
@@ -205,6 +215,7 @@ export default class DeliveryForm extends React.Component<Props> {
                                                 <label htmlFor={id}>Адрес</label>
                                                 <Field
                                                     id={id}
+                                                    readOnly={readOnly}
                                                     name="address"
                                                     component={TextInput}
                                                 />
@@ -231,6 +242,7 @@ export default class DeliveryForm extends React.Component<Props> {
                                                 <label htmlFor={id}>Город</label>
                                                 <Field
                                                     id={id}
+                                                    readOnly={readOnly}
                                                     name="city"
                                                     component={TextInput}
                                                 />
@@ -289,22 +301,24 @@ export default class DeliveryForm extends React.Component<Props> {
                                      {status}
                                 </div>
                             }
-                            <button
-                                className={styles.buttonSubmit}
-                                type="submit"
-                                disabled={isSubmitting || !isValid}
-                            >
-                                {isSubmitting ?
-                                    <span>
-                                        <Icon icon="spinner" spin fixedWidth />
-                                        Отправка запроса...
-                                    </span>
-                                    :
-                                    <span>
-                                        Подтвердить
-                                    </span>
-                                }
-                            </button>
+                            {!readOnly &&
+                                <button
+                                    className={styles.buttonSubmit}
+                                    type="submit"
+                                    disabled={isSubmitting || !isValid}
+                                >
+                                    {isSubmitting ?
+                                        <span>
+                                            <Icon icon="spinner" spin fixedWidth />
+                                            Отправка запроса...
+                                        </span>
+                                        :
+                                        <span>
+                                            Подтвердить
+                                        </span>
+                                    }
+                                </button>
+                            }
                         </form>
                     }
                 </Formik>
