@@ -38,9 +38,12 @@ export interface Props {
     submitOrder: (data: Partial<OrderData>) => Promise<OrderData>;
 }
 
+export class OwnProps {
+    intialValues?: FormValues;
+}
 
-export class OrderFormContainer extends React.Component<Props> {
-    constructor(props: Props) {
+export class OrderFormContainer extends React.Component<Props & OwnProps> {
+    constructor(props: Props & OwnProps) {
         super(props);
 
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -49,6 +52,7 @@ export class OrderFormContainer extends React.Component<Props> {
     public render() {
         return (
             <OrderForm
+                readOnly={true}
                 warehouseAddress={this.props.companyInfo.contacts.warehouseAddress}
                 warehouseImageURL={this.props.companyInfo.contacts.routeScheme}
                 onSubmit={this.handleSubmit}

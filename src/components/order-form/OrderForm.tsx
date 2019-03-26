@@ -46,6 +46,8 @@ export interface FormValues {
 export interface Props {
     warehouseAddress: string;
     warehouseImageURL: string;
+    readOnly: boolean;
+    initialValues?: FormValues;
     onSubmit: (values: FormValues) => Promise<FormValues>;
 }
 
@@ -54,7 +56,9 @@ const renderInputTextField = (
     name: string,
     label: string,
     errors: FormikErrors<Partial<FormValues>>,
-    touched: FormikTouched<Partial<FormValues>>) => (
+    touched: FormikTouched<Partial<FormValues>>,
+    readOnly: boolean,
+    value: string) => (
     <UniqueID>
     {(id) =>
         <div
@@ -64,11 +68,17 @@ const renderInputTextField = (
             )}
         >
             <label htmlFor={id}>{label}</label>
-            <Field
-                id={id}
-                name={name}
-                component={TextInput}
-            />
+            {readOnly ?
+                <div>
+                    {value}
+                </div>
+                :
+                <Field
+                    id={id}
+                    name={name}
+                    component={TextInput}
+                />
+            }
             {errors[name] && touched[name] &&
                 <div
                     className={styles.fieldError}
@@ -86,13 +96,15 @@ export default class OrderForm extends React.Component<Props> {
         const {
             warehouseAddress,
             warehouseImageURL,
+            readOnly,
+            initialValues,
         } = this.props;
 
         return (
             <div className={styles.className}>
 
                 <Formik
-                    initialValues={{
+                    initialValues={initialValues || {
                         order_type: BusinessType.INDIVIDUAL,
                         organization_name: 'aaa',
                         email: '',
@@ -120,10 +132,9 @@ export default class OrderForm extends React.Component<Props> {
                     onSubmit={(values: FormValues, actions: FormikActions<FormValues>) => {
                         actions.setSubmitting(true);
                         return this.props.onSubmit(values).catch(err => {
-                            console.log('ERRORS', err);
-
                             actions.setErrors(err);
                             actions.setSubmitting(false);
+
                             if (err._error) {
                                 actions.setStatus(
                                     'Произошла ошибка. Пожалуйста, повторите позже.'
@@ -154,7 +165,7 @@ export default class OrderForm extends React.Component<Props> {
                         isValid,
                         values,
                     }) => {
-                        const renderField = (name: string, label: string) => renderInputTextField(name, label, errors, touched);
+                        const renderField = (name: string, label: string) => renderInputTextField(name, label, errors, touched, readOnly, values[name]);
                         const legalRetailerInfoColumnStyle = values.order_type === 'legal' ? styles.column20 : styles.column25;
 
                         return (

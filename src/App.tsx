@@ -7,6 +7,7 @@ import './icons';
 import Header from './components/header';
 import Homepage from './components/homepage';
 import Catalogue from './components/catalogue';
+import Account from './components/account';
 import Cart from './components/cart';
 
 class App extends React.Component {
@@ -19,6 +20,11 @@ class App extends React.Component {
             path='/'
             exact={true}
             component={Homepage}
+        />
+        <Route
+            path='/account/'
+            exact={true}
+            component={Account}
         />
         <Route
             path='/catalogue/:category/'
