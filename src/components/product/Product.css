@@ -97,6 +97,7 @@
 
 :local .tabContentActive {
     display: block;
+    background-color: #fff;
 }
 
 :local .propsList {

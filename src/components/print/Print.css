@@ -4,7 +4,7 @@
 :local .className {
 
     @include clearfix();
-    display: none;
+    /*display: none;*/
 
     @media print {
         display: block;
@@ -12,8 +12,14 @@
 }
 :local .header {
     @include clearfix();
+
     border-bottom: solid 3px;
     padding-bottom: 10px;
+    display: none;
+    @media print {
+
+        display: block;
+    }
 }
 :local .logoWrapper {
     float: left;
