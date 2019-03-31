@@ -41,6 +41,8 @@ export default class ProductComponent extends React.Component<Props, State> {
 
         this.handleTabClick = this.handleTabClick.bind(this);
         this.handleTitleClick = this.handleTitleClick.bind(this);
+        this.handlePrintButtonClick = this.handlePrintButtonClick.bind(this);
+
         this.handleAttributeButtonClick = this.handleAttributeButtonClick.bind(this);
         this.handleIncrementButtonClick = this.handleIncrementButtonClick.bind(this);
         this.handleDecrementButtonClick = this.handleDecrementButtonClick.bind(this);
@@ -189,6 +191,7 @@ export default class ProductComponent extends React.Component<Props, State> {
 
                             <button
                                 className={styles.tabLink}
+                                onClick={this.handlePrintButtonClick}
                             >
                                 <Icon icon="print" />
                             </button>
@@ -277,6 +280,12 @@ export default class ProductComponent extends React.Component<Props, State> {
             this.props.onCartIncrementClick();
         }
     }
+    private handlePrintButtonClick(e: React.SyntheticEvent<HTMLButtonElement>) {
+        e.preventDefault();
+        e.stopPropagation();
+        const win = window.open('/print/product/' + this.props.product_id + '/', '_blank');
+        (win as Window).focus();
+    }
 
     private handleInputChange(e: React.SyntheticEvent<HTMLInputElement>) {
         if (!isNaN(parseInt(e.currentTarget.value, 10))) {
@@ -286,6 +295,7 @@ export default class ProductComponent extends React.Component<Props, State> {
             this.props.onCartAmountSet(0);
         }
     }
+
     private handleInputClick(e: React.SyntheticEvent<HTMLInputElement>) {
         e.stopPropagation();
     }

@@ -101,8 +101,6 @@ export default class OrderForm extends React.Component<Props> {
             initialValues,
         } = this.props;
 
-        console.log(initialValues);
-
         return (
             <div className={styles.className}>
 

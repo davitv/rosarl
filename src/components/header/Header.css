@@ -11,6 +11,10 @@ $height: 60px;
 
     height: $height;
     background-color: #023466;
+
+    @media print {
+      display: none;
+    }
 }
 
 :local .floatLeft {

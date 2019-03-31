@@ -1,0 +1,48 @@
+@import '../../scss/clearfix';
+
+
+:local .className {
+    @include clearfix();
+
+    /*display: none;*/
+    border-bottom: solid 3px;
+
+    @media print {
+        display: block;
+    }
+}
+
+:local .logoWrapper {
+    float: left;
+    width: 300px;
+}
+
+:local .headline {
+    color: #656464;
+    font-size: 32px;
+    font-family: 'Arial';
+    font-weight: bold;
+    margin: 0;
+    padding-top: 18px;
+    text-align: center;
+    margin-bottom: 14px;
+}
+
+
+:local .inn {
+
+}
+:local .info {
+    float: left;
+    font-family: 'Arial';
+    font-size: 13px;
+    padding: 10px 0 0px 20px;
+    line-height: 24px;
+
+
+}
+
+:local .contact {
+    display: inline-block;
+    margin-right: 15px;
+}
