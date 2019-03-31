@@ -73,7 +73,7 @@ export default class OrderResults extends React.Component<Props> {
                         </h3>
                     </div>
 
-                    <a href="#" className={styles.printLink}>Распечатать заказ</a>
+                    {/*<a href="#" className={styles.printLink}>Распечатать заказ</a>*/}
             </div>
         );
     }
