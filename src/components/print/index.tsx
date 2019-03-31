@@ -4,10 +4,6 @@ import { FontAwesomeIcon as Icon } from '@fortawesome/react-fontawesome';
 const styles = require('./Print.css');
 
 export default class Print extends React.Component {
-    componentWillMount() {
-        print();
-    }
-
     public render() {
         return (
             <div className={styles.className}>

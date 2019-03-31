@@ -41,6 +41,11 @@ export const loadProducts = (queryParams?: Partial<QueryParams>, path='/api/prod
     constants.LOAD_PRODUCTS
 );
 
+export const loadProductsById = (ids: number[], path='/api/cart/products/') => retrieveData(
+    (token: string) => backendRetrieve(path, token, {idx: ids.join(',')}),
+    constants.LOAD_PRODUCTS
+);
+
 export const loadFilteringAttributes = (categoryId: number) => retrieveData(
     (token: string) => backendRetrieve('/api/attributes/', token, {category_id: categoryId}),
     constants.LOAD_FILTERING_ATTRIBUTES

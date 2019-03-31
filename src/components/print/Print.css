@@ -2,16 +2,19 @@
 
 
 :local .className {
-    @include clearfix();
 
-    /*display: none;*/
-    border-bottom: solid 3px;
+    @include clearfix();
+    display: none;
 
     @media print {
         display: block;
     }
 }
-
+:local .header {
+    @include clearfix();
+    border-bottom: solid 3px;
+    padding-bottom: 10px;
+}
 :local .logoWrapper {
     float: left;
     width: 300px;

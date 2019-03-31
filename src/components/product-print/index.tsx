@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
 import { ThunkDispatch } from 'redux-thunk';
 
-import { loadCartProducts, CartAction } from '../../cart/actions';
+import { loadProductsById, ProductsAction } from '../../products/actions';
 
 import * as types from '../../types';
 
@@ -22,9 +22,9 @@ export interface Props {
     load: () => Promise<any>;
 }
 
-const mapDispatchToProps = (dispatch: ThunkDispatch<types.AppState, {}, CartAction>, {match: {params}, ...rest}: OwnProps) => ({
+const mapDispatchToProps = (dispatch: ThunkDispatch<types.AppState, {}, ProductsAction>, {match: {params}, ...rest}: OwnProps) => ({
     load: () => {
-        return dispatch(loadCartProducts([parseInt(params.product, 10)]));
+        return dispatch(loadProductsById([parseInt(params.product, 10)]));
     }
 });
 
@@ -34,19 +34,19 @@ const mapStateToProps = (state: types.AppState, {match: {params: {product}}}: Ow
 });
 
 export class ProductPrintContainer extends React.Component<Props & OwnProps> {
-    public componentDidMount() {
-        print();
-    }
-
     public componentWillMount() {
         this.props.load();
     }
+
     public render() {
         const [ product ] = this.props.products;
+        console.log(this.props.productId, this.props.products);
 
         return (
             <Print>
-                <ProductPrint product={product} />
+                {product !== undefined &&
+                    <ProductPrint product={product} />
+                }
             </Print>
         );
     }
