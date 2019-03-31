@@ -73,7 +73,12 @@ class Header extends React.Component<Props> {
                     <div className={styles.navigation}>
                         <Dropdown>
                             {(togglerRef, contentRef, isOpen) =>
-                                <div className={styles.item}>
+                                <div
+                                    className={cx(
+                                        styles.item,
+                                        {[styles.itemActive]: isOpen}
+                                    )}
+                                >
                                     <a
                                         href="#"
                                         className={styles.navigationLink}
@@ -106,7 +111,12 @@ class Header extends React.Component<Props> {
                         </Dropdown>
                         <Dropdown>
                             {(togglerRef, contentRef, isOpen) =>
-                                <div className={styles.item}>
+                                <div
+                                    className={cx(
+                                        styles.item,
+                                        {[styles.itemActive]: isOpen}
+                                    )}
+                                >
                                     <a
                                         href="#"
                                         className={styles.navigationLink}
@@ -129,7 +139,12 @@ class Header extends React.Component<Props> {
                         </Dropdown>
                         <Dropdown>
                             {(togglerRef, contentRef, isOpen) =>
-                                <div className={styles.item}>
+                                <div
+                                    className={cx(
+                                        styles.item,
+                                        {[styles.itemActive]: isOpen}
+                                    )}
+                                >
                                     <a
                                         href="#"
                                         className={styles.navigationLink}
@@ -153,7 +168,12 @@ class Header extends React.Component<Props> {
 
                         <Dropdown>
                             {(togglerRef, contentRef, isOpen) =>
-                                <div className={styles.item}>
+                                <div
+                                    className={cx(
+                                        styles.item,
+                                        {[styles.itemActive]: isOpen}
+                                    )}
+                                >
                                     <a
                                         href="#"
                                         className={styles.navigationLink}
@@ -177,7 +197,12 @@ class Header extends React.Component<Props> {
 
                         <Dropdown>
                             {(togglerRef, contentRef, isOpen) =>
-                                <div className={styles.item}>
+                                <div
+                                    className={cx(
+                                        styles.item,
+                                        {[styles.itemActive]: isOpen}
+                                    )}
+                                >
                                     <a
                                         href="#"
                                         className={styles.navigationLink}
@@ -210,7 +235,12 @@ class Header extends React.Component<Props> {
                         </Dropdown>
                         <Dropdown>
                             {(togglerRef, contentRef, isOpen) =>
-                                <div className={styles.item}>
+                                <div
+                                    className={cx(
+                                        styles.item,
+                                        {[styles.itemActive]: isOpen}
+                                    )}
+                                >
                                     <a
                                         href="#"
                                         className={styles.navigationLink}
@@ -234,7 +264,12 @@ class Header extends React.Component<Props> {
 
                         <Dropdown>
                             {(togglerRef, contentRef, isOpen) =>
-                                <div className={styles.item}>
+                                <div
+                                    className={cx(
+                                        styles.item,
+                                        {[styles.itemActive]: isOpen}
+                                    )}
+                                >
                                     <a
                                         href="#"
                                         className={styles.navigationLink}
@@ -276,7 +311,11 @@ class Header extends React.Component<Props> {
                 <div className={styles.floatRight}>
                     <div className={styles.navigation}>
                         {isAuthenticated ?
-                            <div className={styles.item}>
+                            <div
+                                className={cx(
+                                    styles.item,
+                                )}
+                            >
                                 <Link
                                     to="/account/"
                                     className={styles.navigationLink}
@@ -288,7 +327,12 @@ class Header extends React.Component<Props> {
                             :
                             <Dropdown>
                                 {(togglerRef, contentRef, isOpen) =>
-                                    <div className={styles.item}>
+                                    <div
+                                        className={cx(
+                                            styles.item,
+                                            {[styles.itemActive]: isOpen}
+                                        )}
+                                    >
                                         <a
                                             href="#"
                                             className={styles.navigationLink}
@@ -316,7 +360,12 @@ class Header extends React.Component<Props> {
 
                         <Dropdown>
                             {(togglerRef, contentRef, isOpen) =>
-                                <div className={styles.item}>
+                                <div
+                                    className={cx(
+                                        styles.item,
+                                        {[styles.itemActive]: isOpen}
+                                    )}
+                                >
                                     <a
                                         href="#"
                                         className={styles.navigationLink}
@@ -341,7 +390,11 @@ class Header extends React.Component<Props> {
                             }
                         </Dropdown>
 
-                        <div className={styles.item}>
+                        <div
+                            className={cx(
+                                styles.item
+                            )}
+                        >
                             <a
                                 onClick={this.handleCartClick}
                                 href="#"

@@ -3,7 +3,6 @@
 @import '../../scss/buttons';
 @import '../../scss/vars';
 
-
 $height: 60px;
 
 :local .className {
@@ -58,6 +57,21 @@ $height: 60px;
 
 :local .item {
     float: left;
+    position: relative;
+}
+
+:local .itemActive {
+    &:before {
+        content: ' ';
+        width: 10px;
+        height: 10px;
+        background-color: white;
+        position: absolute;
+        transform: rotate(45deg);
+        bottom: -5px;
+        left: 42%;
+        z-index: 100000;
+    }
 }
 
 :local .navigationLink {
@@ -72,7 +86,6 @@ $height: 60px;
     display: block;
     text-align: center;
     font-size: 14px;
-    /*line-height: 1;*/
 }
 
 :local .loaderIconImage {
