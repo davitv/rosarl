@@ -9,7 +9,7 @@ import Homepage from './components/homepage';
 import Catalogue from './components/catalogue';
 import Account from './components/account';
 import Cart from './components/cart';
-
+import PrintCompanyInfo from './components/print-company-info';
 import ProductPrint from './components/product-print';
 
 class App extends React.Component {
@@ -29,6 +29,11 @@ class App extends React.Component {
               path='/print/product/:product/'
               exact={true}
               component={ProductPrint}
+          />
+          <Route
+              path='/print/info/:infoType/'
+              exact={true}
+              component={PrintCompanyInfo}
           />
           <Route
               path='/account/'

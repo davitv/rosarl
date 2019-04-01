@@ -96,12 +96,13 @@ class Header extends React.Component<Props> {
                                     >
                                         <div className={styles.dropdownContent}>
                                             <p>
-                                                <button
-                                                    type="button"
+                                                <a
                                                     className={styles.btnPrint}
+                                                    href={'/print/info/about/'}
+                                                    target="_blank"
                                                 >
                                                     <Icon icon="print" />
-                                                </button>
+                                                </a>
                                             </p>
                                             {about.map((text, index) => <p key={index}>{text}</p>)}
                                         </div>
@@ -220,12 +221,13 @@ class Header extends React.Component<Props> {
                                     >
                                         <div className={styles.dropdownContent}>
                                             <p>
-                                                <button
-                                                    type="button"
+                                                <a
                                                     className={styles.btnPrint}
+                                                    href={'/print/info/payment/'}
+                                                    target="_blank"
                                                 >
                                                     <Icon icon="print" />
-                                                </button>
+                                                </a>
                                             </p>
                                             {payment.map((text, index) => <p key={index}>{text}</p>)}
                                         </div>
@@ -287,12 +289,13 @@ class Header extends React.Component<Props> {
                                     >
                                         <div className={styles.dropdownContent}>
                                             <p>
-                                                <button
-                                                    type="button"
+                                                <a
                                                     className={styles.btnPrint}
+                                                    href={'/print/info/contacts/'}
+                                                    target="_blank"
                                                 >
                                                     <Icon icon="print" />
-                                                </button>
+                                                </a>
                                             </p>
                                             <p>{contacts.address}</p>
                                             <p>{contacts.route}</p>
