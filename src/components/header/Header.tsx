@@ -34,6 +34,7 @@ export interface Props {
     };
 
     onCartClick: () => void;
+    onLogoutClick: () => void;
 }
 
 class Header extends React.Component<Props> {
@@ -314,19 +315,54 @@ class Header extends React.Component<Props> {
                 <div className={styles.floatRight}>
                     <div className={styles.navigation}>
                         {isAuthenticated ?
-                            <div
-                                className={cx(
-                                    styles.item,
-                                )}
-                            >
-                                <Link
-                                    to="/account/"
-                                    className={styles.navigationLink}
-                                >
-                                    <i className={styles.icon}><Icon icon="user" /></i>
-                                    Аккаунт
-                                </Link>
-                            </div>
+                            <Dropdown>
+                                {(togglerRef, contentRef, isOpen) =>
+                                    <div
+                                        className={cx(
+                                            styles.item,
+                                            {[styles.itemActive]: isOpen}
+                                        )}
+                                    >
+                                        <a
+                                            href="#"
+                                            className={styles.navigationLink}
+                                            ref={togglerRef}
+                                        >
+                                            <i className={styles.icon}><Icon icon="user" /></i>
+                                            Аккаунт
+                                        </a>
+                                        <div
+                                            className={cx(
+                                                styles.dropdown,
+                                                styles.dropdownSmall,
+                                                {[styles.dropdownOpen]: isOpen}
+                                            )}
+                                            ref={contentRef}
+                                        >
+                                            <div className={styles.dropdownContent}>
+                                                <ul className={styles.dropdownMenu}>
+                                                    <li>
+                                                        <Link to='/account/'>
+                                                            <i><Icon icon="user" /></i> Личный кабинет
+                                                        </Link>
+                                                    </li>
+                                                    <li>
+                                                        <Link to='/settings/'>
+                                                            <i><Icon icon="cogs" /></i> Настройки
+                                                        </Link>
+                                                    </li>
+                                                    <li className={styles.separator}/>
+                                                    <li>
+                                                        <Link to='/' onClick={this.handleLogoutClick}>
+                                                            <i><Icon icon="sign-out-alt" /></i> Выйти
+                                                        </Link>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                            </Dropdown>
                             :
                             <Dropdown>
                                 {(togglerRef, contentRef, isOpen) =>
@@ -419,7 +455,7 @@ class Header extends React.Component<Props> {
     }
 
     private handleLogoutClick(e: React.SyntheticEvent<HTMLAnchorElement>) {
-        e.preventDefault();
+        this.props.onLogoutClick();
     }
 
     private handleLoginClick(e: React.SyntheticEvent<HTMLAnchorElement>) {

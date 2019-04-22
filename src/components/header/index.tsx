@@ -20,6 +20,7 @@ export interface Props {
     loadCompanyInfo: () => Promise<any>;
     loadManufacturers: () => Promise<any>;
     getUserDetails: () => Promise<any>;
+    logout: () => void;
 }
 
 const mapStateToProps = (state: types.AppState) => ({
@@ -33,6 +34,7 @@ const mapDispatchToProps = (dispatch: ThunkDispatch<types.AppState, {}, UIAction
     toggleCart: (isOpen: boolean) => {
         dispatch(toggleCart(isOpen))
     },
+    logout: () => dispatch(logout()),
     loadManufacturers: () => dispatch(loadManufacturers()),
     loadCompanyInfo: () => dispatch(loadCompanyInfo()),
     getUserDetails: () => dispatch(getUserDetails()),
@@ -59,6 +61,7 @@ export class HeaderContainer extends React.Component<Props> {
 
         return (
             <Header
+                onLogoutClick={this.props.logout}
                 isAuthenticated={isAuthenticated}
                 paymentText={payment.text}
                 paymentImageURL={payment.image_url}

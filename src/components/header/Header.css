@@ -136,3 +136,38 @@ $height: 60px;
     right: 0;
     left: auto;
 }
+
+:local .dropdownMenu {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    margin-left: -15px;
+    margin-right: -15px;
+    > li {
+        display: block;
+        > a,
+        > a:active,
+        > a:visited
+        {
+            text-decoration: none;
+            padding: 7px 15px;
+            display: block;
+            color: inherit;
+            &:hover {
+                background-color: #f0f0f0;
+            }
+            > i {
+                display: inline-block;
+                width: 25px;
+            }
+        }
+    }
+}
+
+:local .separator {
+    width: 100%;
+    height: 1px;
+    margin: 5px 0;
+    background-color: #ccc;
+    padding: 0;
+}

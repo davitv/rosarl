@@ -19,12 +19,16 @@ import {
     faPrint,
     faTimes,
     faGlobeAmericas,
+    faCogs,
     faUser,
+    faSignOutAlt,
 } from '@fortawesome/free-solid-svg-icons';
 
 library.add(
     faTimes,
+    faSignOutAlt,
     faBuilding,
+    faCogs,
     faUsers,
     faFileAlt,
     faPrint,
