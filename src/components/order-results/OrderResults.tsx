@@ -54,7 +54,7 @@ export default class OrderResults extends React.Component<Props> {
                             </h3>
                         }
                         <h3 className={styles.productsListHeadline}>Список товаров</h3>
-                        {products.map(({amount, product: {product_id, name, price}}: any) =>
+                        {products.filter(({product}: any) => product !== null).map(({amount, product: {product_id, name, price}}: any) =>
                             <div key={product_id} className={styles.product}>
                                 <span className={styles.productName}>
                                     {name}
@@ -68,7 +68,7 @@ export default class OrderResults extends React.Component<Props> {
                         <h3 className={styles.priceSummary}>
                             Общая стоимость товаров
                             <span className={styles.total}>
-                                {Math.round(products.reduce((p, {amount, product: {price}}: any) => amount * price, 0) * 100) / 100 } Руб.
+                                {Math.round(products.filter(({product}: any) => product !== null).reduce((p, {amount, product: {price}}: any) => amount * price, 0) * 100) / 100 } Руб.
                             </span>
                         </h3>
                     </div>
