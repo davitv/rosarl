@@ -9,9 +9,6 @@ import BottomScrollListener from 'react-bottom-scroll-listener';
 
 const styles = require('./ProductsList.css');
 
-const loaderWhiteURL = require('../../assets/loader-white.png');
-const loaderDarkURL = require('../../assets/loader-black.png');
-
 export interface Props {
     products: ProductType[];
     openProducts: number[];
@@ -26,7 +23,6 @@ export interface Props {
 export default class ProductsList extends React.Component<Props> {
     public render() {
         const {
-            products,
             onProductTitleClick,
             openProducts,
             onAttributeClick,
@@ -34,16 +30,6 @@ export default class ProductsList extends React.Component<Props> {
             onBottomScroll,
             selectedFilters
         } = this.props;
-
-        const dublicates: number[] = [];
-
-        const renderProducts = products.filter((({product_id}) => {
-            if (dublicates.indexOf(product_id) === -1) {
-                dublicates.push(product_id);
-                return true;
-            }
-            return false;
-        }));
 
         return (
             <div className={styles.className}>

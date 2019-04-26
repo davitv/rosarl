@@ -70,7 +70,7 @@ const renderInputTextField = (
         >
             <label htmlFor={id}>{label}</label>
             {readOnly ?
-                <div>
+                <div className={styles.readOnlyField} title={value}>
                     {value || 'Значение не указано.'}
                 </div>
                 :

@@ -17,9 +17,6 @@ export interface Props extends ProductProps {
     onCartAmountSet: (amount: number) => void;
 }
 
-export interface State {
-    showDetails: boolean;
-}
 
 const mapStateToProps = (state: types.AppState, ownProps: {product_id: number}) => ({
     cartAmount: state.cart.selectedItems[ownProps.product_id] === undefined ? 0 : state.cart.selectedItems[ownProps.product_id]
@@ -33,11 +30,7 @@ const mapDispatchToProps = (dispatch: ThunkDispatch<types.AppState, {}, CartActi
 });
 
 
-export class ProductContainer extends React.Component<Props, State> {
-    constructor(props: Props) {
-        super(props);
-    }
-
+export class ProductContainer extends React.Component<Props> {
     public render() {
         const {
             onCartDecrementClick,
@@ -55,10 +48,6 @@ export class ProductContainer extends React.Component<Props, State> {
                 {...this.props}
             />
         );
-    }
-
-    private handleProductTitleClick() {
-        this.setState({showDetails: true});
     }
 }
 

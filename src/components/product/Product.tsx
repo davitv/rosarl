@@ -7,10 +7,10 @@ import { IMAGES_PATH_URL } from '../../products/constants';
 
 import CartInput from '../cart-input';
 
-const styles = require('./Product.css');
+const Lightbox = require('react-image-lightbox').default;
+const lstyles = require('./Lightbox.css');
 
-const loaderWhiteURL = require('../../assets/loader-white.png');
-const loaderDarkURL = require('../../assets/loader-black.png');
+const styles = require('./Product.css');
 
 export enum ActiveTabChoices {
     DESCRIPTION = 1,
@@ -19,6 +19,8 @@ export enum ActiveTabChoices {
 
 export interface State {
     activeTab: ActiveTabChoices;
+    isImagesViewOpen: boolean;
+    imageIndex: number;
 }
 
 export interface Props extends Product {
@@ -32,13 +34,19 @@ export interface Props extends Product {
     onAttributeClick: (attributeId: number) => void;
 }
 
+const func = () => {
+    console.log(lstyles);
+};
+
 export default class ProductComponent extends React.Component<Props, State> {
     constructor(props: Props) {
         super(props);
         this.state = {
-            activeTab: ActiveTabChoices.DESCRIPTION
+            activeTab: ActiveTabChoices.DESCRIPTION,
+            isImagesViewOpen: false,
+            imageIndex: 0,
         };
-
+        
         this.handleTabClick = this.handleTabClick.bind(this);
         this.handleTitleClick = this.handleTitleClick.bind(this);
         this.handlePrintButtonClick = this.handlePrintButtonClick.bind(this);
@@ -48,7 +56,8 @@ export default class ProductComponent extends React.Component<Props, State> {
         this.handleDecrementButtonClick = this.handleDecrementButtonClick.bind(this);
         this.handleAddButtonClick = this.handleAddButtonClick.bind(this);
         this.handleInputChange = this.handleInputChange.bind(this);
-        this.handleInputClick = this.handleInputClick.bind(this);
+        this.showImageGallery = this.showImageGallery.bind(this);
+        this.hideImageGallery = this.hideImageGallery.bind(this);
     }
 
     public render() {
@@ -70,7 +79,9 @@ export default class ProductComponent extends React.Component<Props, State> {
         } = this.props;
 
         const {
-            activeTab
+            activeTab,
+            isImagesViewOpen,
+            imageIndex,
         } = this.state;
 
         const inCart = cartAmount > 0;
@@ -85,17 +96,31 @@ export default class ProductComponent extends React.Component<Props, State> {
                     }
                 )}
             >
-                <div
-                    className={styles.title}
-                    onClick={this.handleTitleClick}
-                >
+                <div className={styles.title}>
                     <div className={styles.w5}>
+                        {isImagesViewOpen && images.length !== 0 &&
+                            <Lightbox
+                                mainSrc={IMAGES_PATH_URL + images[imageIndex].image_url}
+                                nextSrc={IMAGES_PATH_URL + images[(imageIndex + 1) % images.length].image_url}
+                                prevSrc={IMAGES_PATH_URL + images[(imageIndex + images.length - 1) % images.length].image_url}
+
+                                onCloseRequest={this.hideImageGallery}
+                                onMovePrevRequest={() => this.setState({
+                                    imageIndex: (imageIndex + images.length - 1) % images.length,
+                                })}
+                                onMoveNextRequest={() => this.setState({
+                                    imageIndex: (imageIndex + 1) % images.length,
+                                })}
+                            />
+                        }
                         <img
                             className={styles.photo}
+                            onClick={this.showImageGallery}
                             src={images.length ? IMAGES_PATH_URL + images[0].image_url : undefined}
                         />
                     </div>
                     <div
+                        onClick={this.handleTitleClick}
                         className={cn(
                             styles.w10,
                             styles.article
@@ -104,7 +129,7 @@ export default class ProductComponent extends React.Component<Props, State> {
                         {article}
                     </div>
                     <div
-
+                        onClick={this.handleTitleClick}
                         className={cn(
                             styles.w45,
                             styles.name
@@ -113,6 +138,7 @@ export default class ProductComponent extends React.Component<Props, State> {
                         {name}
                     </div>
                     <div
+                        onClick={this.handleTitleClick}
                         className={cn(
                             styles.w15,
                             styles.attributesList,
@@ -138,6 +164,7 @@ export default class ProductComponent extends React.Component<Props, State> {
                         }
                     </div>
                     <div
+                        onClick={this.handleTitleClick}
                         className={cn(
                             styles.w10,
                             styles.price
@@ -146,6 +173,7 @@ export default class ProductComponent extends React.Component<Props, State> {
                         {price}
                     </div>
                     <div
+                        onClick={this.handleTitleClick}
                         className={cn(
                             styles.w15,
                             styles.cartConrols,
@@ -296,7 +324,14 @@ export default class ProductComponent extends React.Component<Props, State> {
         }
     }
 
-    private handleInputClick(e: React.SyntheticEvent<HTMLInputElement>) {
+    private showImageGallery(e: React.SyntheticEvent<HTMLImageElement>) {
+        e.preventDefault();
         e.stopPropagation();
+        this.setState({isImagesViewOpen: true});
+        return false;
+    }
+
+    private hideImageGallery() {
+        this.setState({isImagesViewOpen: false});
     }
 }
