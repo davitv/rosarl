@@ -153,3 +153,80 @@ interface FilteringAttribute {
 }
 ```
 
+### Order
+
+```
+/api/orders/
+```
+Endpoint for making orders. Accepts POST JSON encoded data as body, example:
+```
+curl 'http://rosar-l-test.ru/api/orders/' -H 'authorization: ' -H 'Origin: http://rosar-l-test.ru' -H 'Accept-Encoding: gzip, deflate' -H 'Accept-Language: en-US,en;q=0.9,ru;q=0.8,la;q=0.7,uk;q=0.6,fr;q=0.5' -H 'User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/75.0.3770.142 Safari/537.36' -H 'content-type: application/json;charset=UTF-8' -H 'Accept: */*' -H 'Referer: http://rosar-l-test.ru/catalogue/29210/' -H 'Connection: keep-alive' --data-binary '{"order_type":"individual","organization_name":"aaa","email":"davitvrd@gmail.com","kpp":"","rsn":"","inn":"","bik":"","korn":"","phone":"+79261234567","bank_name":"","first_name":"Samvel","last_name":"Vardanyan","patronymic":"sss","legal_address":"","address":"Degt, Degt","city":"Mikolaiv","postal":"","delivery_method":0,"products":[{"id":636131,"amount":1},{"id":636160,"amount":1}],"delivery":{"method":0,"full_name":"Samvel Vardanyan","address":"Degt, Degt","city":"Mikolaiv","phone":"980699642"}}' --compressed --insecure
+```
+
+The request body data types are:
+```typescript
+
+enum BusinessType {
+    INDIVIDUAL = 'individual', // физ. лицо
+    LEGAL = 'legal', // юр. лицо
+    RETAILER = 'retailer', // ИП
+}
+
+enum DeliveryMethod {
+    MOSCOW = 0,
+    RUSSIA,
+    PICKUP
+}
+
+// THE ACTUAL REQUEST DATA
+interface OrderData {
+    id?: number;
+    order_type: BusinessType;
+    deliveryMethod: DeliveryMethod;
+    organization_name: string;
+    phone: string;
+    email: string;
+
+    inn: string;
+    kpp: string;
+    bik: string;
+    korn: string;
+    rsn: string;
+
+    first_name: string;
+    last_name: string;
+    patronymic: string;
+    legal_address: string;
+    individual_address: string;
+    city: string;
+    postal: string;
+
+    bank_name: string;
+
+    products: {
+        id: number;
+        amount: number;
+
+        product?: Product;
+    }[];
+}
+
+```
+
+!! KEEP IN MIND !!!
+
+For any type of request the data is always same, just the serializer changes on backend based on ```BusinessType``` type value so you should carry that logic on FE side.
+
+The response body would have the same format as the request __with optional fields set__ (i.e. ```products.product``` will have a value of ordered product item).
+
+
+
+
+
+
+
+
+
+
+
+
