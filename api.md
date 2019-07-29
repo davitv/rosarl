@@ -130,6 +130,8 @@ interface Product {
 }
 
 
+
+```
 ### Category related attributes
 ```
 /api/attributes/
