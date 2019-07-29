@@ -220,12 +220,104 @@ For any type of request the data is always same, just the serializer changes on 
 The response body would have the same format as the request __with optional fields set__ (i.e. ```products.product``` will have a value of ordered product item).
 
 
+### Account Login
 
+```
+/api/login/
+```
 
+Quite self-explanatory, accepts POST requests with username/password key-value json, i.e. :
+```
+{"username":"examile@gmail.com","password":"yFdsTVnSRC"}
+```
 
+The successful response contains full info about current account. JSON encoded with token used for authentication. 
 
+```
+date_joined: "2019-04-22T09:23:02Z"
+email: "example@gmail.com"
+first_name: "Вадим"
+id: 7
+is_active: true
+is_staff: false
+last_login: null
+last_name: "smith"
+phone: "+79261234566"
+token: "fa8662393bf8eca99a03ba89885e15da7c44477d" // this should be used in headers  for auth request, i.e. authorization: fa8662393bf8eca99a03ba89885e15da7c44477d
+```
 
+### Account information
+```
+/api/user-info/
+```
+Accepts only GET with no params, send the token fetched from endpoint described just before i.e.
+```curl 'http://rosar-l-test.ru/api/user-info/' -H 'Accept-Encoding: gzip, deflate' -H 'Accept-Language: en-US,en;q=0.9,ru;q=0.8,la;q=0.7,uk;q=0.6,fr;q=0.5' -H 'authorization: fa8662393bf8eca99a03ba89885e15da7c44477d' -H 'Accept: */*' -H 'Referer: http://rosar-l-test.ru/account/' -H 'User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/75.0.3770.142 Safari/537.36' -H 'Connection: keep-alive' --compressed --insecure```
 
+Response data types are next:
+```typescript
+export interface Address {
+    id:  number;
+    method:  number;
+    phone:  string;
+    address:  string;
+    city:  string;
+    email:  null | string;
+    full_name:  string;
+    carrier:  string;
+}
+
+interface OrderProduct {
+    id: number;
+    product: {
+        name: string;
+        article: string;
+        description: string;
+        price: number;
+        images:[],
+        product_s_desc: string;
+        product_thumb_image:  string;
+        product_full_image:  string;
+        product_id: number;
+        weight: number;
+        width: number;
+        height: number;
+        length: number;
+   },
+   amount: number;
+   order: number;
+}
+
+interface Order {
+    id: number;
+    bank_name: string;
+    bik: string;
+    city: string;
+    date_added: string;
+    date_modified: string;
+    delivery: number;
+    delivery_method: string;
+    email: string;
+    first_name: string;
+    individual_address: string;
+    inn: string;
+    korn: string;
+    kpp: string;
+    last_name: string;
+    legal_address: string;
+    order_type: BusinessType;
+    organization_name: string;
+    patronymic: string;
+    phone: string;
+    postal: string;
+    rsn: string;
+    products: OrderProduct[];
+}
+
+// ACTUAL RESPONSE BODY
+interface UserDetails {
+    orders: Order[];
+    addresses: Address[];
+}
 
 
 
