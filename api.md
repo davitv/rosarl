@@ -87,3 +87,67 @@ type Category = {
     results: Category[];
 }
 ```
+
+### Products
+```
+/api/products/
+```
+Retrieve the products list. Accepts ```category``` and ```attributes``` GET params, attributes can be multiple, comma separated (i.e. ```/api/products/?attributes=13%2C34&category=29210``).
+
+Response examples:
+```typescript
+
+export interface Attribute {
+    id: number;
+    name: string;
+    value: string;
+}
+
+interface Product {
+    product_id: number;
+    name: string;
+    article: string;
+    description: string;
+    product_s_desc: string;
+    price: number;
+    width: number;
+    height: number;
+    length: number;
+    weight: number;
+
+    product_full_image: string;
+    product_thumb_image: string;
+    images: Photo[];
+    attributes: Attribute[];
+}
+
+// ACTUAL RESPONSE:
+{
+   count: number;
+   next: string | null; // absolute url to the next page of results
+   previous: string | null; // same as above, but for prev results
+   results: Product[];
+}
+
+
+### Category related attributes
+```
+/api/attributes/
+```
+Retrieves the list of existing product attributes for category determined by GET param ```category_id```. Response example:
+```typescript
+
+interface FilteringAttribute {
+    name: string;
+    choices: {
+        name: string;
+        value: number; // this is used for /api/products/ endpoint as attributes GET param
+    }[];
+}
+
+// ACTUAL RESPONSE
+{
+   results: FilteringAttribute[];
+}
+```
+
