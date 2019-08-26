@@ -66,6 +66,24 @@ Get data for header tabs. Response:
 ```
 
 
+
+### Callback request
+```
+[POST] /api/callback-request/
+```
+Create a callback request.  Accepts POST JSON encoded data as body, example:
+
+```typescript
+{"name":"TEST","phone":"+79261234567"}
+```
+
+!! BE AWARE !! That the phone should be fully qualified russian number.
+
+```typescript
+{"id":17,"name":"TEST","phone":"+79261234567","date_added":"2019-08-26T15:28:20.935193Z","date_modified":"2019-08-26T15:28:20.935250Z"}
+```
+
+
 ### Categories
 ```
 /api/categories/
