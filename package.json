@@ -44,7 +44,7 @@
     "marked": "^0.5.1",
     "moment": "^2.22.2",
     "muuri": "^0.7.1",
-    "node-sass": "^4.9.3",
+    "node-sass": "^4.13.1",
     "object-assign": "4.1.1",
     "packery": "^2.1.2",
     "postcss-flexbugs-fixes": "3.2.0",
