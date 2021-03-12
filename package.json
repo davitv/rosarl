@@ -55,7 +55,7 @@
     "react": "^16.5.2",
     "react-big-calendar": "^0.20.2",
     "react-bottom-scroll-listener": "^2.1.1",
-    "react-dev-utils": "^5.0.2",
+    "react-dev-utils": "^11.0.4",
     "react-dom": "^16.5.2",
     "react-image-lightbox": "^5.1.0",
     "react-router": "^4.3.1",
